@@ -2,10 +2,8 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let mongoose = require("mongoose");
 let app = express();
-require("custom-env").env("dev");
-
-// Import routes
 let apiRoutes = require("./api-routes");
+require("custom-env").env("dev");
 
 // Configure bodyparser to handle post requests
 app.use(
@@ -16,10 +14,11 @@ app.use(
 app.use(bodyParser.json());
 
 // Connect to Mongoose and set connection variable
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/`, {
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/todo`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
+
 var db = mongoose.connection;
 
 // Added check for DB connection
