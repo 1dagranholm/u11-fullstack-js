@@ -1,10 +1,18 @@
 module.exports = {
-    restApiResponse: function (err, message, data = "", res = null) {
+    restApiResponse: function (err, message, data = "", res = null, debug = false) {
         if (err) {
-            res.json({
-                status: "error",
-                message: message[0],
-            });
+            if (debug) {
+                res.json({
+                    status: "error",
+                    message: message[0],
+                    debug: err,
+                });
+            } else {
+                res.json({
+                    status: "error",
+                    message: message[0],
+                });
+            }
         } else if (data == 0) {
             res.json({
                 status: "error",

@@ -1,33 +1,43 @@
 const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema({
-    user_name: {
-        type: "string",
-        required: true,
+const userSchema = mongoose.Schema(
+    {
+        userName: {
+            type: "string",
+            required: true,
+        },
+        password: {
+            type: "string",
+            pattern: "^(?:\\d+|[a-zA-Z]+|[!@#$%^&*]+)$",
+            required: true,
+        },
+        role: {
+            type: String,
+            enum: ["admin", "user"],
+            required: true,
+        },
+        email: {
+            type: String,
+            required: true,
+        },
+        firstName: {
+            type: String,
+            required: true,
+        },
+        lastName: {
+            type: String,
+            required: true,
+        },
+        deletedAt: {
+            type: Date,
+        },
     },
-    password: {
-        type: "string",
-        pattern: "^(?:\\d+|[a-zA-Z]+|[!@#$%^&*]+)$",
-        required: true,
-    },
-    role: {
-        type: String,
-        enum: ["admin", "user"],
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-    },
-    first_name: {
-        type: String,
-    },
-    last_name: {
-        type: String,
-    },
-});
+    {
+        timestamps: true,
+    }
+);
 
-const User = (module.exports = mongoose.model("User", userSchema, "users"));
+const User = (module.exports = mongoose.model("User", userSchema));
 
 module.exports.get = function (callback, limit) {
     User.find(callback).limit(limit);
