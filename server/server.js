@@ -1,8 +1,9 @@
-let express = require("express");
-let bodyParser = require("body-parser");
-let mongoose = require("mongoose");
-let app = express();
-let apiRoutes = require("./api-routes");
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const app = express();
+const apiRoutes = require("./api-routes");
+const cors = require("cors");
 require("custom-env").env("dev");
 
 // Configure bodyparser to handle post requests
@@ -13,20 +14,26 @@ app.use(
 );
 app.use(bodyParser.json());
 
-// Connect to Mongoose and set connection variable
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/todo`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+app.use(express.json());
+app.use(cors());
 
-var db = mongoose.connection;
+// Connect to Mongoose and set connection variable
+mongoose.connect(
+    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOST}/${process.env.MONGO_DB}`,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    }
+);
+
+const db = mongoose.connection;
 
 // Added check for DB connection
 if (!db) console.log("Error connecting db");
 else console.log("Db connected successfully");
 
 // Setup server port
-var port = process.env.PORT || 8080;
+const port = process.env.APP_PORT || 8080;
 
 // Send message for default URL
 app.get("/", (req, res) => res.send("Server is live!"));
