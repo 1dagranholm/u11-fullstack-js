@@ -90,3 +90,20 @@ exports.delete = function (req, res) {
         }
     });
 };
+
+exports.search = async function (req, res) {
+    let searchTerm = new RegExp(req.body.term, "i");
+
+    await Todo.find()
+        .or([{ title: searchTerm }, { description: searchTerm }])
+        .then((todos) => {
+            res.send(todos);
+        })
+        .catch((error) => {
+            res.status(500).send({
+                message: "Failed: to search via index",
+                success: true,
+                result: error,
+            });
+        });
+};

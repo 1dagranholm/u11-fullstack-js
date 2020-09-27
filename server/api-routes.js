@@ -21,4 +21,8 @@ router.route("/todos").get(todoController.index).post(todoController.new);
 router.route("/todos/:todo_id").get(todoController.view).patch(todoController.update).delete(todoController.delete);
 router.route("/todos/restore/:todo_id").patch(todoController.restore);
 
+// Search routes
+router.route("/search/users").post(userController.search);
+router.route("/search/todos").post(todoController.search);
+
 module.exports = router;

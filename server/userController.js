@@ -91,3 +91,20 @@ exports.delete = function (req, res) {
         }
     });
 };
+
+exports.search = async function (req, res) {
+    let searchTerm = new RegExp(req.body.term, "i");
+
+    await User.find()
+        .or([{ userName: searchTerm }, { firstName: searchTerm }, { lastName: searchTerm }])
+        .then((users) => {
+            res.send(users);
+        })
+        .catch((error) => {
+            res.status(500).send({
+                message: "Failed: to search via index",
+                success: true,
+                result: error,
+            });
+        });
+};
