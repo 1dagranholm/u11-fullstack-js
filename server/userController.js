@@ -1,25 +1,15 @@
 User = require("./userModel");
+const { restApiResponse } = require("./helpers");
 
 // Retrieve all users
 exports.index = function (req, res) {
     User.get(function (err, users) {
-        if (err) {
-            res.json({
-                status: "error",
-                message: err,
-            });
-        } else if (users == 0) {
-            res.json({
-                status: "error",
-                message: "There's no users to retrieve",
-            });
-        } else {
-            res.json({
-                status: "success",
-                message: "All existing users retrieved successfully",
-                data: users,
-            });
-        }
+        restApiResponse(
+            err,
+            ["Error occured while fetching users", "All existing users retrieved successfully"],
+            users,
+            res
+        );
     });
 };
 
@@ -33,45 +23,20 @@ exports.new = function (req, res) {
     user.last_name = req.body.last_name ? req.body.last_name : user.last_name;
 
     user.save(function (err) {
-        if (err) {
-            res.json({
-                status: "error",
-                message: "Unable to save new user",
-            });
-        } else {
-            res.json({
-                status: "success",
-                message: "New user created!",
-                data: user,
-            });
-        }
+        restApiResponse(err, ["Unable to save new user", "New user created!"], user, res);
     });
 };
 
 exports.view = function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
-        if (err) {
-            res.json({
-                status: "error",
-                message: "No user retrieved",
-            });
-        } else {
-            res.json({
-                status: "success",
-                message: "User details loading...",
-                data: user,
-            });
-        }
+        restApiResponse(err, ["No user retrieved", "User details loaded"], user, res);
     });
 };
 
 exports.update = function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
         if (err) {
-            res.json({
-                status: "error",
-                message: "No matching user found and therefore unable to update",
-            });
+            restApiResponse(err, ["No matching user found and therefore unable to update", ""], "", res);
         } else {
             user.user_name = req.body.user_name;
             user.password = req.body.password;
@@ -81,18 +46,7 @@ exports.update = function (req, res) {
             user.last_name = req.body.last_name ? req.body.last_name : user.last_name;
 
             user.save(function (err) {
-                if (err) {
-                    res.json({
-                        status: "error",
-                        message: "Unable to update user info",
-                    });
-                } else {
-                    res.json({
-                        status: "success",
-                        message: "User info updated",
-                        data: user,
-                    });
-                }
+                restApiResponse(err, ["Unable to update user info", "User info updated"], user, res);
             });
         }
     });
@@ -104,17 +58,7 @@ exports.delete = function (req, res) {
             _id: req.params.user_id,
         },
         function (err) {
-            if (err) {
-                res.json({
-                    status: "error",
-                    message: "No matching user found and therefore unable to delete",
-                });
-            } else {
-                res.json({
-                    status: "success",
-                    message: "User deleted",
-                });
-            }
+            restApiResponse(err, ["No matching user found and therefore unable to delete", "User deleted"], user, res);
         }
     );
 };
