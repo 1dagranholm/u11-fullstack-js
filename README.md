@@ -6,6 +6,8 @@
 
 ## React app
 
+<br />
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -80,6 +82,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 ### - Instructions for -
 
 ## Server (Nodejs with Express and cloadbased DB in MongoDB Atlas)
+
+<br />
 
 ### To run the server in development mode
 
