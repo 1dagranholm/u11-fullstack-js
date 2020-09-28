@@ -1,5 +1,3 @@
-# u11-fullstack-js
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -13,18 +11,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
-
-### To run the server in development mode
-
-Rename .env.dev.example to .env.dev and edit to suit your setup.
-
-APP_ENV=dev (do not edit this one!)
-APP_DEBUG=false (change to true for debug option on api requests)
-APP_PORT= (choose port to run your local server on)
-MONGO_HOST= (connect to your cloudbased db @ MongoDB Atlas)
-MONGO_USER= (your MongoDB Atlas username)
-MONGO_PASS= (your MongoDB Atlas password)
-MONGO_DB= (select your MongoDB Atlas database)
 
 ### `yarn test`
 
