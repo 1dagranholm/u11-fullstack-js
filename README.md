@@ -17,13 +17,13 @@ You will also see any lint errors in the console.
 ### To run the server in development mode
 
 Rename .env.dev.example to .env.dev and edit to suit your setup.
-
-APP_ENV=dev (do not edit this one!)
-APP_DEBUG=false (change to true for debug option on api requests)
-APP_PORT= (choose port to run your local server on)
-MONGO_HOST= (connect to your cloudbased db @ MongoDB Atlas)
-MONGO_USER= (your MongoDB Atlas username)
-MONGO_PASS= (your MongoDB Atlas password)
+<br /><br />
+APP_ENV=dev (do not edit this one!)<br />
+APP_DEBUG=false (change to true for debug option on api requests)<br />
+APP_PORT= (choose port to run your local server on)<br />
+MONGO_HOST= (connect to your cloudbased db @ MongoDB Atlas)<br />
+MONGO_USER= (your MongoDB Atlas username)<br />
+MONGO_PASS= (your MongoDB Atlas password)<br />
 MONGO_DB= (select your MongoDB Atlas database)
 
 ### `yarn test`
