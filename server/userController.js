@@ -97,6 +97,7 @@ exports.search = async function (req, res) {
 
     await User.find()
         .or([{ userName: searchTerm }, { firstName: searchTerm }, { lastName: searchTerm }])
+        .sort({ userName: 1 })
         .then((users) => {
             res.send(users);
         })

@@ -96,6 +96,7 @@ exports.search = async function (req, res) {
 
     await Todo.find()
         .or([{ title: searchTerm }, { description: searchTerm }])
+        .sort({ createdAt: -1 })
         .then((todos) => {
             res.send(todos);
         })
