@@ -9,8 +9,10 @@ export interface IFormState {
     id: string;
     user: any;
     values: IValues[];
+    options: IValues[];
     submitSuccess: boolean;
     loading: boolean;
+    role: string;
 }
 
 class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState> {
@@ -20,14 +22,17 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
             id: this.props.match.params.id,
             user: {},
             values: [],
+            options: [],
             loading: false,
             submitSuccess: false,
+            role: "",
         };
     }
 
     public componentDidMount(): void {
         axios.get(`http://localhost:8080/api/users/${this.state.id}`).then((response) => {
             this.setState({ user: response.data.data });
+            this.setState({ role: this.state.user.role });
         });
     }
 
@@ -45,9 +50,15 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
     private setValues = (values: IValues) => {
         this.setState({ values: { ...this.state.values, ...values } });
     };
+
     private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
-        e.preventDefault();
+        // e.preventDefault();
         this.setValues({ [e.currentTarget.id]: e.currentTarget.value });
+    };
+
+    private handleOptionChange = (e: React.FormEvent<HTMLSelectElement>) => {
+        this.setValues({ [e.currentTarget.id]: e.currentTarget.value });
+        this.setState({ role: e.currentTarget.value });
     };
 
     public render() {
@@ -126,16 +137,16 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
                                         />
                                     </div>
                                     <div className="form-group col-md-12">
-                                        <label htmlFor="role"> Role </label>
-                                        <input
-                                            type="text"
-                                            id="role"
-                                            defaultValue={this.state.user.role}
-                                            onChange={(e) => this.handleInputChanges(e)}
+                                        <label htmlFor="role">Role</label>
+                                        <select
                                             name="role"
-                                            className="form-control"
-                                            placeholder="Set a role for the user"
-                                        />
+                                            id="role"
+                                            value={this.state.role}
+                                            onChange={(e) => this.handleOptionChange(e)}
+                                        >
+                                            <option value="user">Standard User</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
                                     </div>
                                     <div className="form-group col-md-4 pull-right">
                                         <button className="btn btn-success" type="submit">

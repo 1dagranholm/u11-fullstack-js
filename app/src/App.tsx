@@ -2,10 +2,10 @@ import * as React from "react";
 import "./App.css";
 import { Switch, Route, withRouter, RouteComponentProps, Link } from "react-router-dom";
 import Home from "./components/Home";
-import CreateUser from "./components/user/Create";
-import EditUser from "./components/user/Edit";
-import CreateTodo from "./components/todo/Create";
-import EditTodo from "./components/todo/Edit";
+import CreateUser from "./components/user/CreateUser";
+import EditUser from "./components/user/EditUser";
+import CreateTodo from "./components/todo/CreateTodo";
+import EditTodo from "./components/todo/EditTodo";
 
 class App extends React.Component<RouteComponentProps<any>> {
     public render() {
