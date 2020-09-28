@@ -1,5 +1,9 @@
 # u11-fullstack-js
 
+### Instructions for:
+
+## React app
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -13,18 +17,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
-
-### To run the server in development mode
-
-Rename .env.dev.example to .env.dev and edit to suit your setup.
-<br /><br />
-APP_ENV=dev (do not edit this one!)<br />
-APP_DEBUG=false (change to true for debug option on api requests)<br />
-APP_PORT= (choose port to run your local server on)<br />
-MONGO_HOST= (connect to your cloudbased db @ MongoDB Atlas)<br />
-MONGO_USER= (your MongoDB Atlas username)<br />
-MONGO_PASS= (your MongoDB Atlas password)<br />
-MONGO_DB= (select your MongoDB Atlas database)
 
 ### `yarn test`
 
@@ -80,3 +72,23 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+<br /><br />
+
+### Instructions for:
+
+## Server
+
+### (Nodejs with Express and cloadbased DB in MongoDB Atlas)
+
+### To run the server in development mode
+
+Rename .env.dev.example to .env.dev and edit to suit your setup.
+<br /><br />
+APP_ENV=dev (do not edit this one!)<br />
+APP_DEBUG=false (change to true for debug option on api requests)<br />
+APP_PORT= (choose port to run your local server on)<br />
+MONGO_HOST= (connect to your cloudbased db @ MongoDB Atlas)<br />
+MONGO_USER= (your MongoDB Atlas username)<br />
+MONGO_PASS= (your MongoDB Atlas password)<br />
+MONGO_DB= (select your MongoDB Atlas database)
