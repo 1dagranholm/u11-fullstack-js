@@ -27,7 +27,6 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
 
     public componentDidMount(): void {
         axios.get(`http://localhost:8080/api/users/${this.state.id}`).then((response) => {
-            console.log(this.state.user);
             this.setState({ user: response.data.data });
         });
     }
@@ -62,7 +61,7 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
                                 <h2> Edit Customer </h2>
                                 {submitSuccess && (
                                     <div className="alert alert-info" role="alert">
-                                        Customer's details has been edited successfully{" "}
+                                        Users's details has been edited successfully{" "}
                                     </div>
                                 )}
                                 <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
@@ -88,18 +87,6 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
                                             name="password"
                                             className="form-control"
                                             placeholder="Set a password for the user"
-                                        />
-                                    </div>
-                                    <div className="form-group col-md-12">
-                                        <label htmlFor="role"> Role </label>
-                                        <input
-                                            type="text"
-                                            id="role"
-                                            defaultValue={this.state.user.role}
-                                            onChange={(e) => this.handleInputChanges(e)}
-                                            name="role"
-                                            className="form-control"
-                                            placeholder="Set a role for the user"
                                         />
                                     </div>
                                     <div className="form-group col-md-12">
@@ -138,7 +125,18 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
                                             placeholder="Enter user's email address"
                                         />
                                     </div>
-
+                                    <div className="form-group col-md-12">
+                                        <label htmlFor="role"> Role </label>
+                                        <input
+                                            type="text"
+                                            id="role"
+                                            defaultValue={this.state.user.role}
+                                            onChange={(e) => this.handleInputChanges(e)}
+                                            name="role"
+                                            className="form-control"
+                                            placeholder="Set a role for the user"
+                                        />
+                                    </div>
                                     <div className="form-group col-md-4 pull-right">
                                         <button className="btn btn-success" type="submit">
                                             Edit Customer{" "}

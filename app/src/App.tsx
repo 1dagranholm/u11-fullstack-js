@@ -2,8 +2,10 @@ import * as React from "react";
 import "./App.css";
 import { Switch, Route, withRouter, RouteComponentProps, Link } from "react-router-dom";
 import Home from "./components/Home";
-import Create from "./components/user/Create";
+import CreateUser from "./components/user/Create";
 import EditUser from "./components/user/Edit";
+import CreateTodo from "./components/todo/Create";
+import EditTodo from "./components/todo/Edit";
 
 class App extends React.Component<RouteComponentProps<any>> {
     public render() {
@@ -17,12 +19,17 @@ class App extends React.Component<RouteComponentProps<any>> {
                         <li>
                             <Link to={"/create-user"}> Create user </Link>
                         </li>
+                        <li>
+                            <Link to={"/create-todo"}> Create todo </Link>
+                        </li>
                     </ul>
                 </nav>
                 <Switch>
                     <Route path={"/"} exact component={Home} />
-                    <Route path={"/create-user"} exact component={Create} />
+                    <Route path={"/create-user"} exact component={CreateUser} />
                     <Route path={"/edit-user/:id"} exact component={EditUser} />
+                    <Route path={"/create-todo"} exact component={CreateTodo} />
+                    <Route path={"/edit-todo/:id"} exact component={EditTodo} />
                 </Switch>
             </div>
         );
