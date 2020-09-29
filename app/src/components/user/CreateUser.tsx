@@ -26,7 +26,7 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
         this.state = {
             userName: "",
             password: "",
-            role: "",
+            role: "user",
             email: "",
             firstName: "",
             lastName: "",
@@ -66,6 +66,14 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
         this.setState({
             [e.currentTarget.name]: e.currentTarget.value,
         });
+    };
+
+    private handleOptionChanges = (e: React.FormEvent<HTMLSelectElement>) => {
+        e.preventDefault();
+        this.setState({
+            [e.currentTarget.name]: e.currentTarget.value,
+        });
+        this.setState({ role: e.currentTarget.value });
     };
 
     public render() {
@@ -108,17 +116,6 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
                             />
                         </div>
                         <div className="form-group col-md-12">
-                            <label htmlFor="role"> Role </label>
-                            <input
-                                type="text"
-                                id="role"
-                                onChange={(e) => this.handleInputChanges(e)}
-                                name="role"
-                                className="form-control"
-                                placeholder="Set a role for the user"
-                            />
-                        </div>
-                        <div className="form-group col-md-12">
                             <label htmlFor="firstName"> First Name </label>
                             <input
                                 type="text"
@@ -150,6 +147,18 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
                                 className="form-control"
                                 placeholder="Enter user's email address"
                             />
+                        </div>
+                        <div className="form-group col-md-12">
+                            <label htmlFor="role">Role</label>
+                            <select
+                                name="role"
+                                id="role"
+                                value={this.state.role}
+                                onChange={(e) => this.handleOptionChanges(e)}
+                            >
+                                <option value="user">Standard User</option>
+                                <option value="admin">Admin</option>
+                            </select>
                         </div>
                         <div className="form-group col-md-4 pull-right">
                             <button className="btn btn-success" type="submit">
