@@ -54,7 +54,7 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
         this.setValues({ [e.currentTarget.id]: e.currentTarget.value });
     };
 
-    private handleOptionChange = (e: React.FormEvent<HTMLSelectElement>) => {
+    private handleOptionChanges = (e: React.FormEvent<HTMLSelectElement>) => {
         e.preventDefault();
         this.setValues({ [e.currentTarget.id]: e.currentTarget.value });
         this.setState({ role: e.currentTarget.value });
@@ -141,7 +141,7 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
                                             name="role"
                                             id="role"
                                             value={this.state.role}
-                                            onChange={(e) => this.handleOptionChange(e)}
+                                            onChange={(e) => this.handleOptionChanges(e)}
                                         >
                                             <option value="user">Standard User</option>
                                             <option value="admin">Admin</option>
