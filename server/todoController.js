@@ -1,110 +1,114 @@
-Todo = require("./todoModel");
-const { restApiResponse } = require("./helpers");
+const Todo = require('./todoModel');
+const { restApiResponse } = require('./helpers');
 
 // Retrieve user via index action
 exports.index = function (req, res) {
-    Todo.get(function (err, todos) {
-        restApiResponse(
-            err,
-            ["Error occured while fetching todos", "All existing todos retrieved successfully"],
-            todos,
-            res
-        );
-    });
+  Todo.get((err, todos) => {
+    restApiResponse(
+      err,
+      ['Error occured while fetching todos', 'All existing todos retrieved successfully'],
+      todos,
+      res,
+    );
+  });
 };
 
 exports.new = function (req, res) {
-    var todo = new Todo();
-    todo.title = req.body.title;
-    todo.description = req.body.description;
-    todo.ownerId = req.body.ownerId;
+  const todo = new Todo();
+  todo.title = req.body.title;
+  todo.description = req.body.description;
+  todo.ownerId = req.body.ownerId;
 
-    todo.save(function (err) {
-        restApiResponse(err, ["Unable to save new todo", "New todo created!"], todo, res);
-    });
+  todo.save((err) => {
+    restApiResponse(err, ['Unable to save new todo', 'New todo created!'], todo, res);
+  });
 };
 
 exports.view = function (req, res) {
-    Todo.findById(req.params.todo_id, function (err, todo) {
-        restApiResponse(err, ["No todos retrieved", "Todo details loaded"], todo, res);
-    });
+  Todo.findById(req.params.todo_id, (err, data) => {
+    const todo = data;
+    restApiResponse(err, ['No todos retrieved', 'Todo details loaded'], todo, res);
+  });
 };
 
 exports.update = function (req, res) {
-    Todo.findById(req.params.todo_id, function (err, todo) {
-        if (err) {
-            restApiResponse(err, ["No matching todo found and therefore unable to update", ""], "", res);
-        } else {
-            todo.title = req.body.title ? req.body.title : todo.title;
-            todo.description = req.body.description ? req.body.description : todo.description;
+  Todo.findById(req.params.todo_id, (err, data) => {
+    const todo = data;
+    if (err) {
+      restApiResponse(err, ['No matching todo found and therefore unable to update', ''], '', res);
+    } else {
+      todo.title = req.body.title ? req.body.title : todo.title;
+      todo.description = req.body.description ? req.body.description : todo.description;
 
-            if (req.body.completed == "true") {
-                todo.completed_at = new Date();
-            } else {
-                todo.completed_at = undefined;
-            }
+      if (req.body.completed === 'true') {
+        todo.completed_at = new Date();
+      } else {
+        todo.completed_at = undefined;
+      }
 
-            todo.save(function (err) {
-                restApiResponse(err, ["Unable to update todo info", "Todo info updated"], todo, res);
-            });
-        }
-    });
+      todo.save((saveErr) => {
+        restApiResponse(saveErr, ['Unable to update todo info', 'Todo info updated'], todo, res);
+      });
+    }
+  });
 };
 
 exports.restore = function (req, res) {
-    Todo.findById(req.params.todo_id, function (err, todo) {
-        if (err) {
-            restApiResponse(err, ["No matching todo found and therefore unable to restore", ""], todo, res);
-        } else {
-            if (req.body.restore == "true") {
-                todo.deletedAt = undefined;
-            }
+  Todo.findById(req.params.todo_id, (err, data) => {
+    const todo = data;
+    if (err) {
+      restApiResponse(err, ['No matching todo found and therefore unable to restore', ''], todo, res);
+    } else {
+      if (req.body.restore === 'true') {
+        todo.deletedAt = undefined;
+      }
 
-            todo.save(function (err) {
-                restApiResponse(
-                    err,
-                    [`Unable to restore todo ${req.params.todo_id}`, `Todo ${req.params.todo_id} is now restored`],
-                    todo,
-                    res
-                );
-            });
-        }
-    });
+      todo.save((saveErr) => {
+        restApiResponse(
+          saveErr,
+          [`Unable to restore todo ${req.params.todo_id}`, `Todo ${req.params.todo_id} is now restored`],
+          todo,
+          res,
+        );
+      });
+    }
+  });
 };
 
 exports.delete = function (req, res) {
-    Todo.findById(req.params.todo_id, function (err, todo) {
-        if (err) {
-            restApiResponse(err, ["No matching todo found and therefore unable to delete", ""], todo, res);
-        } else {
-            todo.deletedAt = new Date();
+  Todo.findById(req.params.todo_id, (err, data) => {
+    const todo = data;
+    if (err) {
+      restApiResponse(err, ['No matching todo found and therefore unable to delete', ''], todo, res);
+    } else {
+      todo.deletedAt = new Date();
 
-            todo.save(function (err) {
-                restApiResponse(
-                    err,
-                    [`Unable to delete todo ${req.params.todo_id}`, `Todo ${req.params.todo_id} is now deleted`],
-                    todo,
-                    res
-                );
-            });
-        }
-    });
+      todo.save((saveErr) => {
+        restApiResponse(
+          saveErr,
+          [`Unable to delete todo ${req.params.todo_id}`, `Todo ${req.params.todo_id} is now deleted`],
+          todo,
+          res,
+        );
+      });
+    }
+  });
 };
 
 exports.search = async function (req, res) {
-    let searchTerm = new RegExp(req.body.term, "i");
+  const searchTerm = new RegExp(req.body.term, 'i');
 
-    await Todo.find()
-        .or([{ title: searchTerm }, { description: searchTerm }])
-        .sort({ createdAt: -1 })
-        .then((todos) => {
-            res.send(todos);
-        })
-        .catch((error) => {
-            res.status(500).send({
-                message: "Failed: to search via index",
-                success: true,
-                result: error,
-            });
-        });
+  await Todo.find()
+    .or([{ title: searchTerm }, { description: searchTerm }])
+    .sort({ createdAt: -1 })
+    .then((todos) => {
+      res.send(todos);
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: 'Failed: to search via index',
+        success: true,
+        result: error,
+      });
+    });
 };
