@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 import axios from "axios";
+import { formatTimestamp } from "../helper";
 
 interface IState {
     users: any[];
@@ -78,9 +79,9 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                                                 <td>{user.email}</td>
                                                 <td>{user.firstName}</td>
                                                 <td>{user.lastName}</td>
-                                                <td>{user.createdAt}</td>
-                                                <td>{user.updatedAt}</td>
-                                                <td>{user.deletedAt}</td>
+                                                <td>{formatTimestamp(user.createdAt)}</td>
+                                                <td>{formatTimestamp(user.updatedAt)}</td>
+                                                <td>{formatTimestamp(user.deletedAt)}</td>
                                                 <td>
                                                     <div className="d-flex justify-content-between align-items-center">
                                                         <div className="btn-group" style={{ marginBottom: "20px" }}>
@@ -135,10 +136,10 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                                                 <td>{todo.title}</td>
                                                 <td>{todo.description}</td>
                                                 <td>{todo.ownerId}</td>
-                                                <td>{todo.createdAt}</td>
-                                                <td>{todo.updatedAt}</td>
-                                                <td>{todo.completedAt}</td>
-                                                <td>{todo.deletedAt}</td>
+                                                <td>{formatTimestamp(todo.createdAt)}</td>
+                                                <td>{formatTimestamp(todo.updatedAt)}</td>
+                                                <td>{formatTimestamp(todo.completedAt)}</td>
+                                                <td>{formatTimestamp(todo.deletedAt)}</td>
                                                 <td>
                                                     <div className="d-flex justify-content-between align-items-center">
                                                         <div className="btn-group" style={{ marginBottom: "20px" }}>
