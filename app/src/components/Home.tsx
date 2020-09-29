@@ -16,6 +16,7 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
             todos: [],
         };
     }
+
     public componentDidMount(): void {
         axios.get(`http://localhost:8080/api/users`).then((response) => {
             this.setState({ users: response.data.data });
@@ -24,6 +25,7 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
             this.setState({ todos: response.data.data });
         });
     }
+
     public deleteUser(id: number) {
         axios.delete(`http://localhost:8080/api/users/${id}`).then((response) => {
             const userIndex = this.state.users.findIndex((user) => user._id === id);
@@ -35,12 +37,34 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
         });
     }
 
+    public restoreUser(id: number) {
+        axios.patch(`http://localhost:8080/api/restore/users/${id}`, { restore: "true" }).then(() => {
+            const userIndex = this.state.users.findIndex((user) => user._id === id);
+            let users = [...this.state.users];
+            let user = { ...users[userIndex] };
+            user.deletedAt = "";
+            users[userIndex] = user;
+            this.setState({ users });
+        });
+    }
+
     public deleteTodo(id: number) {
         axios.delete(`http://localhost:8080/api/todos/${id}`).then((response) => {
             const todoIndex = this.state.todos.findIndex((todo) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };
             todo.deletedAt = response.data.data.deletedAt;
+            todos[todoIndex] = todo;
+            this.setState({ todos });
+        });
+    }
+
+    public restoreTodo(id: number) {
+        axios.patch(`http://localhost:8080/api/restore/todos/${id}`, { restore: "true" }).then(() => {
+            const todoIndex = this.state.todos.findIndex((todo) => todo._id === id);
+            let todos = [...this.state.todos];
+            let todo = { ...todos[todoIndex] };
+            todo.deletedAt = "";
             todos[todoIndex] = todo;
             this.setState({ todos });
         });
@@ -63,6 +87,7 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                             <table className="table table-bordered">
                                 <thead className="thead-light">
                                     <tr>
+                                        <th scope="col">User ID</th>
                                         <th scope="col">Username</th>
                                         <th scope="col">Password</th>
                                         <th scope="col">Role</th>
@@ -79,6 +104,7 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                                     {users &&
                                         users.map((user) => (
                                             <tr key={user._id}>
+                                                <td>{user._id}</td>
                                                 <td>{user.userName}</td>
                                                 <td>{user.password}</td>
                                                 <td>{user.role}</td>
@@ -95,13 +121,19 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                                                                 to={`edit-user/${user._id}`}
                                                                 className="btn btn-sm btn-outline-secondary"
                                                             >
-                                                                Edit User{" "}
+                                                                Edit user{" "}
                                                             </Link>
                                                             <button
                                                                 className="btn btn-sm btn-outline-secondary"
                                                                 onClick={() => this.deleteUser(user._id)}
                                                             >
-                                                                Delete User
+                                                                Delete user
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-sm btn-outline-secondary"
+                                                                onClick={() => this.restoreUser(user._id)}
+                                                            >
+                                                                Restore deleted user
                                                             </button>
                                                         </div>
                                                     </div>
@@ -125,6 +157,7 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                             <table className="table table-bordered">
                                 <thead className="thead-light">
                                     <tr>
+                                        <th scope="col">Todo ID</th>
                                         <th scope="col">Title</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">OwnerId</th>
@@ -139,6 +172,7 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                                     {todos &&
                                         todos.map((todo) => (
                                             <tr key={todo._id}>
+                                                <td>{todo._id}</td>
                                                 <td>{todo.title}</td>
                                                 <td>{todo.description}</td>
                                                 <td>{todo.ownerId}</td>
@@ -153,13 +187,19 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                                                                 to={`edit-todo/${todo._id}`}
                                                                 className="btn btn-sm btn-outline-secondary"
                                                             >
-                                                                Edit Todo{" "}
+                                                                Edit todo{" "}
                                                             </Link>
                                                             <button
                                                                 className="btn btn-sm btn-outline-secondary"
                                                                 onClick={() => this.deleteTodo(todo._id)}
                                                             >
-                                                                Delete Todo
+                                                                Delete todo
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-sm btn-outline-secondary"
+                                                                onClick={() => this.restoreTodo(todo._id)}
+                                                            >
+                                                                Restore deleted todo
                                                             </button>
                                                         </div>
                                                     </div>
