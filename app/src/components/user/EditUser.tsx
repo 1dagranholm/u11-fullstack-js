@@ -9,7 +9,6 @@ export interface IFormState {
     id: string;
     user: any;
     values: IValues[];
-    options: IValues[];
     submitSuccess: boolean;
     loading: boolean;
     role: string;
@@ -22,7 +21,6 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
             id: this.props.match.params.id,
             user: {},
             values: [],
-            options: [],
             loading: false,
             submitSuccess: false,
             role: "",
@@ -52,11 +50,12 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
     };
 
     private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
-        // e.preventDefault();
+        e.preventDefault();
         this.setValues({ [e.currentTarget.id]: e.currentTarget.value });
     };
 
     private handleOptionChange = (e: React.FormEvent<HTMLSelectElement>) => {
+        e.preventDefault();
         this.setValues({ [e.currentTarget.id]: e.currentTarget.value });
         this.setState({ role: e.currentTarget.value });
     };
