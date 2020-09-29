@@ -25,18 +25,24 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
         });
     }
     public deleteUser(id: number) {
-        axios.delete(`http://localhost:8080/api/users/${id}`).then((data) => {
-            const uderIndex = this.state.users.findIndex((user) => user._id === id);
-            this.state.users.splice(uderIndex, 1);
-            this.props.history.push("/");
+        axios.delete(`http://localhost:8080/api/users/${id}`).then((response) => {
+            const userIndex = this.state.users.findIndex((user) => user._id === id);
+            let users = [...this.state.users];
+            let user = { ...users[userIndex] };
+            user.deletedAt = response.data.data.deletedAt;
+            users[userIndex] = user;
+            this.setState({ users });
         });
     }
 
     public deleteTodo(id: number) {
-        axios.delete(`http://localhost:8080/api/todos/${id}`).then((data) => {
+        axios.delete(`http://localhost:8080/api/todos/${id}`).then((response) => {
             const todoIndex = this.state.todos.findIndex((todo) => todo._id === id);
-            this.state.todos.splice(todoIndex, 1);
-            this.props.history.push("/");
+            let todos = [...this.state.todos];
+            let todo = { ...todos[todoIndex] };
+            todo.deletedAt = response.data.data.deletedAt;
+            todos[todoIndex] = todo;
+            this.setState({ todos });
         });
     }
 
