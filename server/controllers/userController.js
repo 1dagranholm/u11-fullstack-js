@@ -1,5 +1,5 @@
-const User = require('./userModel');
-const { restApiResponse } = require('./helpers');
+const User = require('../models/userModel');
+const { restApiResponse } = require('../utils/api-utils');
 
 // Retrieve all users
 exports.index = function (req, res) {

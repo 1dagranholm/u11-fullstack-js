@@ -1,5 +1,5 @@
-const Todo = require('./todoModel');
-const { restApiResponse } = require('./helpers');
+const Todo = require('../models/todoModel');
+const { restApiResponse } = require('../utils/api-utils');
 
 // Retrieve user via index action
 exports.index = function (req, res) {

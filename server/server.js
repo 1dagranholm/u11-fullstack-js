@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 const cors = require('cors');
-const apiRoutes = require('./api-routes');
+const apiRoutes = require('./routes/api-routes');
 require('custom-env').env('dev');
 
 // Configure bodyparser to handle post requests
