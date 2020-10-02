@@ -88,15 +88,12 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                                 <thead className="thead-light">
                                     <tr>
                                         <th scope="col">User ID</th>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Password</th>
-                                        <th scope="col">Role</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Firstname</th>
-                                        <th scope="col">Lastname</th>
-                                        <th scope="col">Created at</th>
-                                        <th scope="col">Updated at</th>
-                                        <th scope="col">Deleted at</th>
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Full name</th>
+                                        <th scope="col">Created</th>
+                                        <th scope="col">Updated</th>
+                                        <th scope="col">Deleted</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
@@ -105,12 +102,9 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                                         users.map((user) => (
                                             <tr key={user._id}>
                                                 <td>{user._id}</td>
-                                                <td>{user.userName}</td>
-                                                <td>{user.password}</td>
-                                                <td>{user.role}</td>
                                                 <td>{user.email}</td>
-                                                <td>{user.firstName}</td>
-                                                <td>{user.lastName}</td>
+                                                <td>{user.role}</td>
+                                                <td>{user.firstName} {user.lastName}</td>
                                                 <td>{formatTimestamp(user.createdAt)}</td>
                                                 <td>{formatTimestamp(user.updatedAt)}</td>
                                                 <td>{formatTimestamp(user.deletedAt)}</td>
@@ -161,10 +155,10 @@ export default class Home extends React.Component<RouteComponentProps, IState> {
                                         <th scope="col">Title</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">OwnerId</th>
-                                        <th scope="col">Created at</th>
-                                        <th scope="col">Updated at</th>
-                                        <th scope="col">Completed at</th>
-                                        <th scope="col">Deleted at</th>
+                                        <th scope="col">Created</th>
+                                        <th scope="col">Updated</th>
+                                        <th scope="col">Completed</th>
+                                        <th scope="col">Deleted</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>

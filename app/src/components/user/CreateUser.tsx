@@ -3,7 +3,6 @@ import axios from "axios";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
 export interface IValues {
-    userName: string;
     password: string;
     role: string;
     email: string;
@@ -24,7 +23,6 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
     constructor(props: RouteComponentProps) {
         super(props);
         this.state = {
-            userName: "",
             password: "",
             role: "user",
             email: "",
@@ -43,7 +41,6 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
         e.preventDefault();
         this.setState({ loading: true });
         const formData = {
-            userName: this.state.userName,
             password: this.state.password,
             role: this.state.role,
             email: this.state.email,
@@ -93,17 +90,6 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
                         </div>
                     )}
                     <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
-                        <div className="form-group col-md-12">
-                            <label htmlFor="userName"> Username </label>
-                            <input
-                                type="text"
-                                id="userName"
-                                onChange={(e) => this.handleInputChanges(e)}
-                                name="userName"
-                                className="form-control"
-                                placeholder="Enter user's username"
-                            />
-                        </div>
                         <div className="form-group col-md-12">
                             <label htmlFor="password"> Password </label>
                             <input

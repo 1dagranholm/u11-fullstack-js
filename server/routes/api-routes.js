@@ -1,4 +1,7 @@
 const router = require('express').Router();
+const { verifySignUp } = require("../middlewares");
+const { authJwt } = require("../middlewares");
+const authController = require("../controllers/authController");
 
 // Set default API response
 router.get('/', (req, res) => {
@@ -26,5 +29,34 @@ router.route('/restore/todos/:todo_id').patch(todoController.restore);
 // Search routes
 router.route('/search/users').post(userController.search);
 router.route('/search/todos').post(todoController.search);
+
+
+// Test authorities routes
+
+router.route("/test/all").get(userController.allAccess);
+router.route("/test/user").get([authJwt.verifyToken], userController.userBoard);
+
+router.route('/test/superadmin').get(
+  [
+    authJwt.verifyToken, 
+    authJwt.isSuperAdmin
+  ], userController.superAdminBoard);
+
+  router.route(
+  '/test/admin').get(
+  [
+    authJwt.verifyToken, 
+    authJwt.isAdmin
+  ], userController.adminBoard);
+
+// Auth signup route
+router.route('/auth/signup').post(
+  [
+    verifySignUp.checkDuplicateEmail,
+    verifySignUp.checkRolesExisted
+  ], authController.signup);
+
+// Auth signin route
+router.route('/auth/signin').post(authController.signin);
 
 module.exports = router;
