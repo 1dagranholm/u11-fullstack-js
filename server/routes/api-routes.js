@@ -8,8 +8,8 @@ router.get('/', (req, res) => {
   });
 });
 
-const userController = require('./userController');
-const todoController = require('./todoController');
+const userController = require('../controllers/userController');
+const todoController = require('../controllers/todoController');
 
 // User routes
 router.route('/users').get(userController.index).post(userController.new);
