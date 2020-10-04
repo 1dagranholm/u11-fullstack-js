@@ -44,15 +44,13 @@ exports.new = function (req, res) {
 };
 
 exports.view = function (req, res) {
-  User.findById(req.params.user_id, (err, data) => {
-    const user = data;
+  User.findById(req.params.user_id).populate("roles", "-__v").exec( (err, user) => {
     restApiResponse(err, ['No user retrieved', 'User details loaded'], user, res);
   });
 };
 
 exports.update = function (req, res) {
-  User.findById(req.params.user_id, (err, data) => {
-    const user = data;
+  User.findById(req.params.user_id, (err, user) => {
     if (err) {
       restApiResponse(err, ['No matching user found and therefore unable to update', ''], '', res);
     } else {
