@@ -14,7 +14,7 @@ export interface IFormState {
     role: string;
 }
 
-class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState> {
+class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
     constructor(props: RouteComponentProps) {
         super(props);
         this.state = {
@@ -150,4 +150,4 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
         );
     }
 }
-export default withRouter(EditCustomer);
+export default withRouter(EditUser);

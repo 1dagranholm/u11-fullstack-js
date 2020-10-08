@@ -18,7 +18,7 @@ export interface IFormState {
     loading: boolean;
 }
 
-class Create extends React.Component<RouteComponentProps, IFormState> {
+class CreateTodo extends React.Component<RouteComponentProps, IFormState> {
     constructor(props: RouteComponentProps) {
         super(props);
         this.state = {
@@ -125,4 +125,4 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
     }
 }
 
-export default withRouter(Create);
+export default withRouter(CreateTodo);

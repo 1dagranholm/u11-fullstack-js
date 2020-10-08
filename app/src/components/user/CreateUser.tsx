@@ -19,7 +19,7 @@ export interface IFormState {
     loading: boolean;
 }
 
-class Create extends React.Component<RouteComponentProps, IFormState> {
+class CreateUser extends React.Component<RouteComponentProps, IFormState> {
     constructor(props: RouteComponentProps) {
         super(props);
         this.state = {
@@ -75,6 +75,7 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
 
     public render() {
         const { submitSuccess, loading } = this.state;
+
         return (
             <div>
                 <div className={"col-md-12 form-wrapper"}>
@@ -159,4 +160,4 @@ class Create extends React.Component<RouteComponentProps, IFormState> {
     }
 }
 
-export default withRouter(Create);
+export default withRouter(CreateUser);
