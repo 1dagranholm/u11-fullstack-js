@@ -33,6 +33,7 @@ nav ul li a:hover {
 }
 table {
     margin-top: 50px;
+    font-size: 0.8rem;
 }
 .App-link {
     color: #61dafb;

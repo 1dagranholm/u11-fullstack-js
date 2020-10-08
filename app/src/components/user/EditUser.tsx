@@ -76,18 +76,6 @@ class EditCustomer extends React.Component<RouteComponentProps<any>, IFormState>
                                 )}
                                 <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
                                     <div className="form-group col-md-12">
-                                        <label htmlFor="userName"> Username </label>
-                                        <input
-                                            type="text"
-                                            id="userName"
-                                            defaultValue={this.state.user.userName}
-                                            onChange={(e) => this.handleInputChanges(e)}
-                                            name="userName"
-                                            className="form-control"
-                                            placeholder="Enter user's username"
-                                        />
-                                    </div>
-                                    <div className="form-group col-md-12">
                                         <label htmlFor="password"> Password </label>
                                         <input
                                             type="text"
