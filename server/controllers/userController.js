@@ -3,19 +3,19 @@ const { restApiResponse } = require('../utils/api-utils');
 
 
 exports.allAccess = (req, res) => {
-  res.status(200).send("Public Content.");
+  res.status(200).send("TodoApp - Making your life easier.");
 };
 
 exports.userBoard = (req, res) => {
-  res.status(200).send("User Content.");
+  res.status(200).send("My todos");
 };
 
 exports.adminBoard = (req, res) => {
-  res.status(200).send("Admin Content.");
+  res.status(200).send("Admin pages");
 };
 
 exports.superAdminBoard = (req, res) => {
-  res.status(200).send("Super Admin Content.");
+  res.status(200).send("Admin pages");
 };
 
 // Retrieve all users
