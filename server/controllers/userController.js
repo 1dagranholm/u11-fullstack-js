@@ -15,7 +15,7 @@ exports.adminBoard = (req, res) => {
 };
 
 exports.superAdminBoard = (req, res) => {
-  res.status(200).send("Admin pages");
+  res.status(200).send("Super Admin pages");
 };
 
 // Retrieve all users
@@ -24,6 +24,17 @@ exports.index = function (req, res) {
     restApiResponse(
       err,
       ['Error occured while fetching users', 'All existing users retrieved successfully'],
+      users,
+      res,
+    );
+  });
+};
+
+exports.filterUsersByRoleId = function (req, res) {
+  User.find({ roles: req.params.role_id}, (err, users) => {
+    restApiResponse(
+      err,
+      ['Error occured while fetching users with requested role', 'All existing users with requested role retrieved successfully'],
       users,
       res,
     );

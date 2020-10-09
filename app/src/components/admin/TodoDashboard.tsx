@@ -58,7 +58,6 @@ class TodoDashboard extends React.Component<RouteComponentProps, IState> {
                     <table className="table table-bordered">
                         <thead className="thead-light">
                             <tr>
-                                <th scope="col">Todo ID</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">OwnerId</th>
@@ -73,7 +72,6 @@ class TodoDashboard extends React.Component<RouteComponentProps, IState> {
                             {todos &&
                                 todos.map((todo) => (
                                     <tr key={todo._id}>
-                                        <td>{todo._id}</td>
                                         <td>{todo.title}</td>
                                         <td>{todo.description}</td>
                                         <td>{todo.ownerId}</td>

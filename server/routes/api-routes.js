@@ -13,10 +13,15 @@ router.get('/', (req, res) => {
 
 const userController = require('../controllers/userController');
 const todoController = require('../controllers/todoController');
+const roleController = require('../controllers/roleController');
 
 // User routes
 router.route('/users').get(userController.index).post(userController.new);
 router.route('/users/:user_id').get(userController.view).patch(userController.update).delete(userController.delete);
+router.route('/users/roles/:role_id').get(userController.filterUsersByRoleId);
+
+// Role routes
+router.route('/roles').get(roleController.index);
 
 // Todo routes
 router.route('/todos').get(todoController.index).post(todoController.new);
