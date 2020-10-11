@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import UserService from "../../services/user.service";
 
 import UserDashboard from "../admin/UserDashboard";
-import TodoDashboard from "../admin/TodoDashboard";
 
 const AdminBoard = () => {
   const [content, setContent] = useState("");
@@ -32,7 +31,6 @@ const AdminBoard = () => {
         <h3>{content}</h3>
       </header>
         <UserDashboard />
-        <TodoDashboard />
     </div>
   );
 };

@@ -13,6 +13,21 @@ exports.index = function (req, res) {
   });
 };
 
+exports.userTodos = async function (req, res) {
+  await Todo.find({ ownerId: req.params.owner_id })
+    .sort({ createdAt: -1 })
+    .then((todos) => {
+      res.send(todos);
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: `Failed to fetch todos from user ${req.params.owner_id}`,
+        success: true,
+        result: error,
+      });
+    });
+};
+
 exports.new = function (req, res) {
   const todo = new Todo();
   todo.title = req.body.title;
@@ -48,6 +63,48 @@ exports.update = function (req, res) {
 
       todo.save((saveErr) => {
         restApiResponse(saveErr, ['Unable to update todo info', 'Todo info updated'], todo, res);
+      });
+    }
+  });
+};
+
+exports.complete = function (req, res) {
+  Todo.findById(req.params.todo_id, (err, data) => {
+    const todo = data;
+    if (err) {
+      restApiResponse(err, ['No matching todo found and therefore unable to complete', ''], todo, res);
+    } else {
+      todo.completedAt = new Date();
+
+      todo.save((saveErr) => {
+        restApiResponse(
+          saveErr,
+          [`Unable to complete todo ${req.params.todo_id}`, `Todo ${req.params.todo_id} is now completed`],
+          todo,
+          res,
+        );
+      });
+    }
+  });
+};
+
+exports.activate = function (req, res) {
+  Todo.findById(req.params.todo_id, (err, data) => {
+    const todo = data;
+    if (err) {
+      restApiResponse(err, ['No matching todo found and therefore unable to restore', ''], todo, res);
+    } else {
+      if (req.body.activate === 'true') {
+        todo.completedAt = undefined;
+      }
+
+      todo.save((saveErr) => {
+        restApiResponse(
+          saveErr,
+          [`Unable to uncomplete todo ${req.params.todo_id}`, `Todo ${req.params.todo_id} is now active again`],
+          todo,
+          res,
+        );
       });
     }
   });

@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const { restApiResponse } = require('../utils/api-utils');
 
+const bcrypt = require("bcryptjs");
 
 exports.allAccess = (req, res) => {
   res.status(200).send("TodoApp - Making your life easier.");
@@ -43,7 +44,7 @@ exports.filterUsersByRoleId = function (req, res) {
 
 exports.new = function (req, res) {
   const user = new User();
-  user.password = req.body.password;
+  user.password = bcrypt.hashSync(req.body.password, 8);
   user.roles = req.body.roles;
   user.email = req.body.email;
   user.firstName = req.body.firstName;
@@ -65,7 +66,7 @@ exports.update = function (req, res) {
     if (err) {
       restApiResponse(err, ['No matching user found and therefore unable to update', ''], '', res);
     } else {
-      user.password = req.body.password ? req.body.password : user.password;
+      user.password = req.body.password ? bcrypt.hashSync(req.body.password, 8) : user.password;
       user.roles = req.body.roles ? req.body.roles : user.roles;
       user.email = req.body.email ? req.body.email : user.email;
       user.firstName = req.body.firstName ? req.body.firstName : user.firstName;

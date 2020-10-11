@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import UserService from "../../services/user.service";
 
+import UserDashboard from "../admin/UserDashboard";
+
 const SuperAdminBoard = () => {
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    UserService.getSuperAdminBoard().then(
+    UserService.getAdminBoard().then(
       (response) => {
         setContent(response.data);
       },
@@ -28,6 +30,7 @@ const SuperAdminBoard = () => {
       <header className="jumbotron">
         <h3>{content}</h3>
       </header>
+        <UserDashboard />
     </div>
   );
 };

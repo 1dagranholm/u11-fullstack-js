@@ -19,6 +19,7 @@ const roleController = require('../controllers/roleController');
 router.route('/users').get(userController.index).post(userController.new);
 router.route('/users/:user_id').get(userController.view).patch(userController.update).delete(userController.delete);
 router.route('/users/roles/:role_id').get(userController.filterUsersByRoleId);
+router.route('/users/todos/:owner_id').get(todoController.userTodos);
 
 // Role routes
 router.route('/roles').get(roleController.index);
@@ -26,6 +27,10 @@ router.route('/roles').get(roleController.index);
 // Todo routes
 router.route('/todos').get(todoController.index).post(todoController.new);
 router.route('/todos/:todo_id').get(todoController.view).patch(todoController.update).delete(todoController.delete);
+
+// Complete/uncomplete todos
+router.route('/complete/todos/:todo_id').patch(todoController.complete);
+router.route('/activate/todos/:todo_id').patch(todoController.activate)
 
 // Restore removed users/todos
 router.route('/restore/users/:user_id').patch(userController.restore);

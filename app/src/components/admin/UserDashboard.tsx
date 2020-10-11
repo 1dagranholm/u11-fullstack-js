@@ -4,7 +4,6 @@ import UserList from "./UserList";
 import AdminList from "./AdminList";
 import SuperAdminList from "./SuperAdminList";
 
-
 export interface IState {
     // users: any[];
 }

@@ -40,7 +40,7 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
         axios.patch(`http://localhost:8080/api/users/${this.state.id}`, this.state.values).then((data) => {
             this.setState({ submitSuccess: true, loading: false });
             setTimeout(() => {
-                this.props.history.push("/");
+                this.props.history.push("/admin");
             }, 1500);
         });
     };
@@ -75,18 +75,6 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
                                     </div>
                                 )}
                                 <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
-                                    <div className="form-group col-md-12">
-                                        <label htmlFor="password"> Password </label>
-                                        <input
-                                            type="text"
-                                            id="password"
-                                            defaultValue={this.state.user.password}
-                                            onChange={(e) => this.handleInputChanges(e)}
-                                            name="password"
-                                            className="form-control"
-                                            placeholder="Set a password for the user"
-                                        />
-                                    </div>
                                     <div className="form-group col-md-12">
                                         <label htmlFor="firstName"> First Name </label>
                                         <input
@@ -134,6 +122,18 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
                                             <option value="user">Standard User</option>
                                             <option value="admin">Admin</option>
                                         </select>
+                                    </div>
+                                    <div className="form-group col-md-12">
+                                        <label htmlFor="password"> Password </label>
+                                        <input
+                                            type="text"
+                                            id="password"
+                                            // defaultValue={this.state.user.password}
+                                            onChange={(e) => this.handleInputChanges(e)}
+                                            name="password"
+                                            className="form-control"
+                                            placeholder="Set new password"
+                                        />
                                     </div>
                                     <div className="form-group col-md-4 pull-right">
                                         <button className="btn btn-success" type="submit">
