@@ -1,21 +1,22 @@
 const User = require('../models/userModel');
 const { restApiResponse } = require('../utils/api-utils');
 
+const bcrypt = require("bcryptjs");
 
 exports.allAccess = (req, res) => {
-  res.status(200).send("Public Content.");
+  res.status(200).send("TodoApp - Making your life easier.");
 };
 
 exports.userBoard = (req, res) => {
-  res.status(200).send("User Content.");
+  res.status(200).send("My todos");
 };
 
 exports.adminBoard = (req, res) => {
-  res.status(200).send("Admin Content.");
+  res.status(200).send("Admin pages");
 };
 
 exports.superAdminBoard = (req, res) => {
-  res.status(200).send("Super Admin Content.");
+  res.status(200).send("Super Admin pages");
 };
 
 // Retrieve all users
@@ -30,9 +31,20 @@ exports.index = function (req, res) {
   });
 };
 
+exports.filterUsersByRoleId = function (req, res) {
+  User.find({ roles: req.params.role_id}, (err, users) => {
+    restApiResponse(
+      err,
+      ['Error occured while fetching users with requested role', 'All existing users with requested role retrieved successfully'],
+      users,
+      res,
+    );
+  });
+};
+
 exports.new = function (req, res) {
   const user = new User();
-  user.password = req.body.password;
+  user.password = bcrypt.hashSync(req.body.password, 8);
   user.roles = req.body.roles;
   user.email = req.body.email;
   user.firstName = req.body.firstName;
@@ -54,7 +66,7 @@ exports.update = function (req, res) {
     if (err) {
       restApiResponse(err, ['No matching user found and therefore unable to update', ''], '', res);
     } else {
-      user.password = req.body.password ? req.body.password : user.password;
+      user.password = req.body.password ? bcrypt.hashSync(req.body.password, 8) : user.password;
       user.roles = req.body.roles ? req.body.roles : user.roles;
       user.email = req.body.email ? req.body.email : user.email;
       user.firstName = req.body.firstName ? req.body.firstName : user.firstName;

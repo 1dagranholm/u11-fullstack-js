@@ -1,38 +1,68 @@
 import * as React from "react";
+import { Switch, Route, withRouter} from "react-router-dom";
+
 import "./App.css";
-import { Switch, Route, withRouter, RouteComponentProps, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import { useState, useEffect } from "react";
+import AuthService from "./services/auth.services";
+
+import Navbar from "./components/core/Navbar";
+
 import Home from "./components/Home";
 import CreateUser from "./components/user/CreateUser";
 import EditUser from "./components/user/EditUser";
 import CreateTodo from "./components/todo/CreateTodo";
 import EditTodo from "./components/todo/EditTodo";
 
-class App extends React.Component<RouteComponentProps<any>> {
-    public render() {
-        return (
-            <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to={"/"}> Home </Link>
-                        </li>
-                        <li>
-                            <Link to={"/create-user"}> Create user </Link>
-                        </li>
-                        <li>
-                            <Link to={"/create-todo"}> Create todo </Link>
-                        </li>
-                    </ul>
-                </nav>
+import Login from "./components/user/Login";
+import Register from "./components/user/Register";
+import Profile from "./components/user/Profile";
+
+import UserBoard from "./components/boards/UserBoard";
+import AdminBoard from "./components/boards/AdminBoard";
+import SuperAdminBoard from "./components/boards/SuperAdminBoard";
+import UserMyTodos from "./components/todo/UserMyTodos";
+
+const App = () => {
+
+    const [showSuperAdminBoard, setShowSuperAdminBoard] = useState(false);
+    const [showAdminBoard, setShowAdminBoard] = useState(false);
+    const [currentUser, setCurrentUser] = useState("");
+
+    useEffect(() => {
+        const user = AuthService.getCurrentUser();
+
+        if (user) {
+            setCurrentUser(user);
+            setShowSuperAdminBoard(user.roles.includes("ROLE_SUPERADMIN"));
+            setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+        }
+    }, []);
+
+    return (
+        <React.Fragment>
+            <Navbar />
+            <div className="container">
                 <Switch>
-                    <Route path={"/"} exact component={Home} />
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/register" component={Register} />
+
+                    <Route exact path="/profile" component={Profile} />
+                    <Route exact path="/my-todos" component={UserMyTodos} />
+
+                    <Route path="/user" component={UserBoard} />
+                    <Route path="/admin" component={AdminBoard} />
+                    <Route path="/superadmin" component={SuperAdminBoard} />
+
                     <Route path={"/create-user"} exact component={CreateUser} />
                     <Route path={"/edit-user/:id"} exact component={EditUser} />
                     <Route path={"/create-todo"} exact component={CreateTodo} />
                     <Route path={"/edit-todo/:id"} exact component={EditTodo} />
                 </Switch>
             </div>
-        );
-    }
+        </React.Fragment>
+    );
 }
 export default withRouter(App);

@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-export function formatTimestamp(timestamp, timestampFormat = "HH:ii dd LLL yyyy") {
+export function formatTimestamp(timestamp, timestampFormat = "HH:mm, d MMMM yyyy") {
     if (timestamp) {
         return format(new Date(timestamp), timestampFormat);
     } else {
