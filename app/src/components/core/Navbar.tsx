@@ -26,8 +26,8 @@ const Navbar = () => {
     };
 
     return (
-        <section id="navbar" className="mb-4">
-          <nav className="navbar navbar-dark bg-dark justify-content-between">
+        <section id="navbar" className="navbar-dark bg-dark">
+          <nav className="navbar container justify-content-between">
                 <Link to="/" className="navbar-brand" href="#"><FontAwesomeIcon icon={faListAlt} /> Doo!S</Link>
                 {user && (
                 <button className="navbar-toggler" 

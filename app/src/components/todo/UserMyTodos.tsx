@@ -1,5 +1,7 @@
 import * as React from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faPenAlt, faUndoAlt, faCheck, faSpinner, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import { formatTimestamp } from "../../helper";
 import AuthService from "../../services/auth.services";
@@ -68,6 +70,9 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
             this.setState({ title: ""}); 
             this.setState({ todos: [newTodo, ...this.state.todos]});
             
+            setTimeout(() => {
+                this.setState({ submitSuccess: false}); 
+            }, 3000);
         });
     };
 
@@ -112,37 +117,36 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
     }
 
     public render() {
-        const { submitSuccess, loading } = this.state;
-        const todos = this.state.todos;
+        const { submitSuccess, loading, todos } = this.state;
 
         return (
-            <div>
-                <div className={"col-md-12 form-wrapper"}>
-                    <h2> My todos </h2>
-                    {!submitSuccess && (
-                        <div className="alert alert-info" role="alert">
-                            Fill the form below to create a new todo
-                        </div>
-                    )}
-                    {submitSuccess && (
-                        <div className="alert alert-info" role="alert">
-                            The new todo was successfully submitted!
-                        </div>
-                    )}
-                    <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
-                        <div className="form-group col-md-12">
-                            <label htmlFor="title"></label>
-                            <input
-                                type="text"
-                                id="title"
-                                onChange={(e) => this.handleInputChanges(e)}
-                                name="title"
-                                className="form-control"
-                                placeholder="Enter your new todo"
-                                value={this.state.title}
-                            />
-
-                            <label htmlFor="ownerId"></label>
+        <React.Fragment>
+            <div className="jumbotron jumbotron-fluid">
+                <div className="container">
+                    <h1 className="display-4">My todos</h1>
+                    <form onSubmit={this.processFormSubmission} noValidate={true}>
+                        <div className="form-group">
+                            <div className="input-group input-group-lg mb-3">
+                                <input 
+                                    type="text" 
+                                    id="title"
+                                    name="title"
+                                    value={this.state.title}
+                                    onChange={(e) => this.handleInputChanges(e)}
+                                    className="form-control" 
+                                    placeholder="Enter your new todo here"
+                                    aria-label="Todo title" 
+                                />
+                                <div className="input-group-append">
+                                    <button className="btn btn-success" type="submit">Add</button>
+                                    {loading && <FontAwesomeIcon className="text-success" icon={faSpinner} />}
+                                </div>
+                            </div>
+                            {submitSuccess && (
+                                <div className="alert alert-success fade show h6" role="alert">
+                                    <FontAwesomeIcon className="text-success" icon={faCheck} /> <strong>Congrats!</strong> Your new todo was successfully submitted.
+                                </div>
+                            )}
                             <input
                                 type="text"
                                 id="ownerId"
@@ -150,90 +154,86 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                 className="form-control"
                                 defaultValue={this.state.ownerId}
                                 hidden
-                            />
-                        </div>
-                        <div className="form-group col-md-4 pull-right">
-                            <button className="btn btn-success" type="submit">
-                                Create
-                            </button>
-                            {loading && <span className="fa fa-circle-o-notch fa-spin" />}
+                                />
                         </div>
                     </form>
                 </div>
-                
-                <div>
-                {todos &&
-                    todos.map((todo: { _id: number; deletedAt: any; completedAt: any;  title: React.ReactNode; description: React.ReactNode; createdAt: any; }) => (
-                        !todo.deletedAt && !todo.completedAt && (<div key={todo._id}>
-                            <ul>
-                                <li>Title: {todo.title}</li>
-                                <li>Desc: {todo.description}</li>
-                                <li>Created: {formatTimestamp(todo.createdAt)}</li>
-                                <li>Completed: {formatTimestamp(todo.completedAt)}</li>
-                                <li>Deleted: {formatTimestamp(todo.deletedAt)}</li>
-                            </ul>
-                            <div className="btn-group" style={{ marginBottom: "20px" }}>
-                                <Link
-                                    to={`/edit-todo/${todo._id}`}
-                                    className="btn btn-sm btn-outline-secondary"
-                                >
-                                    Edit Todo{" "}
-                                </Link>
-                                <button
-                                    className="btn btn-sm btn-outline-secondary"
-                                    onClick={() => this.completeTodo(todo._id)}
-                                >
-                                    Complete Todo
-                                </button>
-                                <button
-                                    className="btn btn-sm btn-outline-secondary"
-                                    onClick={() => this.deleteTodo(todo._id)}
-                                >
-                                    Delete Todo
-                                </button>
-                            </div>
-                        </div> 
-                    )))
-                }
-
-                <h3>Completed todos</h3>
-                {todos &&
-                    todos.map((todo: { _id: number; deletedAt: any; completedAt: any;  title: React.ReactNode; description: React.ReactNode; createdAt: any; }) => (
-                        
-                        !todo.deletedAt && todo.completedAt && (<div key={todo._id}>
-                            <ul>
-                                <li>Title: {todo.title}</li>
-                                <li>Desc: {todo.description}</li>
-                                <li>Created: {formatTimestamp(todo.createdAt)}</li>
-                                <li>Completed: {formatTimestamp(todo.completedAt)}</li>
-                                <li>Deleted: {formatTimestamp(todo.deletedAt)}</li>
-                            </ul>
-                            <div className="btn-group" style={{ marginBottom: "20px" }}>
-                                <Link
-                                    to={`/edit-todo/${todo._id}`}
-                                    className="btn btn-sm btn-outline-secondary"
-                                >
-                                    Edit Todo{" "}
-                                </Link>
-                                <button
-                                    className="btn btn-sm btn-outline-secondary"
-                                    onClick={() => this.activateTodo(todo._id)}
-                                >
-                                    Activate completed todo
-                                </button>
-                                <button
-                                    className="btn btn-sm btn-outline-secondary"
-                                    onClick={() => this.deleteTodo(todo._id)}
-                                >
-                                    Delete Todo
-                                </button>
-                            </div>
-                        </div> 
-                    )))
-                }
-                </div>
             </div>
-        );
+            <div className="container">
+                <section className="row">
+                    <div className="col-12 form-wrapper">
+                    <form noValidate={true}>
+                        <div className="form-group">
+                            <div className="input-group mb-3">
+                                <input 
+                                    type="text" 
+                                    id="title"
+                                    name="title"
+                                    value={this.state.term}
+                                    onChange={(e) => this.handleInputChanges(e)}
+                                    className="form-control" 
+                                    placeholder="Search in your todos..."
+                                    aria-label="Search box" 
+                                />
+                                <div className="input-group-append">
+                                    <button className="btn btn-secondary" type="submit">Search</button>
+                                    {loading && <FontAwesomeIcon className="text-success" icon={faSpinner} />}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                    <div className="col-12">
+                        { todos && (
+                            <React.Fragment>
+                                <ul className="list-group mb-4"> 
+                                    { todos.map((todo: { _id: number; deletedAt: any; completedAt: any;  title: React.ReactNode; description: React.ReactNode; createdAt: any; }) => (
+                                        !todo.deletedAt && !todo.completedAt && (
+                                            <React.Fragment key={todo._id}>
+                                                <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
+                                                    <span className="d-flex">
+                                                        <button type="button" className="btn btn-sm btn-outline-success mr-3" onClick={() => this.completeTodo(todo._id)}><FontAwesomeIcon className="text-white" icon={faCheck} /></button>
+                                                            <div className="d-flex flex-column">
+                                                                <span>{todo.title}</span>
+                                                                <span className="small text-secondary">{todo.description}</span>
+                                                            </div>
+                                                    </span>
+                                                    <span>
+                                                        <Link to={`/edit-todo/${todo._id}`} className="btn btn-sm btn-outline-dark mr-2">
+                                                            <FontAwesomeIcon icon={faPenAlt} className="mr-1"/>Edit
+                                                        </Link>
+                                                        <button type="button" className="btn btn-sm btn-outline-dark" onClick={() => this.deleteTodo(todo._id)}><FontAwesomeIcon icon={faTrashAlt} /></button>
+                                                    </span>
+                                                </li>
+                                            </React.Fragment>
+                                        )
+                                    ))}
+                                </ul>
+                            
+                                <ul className="list-group"> 
+                                { todos.map((todo: { _id: number; deletedAt: any; completedAt: any;  title: React.ReactNode; description: React.ReactNode; createdAt: any; }) => (
+                                    !todo.deletedAt && todo.completedAt && (
+                                        <React.Fragment key={todo._id}>
+                                            <li className="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
+                                                <span>
+                                                    <button type="button" className="btn btn-sm btn-primary mr-3" onClick={() => this.activateTodo(todo._id)}><FontAwesomeIcon className="text-light" icon={faUndoAlt} /></button>
+                                                    {todo.title} <span className="badge badge-pill badge-success ml-2">Done</span>
+                                                </span>
+                                                <span>
+                                                    <button type="button" className="btn btn-sm btn-outline-dark" onClick={() => this.deleteTodo(todo._id)}><FontAwesomeIcon icon={faTrashAlt} /></button>
+                                                </span>
+                                            </li>
+                                        </React.Fragment>
+                                    )
+                                ))}
+                                </ul>
+                            </React.Fragment>
+                        )}
+                    </div>
+                </section>
+            </div>
+        </React.Fragment>
+        )
     }
 }
 
