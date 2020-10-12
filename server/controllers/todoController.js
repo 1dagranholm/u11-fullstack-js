@@ -169,3 +169,23 @@ exports.search = async function (req, res) {
       });
     });
 };
+
+exports.searchUserTodos = async function (req, res) {
+  const searchTerm = new RegExp(req.body.term, 'i');
+  const userId = req.params.user_id;
+
+  await Todo.find()
+    .and({ ownerId: userId })
+    .or([{ title: searchTerm }, { description: searchTerm }])
+    .sort({ createdAt: -1 })
+    .then((todos) => {
+      res.send(todos);
+    })
+    .catch((error) => {
+      res.status(500).send({
+        message: 'Failed: to search via index',
+        success: true,
+        result: error,
+      });
+    });
+};

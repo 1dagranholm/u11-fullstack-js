@@ -2,7 +2,6 @@ import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import UserList from "./UserList";
 import AdminList from "./AdminList";
-import SuperAdminList from "./SuperAdminList";
 
 export interface IState {
     // users: any[];
@@ -23,7 +22,6 @@ class UserDashboard extends React.Component<RouteComponentProps, IState> {
         <div>
             <UserList />
             <AdminList />
-            <SuperAdminList />
         </div>
         );
     }

@@ -15,10 +15,6 @@ exports.adminBoard = (req, res) => {
   res.status(200).send("Admin pages");
 };
 
-exports.superAdminBoard = (req, res) => {
-  res.status(200).send("Super Admin pages");
-};
-
 // Retrieve all users
 exports.index = function (req, res) {
   User.get((err, users) => {

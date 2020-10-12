@@ -37,7 +37,7 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
         axios.patch(`http://localhost:8080/api/todos/${this.state.id}`, this.state.values).then((data) => {
             this.setState({ submitSuccess: true, loading: false });
             setTimeout(() => {
-                this.props.history.push("/");
+                this.props.history.push("/my-todos");
             }, 1500);
         });
     };
@@ -57,8 +57,12 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
                 {this.state.todo && (
                     <div>
                         <div>
-                            <div className={"col-md-12 form-wrapper"}>
-                                <h2> Edit Todo </h2>
+                        <div className="jumbotron jumbotron-fluid">
+                            <div className="container">
+                                <h1 className="display-4">Edit todo</h1>
+                            </div>
+                        </div>
+                        <div className="container">
                                 {submitSuccess && (
                                     <div className="alert alert-info" role="alert">
                                         Todo details has been edited successfully{" "}
@@ -87,18 +91,6 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
                                             name="description"
                                             className="form-control"
                                             placeholder="Edit description"
-                                        />
-                                    </div>
-                                    <div className="form-group col-md-12">
-                                        <label htmlFor="ownerId"> Owner </label>
-                                        <input
-                                            type="text"
-                                            id="ownerId"
-                                            defaultValue={this.state.todo.ownerId}
-                                            onChange={(e) => this.handleInputChanges(e)}
-                                            name="ownerId"
-                                            className="form-control"
-                                            placeholder="Edit owner"
                                         />
                                     </div>
                                     <div className="form-group col-md-4 pull-right">
