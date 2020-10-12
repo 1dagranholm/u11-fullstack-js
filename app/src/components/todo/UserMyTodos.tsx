@@ -14,6 +14,7 @@ export interface IValues {
     deletedAt: Date;
     createdAt: Date;
     updatedAt: Date;
+    term: string;
 }
 export interface IFormState {
     [key: string]: any;
@@ -37,6 +38,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
             loading: false,
             submitSuccess: false,
             todos:[], 
+            term: "",
         };
     }
 
@@ -62,6 +64,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
             deletedAt: this.state.deletedAt,
             createdAt: this.state.createdAt,
             updatedAt: this.state.updatedAt,
+            term: this.state.term
         };
         this.setState({ submitSuccess: true, values: [...this.state.values, formData], loading: false });
         axios.post(`http://localhost:8080/api/todos/`, formData).then((response) => {
@@ -76,6 +79,26 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
         });
     };
 
+    private processSearchSubmission = (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault();
+        this.setState({ loading: true });
+        
+        const currentUser = AuthService.getCurrentUser();
+        const searchTerm = {
+            term: this.state.term,
+        };
+
+        axios.post(`http://localhost:8080/api/search/todos/${currentUser.id}`, searchTerm).then((response) => {
+            let todos = response.data;
+            
+            this.setState({ todos });
+            
+            setTimeout(() => {
+                this.setState({ submitSuccess: false}); 
+            }, 3000);
+        });
+    };
+    
     private handleInputChanges = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
         this.setState({
@@ -117,7 +140,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
     }
 
     public render() {
-        const { submitSuccess, loading, todos } = this.state;
+        const { submitSuccess, todos } = this.state;
 
         return (
         <React.Fragment>
@@ -132,14 +155,13 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                     id="title"
                                     name="title"
                                     value={this.state.title}
-                                    onChange={(e) => this.handleInputChanges(e)}
+                                    onChange={(e) => this.handleInputChanges(e) }
                                     className="form-control" 
                                     placeholder="Enter your new todo here"
                                     aria-label="Todo title" 
                                 />
                                 <div className="input-group-append">
                                     <button className="btn btn-success" type="submit">Add</button>
-                                    {loading && <FontAwesomeIcon className="text-success" icon={faSpinner} />}
                                 </div>
                             </div>
                             {submitSuccess && (
@@ -162,13 +184,13 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
             <div className="container">
                 <section className="row">
                     <div className="col-12 form-wrapper">
-                        <form noValidate={true}>
+                        <form onSubmit={this.processSearchSubmission} noValidate={true}>
                             <div className="form-group">
                                 <div className="input-group mb-3">
                                     <input 
                                         type="text" 
-                                        id="title"
-                                        name="title"
+                                        id="term"
+                                        name="term"
                                         value={this.state.term}
                                         onChange={(e) => this.handleInputChanges(e)}
                                         className="form-control" 
@@ -177,7 +199,6 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                     />
                                     <div className="input-group-append">
                                         <button className="btn btn-secondary" type="submit"><FontAwesomeIcon className="mr-1" icon={faSearch} />Search</button>
-                                        {loading && <FontAwesomeIcon className="text-success" icon={faSpinner} />}
                                     </div>
                                 </div>
                             </div>

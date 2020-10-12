@@ -52,7 +52,7 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
     };
 
     public render() {
-        const { submitSuccess, loading } = this.state;
+        const { submitSuccess } = this.state;
         return (
             <div className="App">
                 {this.state.todo && (
@@ -103,8 +103,8 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
                                             </div>
                                             <div className="form-group pull-right">
                                                 <button className="btn btn-success" type="submit">
-                                                    Save                                                </button>
-                                                {loading && <span className="fa fa-circle-o-notch fa-spin" />}
+                                                    Save
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
