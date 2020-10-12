@@ -21,12 +21,10 @@ import Profile from "./components/user/Profile";
 
 import UserBoard from "./components/boards/UserBoard";
 import AdminBoard from "./components/boards/AdminBoard";
-import SuperAdminBoard from "./components/boards/SuperAdminBoard";
 import UserMyTodos from "./components/todo/UserMyTodos";
 
 const App = () => {
 
-    const [showSuperAdminBoard, setShowSuperAdminBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     const [currentUser, setCurrentUser] = useState("");
 
@@ -35,7 +33,6 @@ const App = () => {
 
         if (user) {
             setCurrentUser(user);
-            setShowSuperAdminBoard(user.roles.includes("ROLE_SUPERADMIN"));
             setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
         }
     }, []);
@@ -43,7 +40,7 @@ const App = () => {
     return (
         <React.Fragment>
             <Navbar />
-            <div className="container">
+            <div>
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/login" component={Login} />
@@ -54,7 +51,6 @@ const App = () => {
 
                     <Route path="/user" component={UserBoard} />
                     <Route path="/admin" component={AdminBoard} />
-                    <Route path="/superadmin" component={SuperAdminBoard} />
 
                     <Route path={"/create-user"} exact component={CreateUser} />
                     <Route path={"/edit-user/:id"} exact component={EditUser} />

@@ -98,7 +98,7 @@ class CreateTodo extends React.Component<RouteComponentProps, IFormState> {
                                 onChange={(e) => this.handleInputChanges(e)}
                                 name="description"
                                 className="form-control"
-                                placeholder="Edit description"
+                                placeholder="Set description"
                             />
                         </div>
                         <div className="form-group col-md-12">
@@ -109,7 +109,7 @@ class CreateTodo extends React.Component<RouteComponentProps, IFormState> {
                                 onChange={(e) => this.handleInputChanges(e)}
                                 name="ownerId"
                                 className="form-control"
-                                placeholder="Edit owner"
+                                placeholder="Set owner"
                             />
                         </div>
                         <div className="form-group col-md-4 pull-right">

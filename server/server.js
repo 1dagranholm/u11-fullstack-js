@@ -53,16 +53,6 @@ function initial() {
       });
 
       new Role({
-        name: "superadmin"
-      }).save(err => {
-        if (err) {
-          console.log("error", err);
-        }
-
-        console.log("added 'moderator' to roles collection");
-      });
-
-      new Role({
         name: "admin"
       }).save(err => {
         if (err) {
