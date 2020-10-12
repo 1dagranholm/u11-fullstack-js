@@ -1,6 +1,7 @@
 import * as React from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import axios from "axios";
+import { formatTimestamp } from "../../helper";
 
 export interface IValues {
     [key: string]: any;
@@ -59,47 +60,55 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
                         <div>
                         <div className="jumbotron jumbotron-fluid">
                             <div className="container">
-                                <h1 className="display-4">Edit todo</h1>
+                                <div className="row">
+                                    <div className="col-12">
+                                        <h1 className="display-4">Edit todo</h1>
+                                        <span> This todo was created <strong>{formatTimestamp(this.state.todo.createdAt)}</strong></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="container">
+                            <div className="row">
                                 {submitSuccess && (
-                                    <div className="alert alert-info" role="alert">
-                                        Todo details has been edited successfully{" "}
+                                    <div className="alert alert-success fade show h6" role="alert">
+                                        <strong>Well done!</strong> Your todo has been updated.
                                     </div>
                                 )}
-                                <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
-                                    <div className="form-group col-md-12">
-                                        <label htmlFor="title"> Title </label>
-                                        <input
-                                            type="text"
-                                            id="title"
-                                            defaultValue={this.state.todo.title}
-                                            onChange={(e) => this.handleInputChanges(e)}
-                                            name="title"
-                                            className="form-control"
-                                            placeholder="Enter title"
-                                        />
+                                    <div className="col-12">
+                                        <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
+                                            <div className="form-group">
+                                                <label htmlFor="title"> Title </label>
+                                                <input
+                                                    type="text"
+                                                    id="title"
+                                                    defaultValue={this.state.todo.title}
+                                                    onChange={(e) => this.handleInputChanges(e)}
+                                                    name="title"
+                                                    className="form-control"
+                                                    placeholder="Enter title"
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="description"> Description </label>
+                                                <input
+                                                    type="text"
+                                                    id="description"
+                                                    defaultValue={this.state.todo.description}
+                                                    onChange={(e) => this.handleInputChanges(e)}
+                                                    name="description"
+                                                    className="form-control"
+                                                    placeholder="Edit description"
+                                                />
+                                            </div>
+                                            <div className="form-group pull-right">
+                                                <button className="btn btn-success" type="submit">
+                                                    Save                                                </button>
+                                                {loading && <span className="fa fa-circle-o-notch fa-spin" />}
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div className="form-group col-md-12">
-                                        <label htmlFor="description"> Description </label>
-                                        <input
-                                            type="text"
-                                            id="description"
-                                            defaultValue={this.state.todo.description}
-                                            onChange={(e) => this.handleInputChanges(e)}
-                                            name="description"
-                                            className="form-control"
-                                            placeholder="Edit description"
-                                        />
-                                    </div>
-                                    <div className="form-group col-md-4 pull-right">
-                                        <button className="btn btn-success" type="submit">
-                                            Edit Todo{" "}
-                                        </button>
-                                        {loading && <span className="fa fa-circle-o-notch fa-spin" />}
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
