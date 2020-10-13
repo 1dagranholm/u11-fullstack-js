@@ -63,64 +63,60 @@ class CreateTodo extends React.Component<RouteComponentProps, IFormState> {
     };
 
     public render() {
-        const { submitSuccess, loading } = this.state;
+        const { submitSuccess } = this.state;
         return (
-            <div>
-                <div className={"col-md-12 form-wrapper"}>
-                    <h2> Create Todo </h2>
-                    {!submitSuccess && (
-                        <div className="alert alert-info" role="alert">
-                            Fill the form below to create a new todo
-                        </div>
-                    )}
-                    {submitSuccess && (
-                        <div className="alert alert-info" role="alert">
-                            The new todo was successfully submitted!
-                        </div>
-                    )}
-                    <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
-                        <div className="form-group col-md-12">
-                            <label htmlFor="title"> Title </label>
-                            <input
-                                type="text"
-                                id="title"
-                                onChange={(e) => this.handleInputChanges(e)}
-                                name="title"
-                                className="form-control"
-                                placeholder="Enter title"
-                            />
-                        </div>
-                        <div className="form-group col-md-12">
-                            <label htmlFor="description"> Description </label>
-                            <input
-                                type="text"
-                                id="description"
-                                onChange={(e) => this.handleInputChanges(e)}
-                                name="description"
-                                className="form-control"
-                                placeholder="Set description"
-                            />
-                        </div>
-                        <div className="form-group col-md-12">
-                            <label htmlFor="ownerId"> Owner </label>
-                            <input
-                                type="text"
-                                id="ownerId"
-                                onChange={(e) => this.handleInputChanges(e)}
-                                name="ownerId"
-                                className="form-control"
-                                placeholder="Set owner"
-                            />
-                        </div>
-                        <div className="form-group col-md-4 pull-right">
-                            <button className="btn btn-success" type="submit">
-                                Create Todo
-                            </button>
-                            {loading && <span className="fa fa-circle-o-notch fa-spin" />}
-                        </div>
-                    </form>
+            <React.Fragment>
+                <div className="jumbotron jumbotron-fluid">
+                    <div className="container">
+                        <h1 className="display-4">Create Todo</h1>
+                        {submitSuccess && (
+                            <div className="alert alert-info" role="alert">
+                                The new todo was successfully submitted!
+                            </div>
+                        )}
+                        <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
+                            <div className="form-group">
+                                <label htmlFor="title"> Title </label>
+                                <input
+                                    type="text"
+                                    id="title"
+                                    onChange={(e) => this.handleInputChanges(e)}
+                                    name="title"
+                                    className="form-control"
+                                    placeholder="Enter title"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="description"> Description </label>
+                                <input
+                                    type="text"
+                                    id="description"
+                                    onChange={(e) => this.handleInputChanges(e)}
+                                    name="description"
+                                    className="form-control"
+                                    placeholder="Set description"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="ownerId"> Owner </label>
+                                <input
+                                    type="text"
+                                    id="ownerId"
+                                    onChange={(e) => this.handleInputChanges(e)}
+                                    name="ownerId"
+                                    className="form-control"
+                                    placeholder="Set owner"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <button className="btn btn-success mt-4" type="submit">
+                                    Create Todo
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 }

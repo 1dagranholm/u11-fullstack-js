@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faListAlt } from '@fortawesome/free-solid-svg-icons';
+import { faListAlt, faUser, faUnlockAlt  } from '@fortawesome/free-solid-svg-icons';
 
 import AuthService from "../../services/auth.services";
 
@@ -26,9 +26,9 @@ const Navbar = () => {
     };
 
     return (
-        <section id="navbar" className="navbar-dark bg-dark">
+        <section id="navbar" className="navbar-dark bg-primary">
           <nav className="navbar container justify-content-between">
-                <Link to="/" className="navbar-brand" href="#"><FontAwesomeIcon icon={faListAlt} /> Doo!S</Link>
+                <Link to="/" className="navbar-brand" href="#"><FontAwesomeIcon className="mr-1" icon={faListAlt} /> TodoApp</Link>
                 {user && (
                 <button className="navbar-toggler" 
                     type="button" 
@@ -43,34 +43,28 @@ const Navbar = () => {
 
                 {user && (
                 <div className="collapse navbar-collapse dropdown-menu-right text-right" id="navbarsExample01">
-                    {user && (
-                        <ul className="navbar-nav mr-auto">
-                            <li className="text-light">
-                                <strong>{user.email}</strong>
-                            </li>
+                    
+                    {showAdminBoard && (
+                        <ul className="navbar-nav mr-auto mt-3">
                             <li className="nav-item">
-                                <Link to="/profile" className="nav-link">My profile</Link>
+                                    <Link to={"/admin"} className="nav-link"><FontAwesomeIcon className="mr-1" icon={faUnlockAlt} /> <strong>Admin pages</strong></Link>
+                            </li>
+                        </ul>
+                    )}
+                    
+                    {user && (
+                        <ul className="navbar-nav mr-auto mt-3">
+                            <li className="text-light small mb-1">
+                                <FontAwesomeIcon className="mr-1" icon={faUser} /> <strong>{user.email}</strong>
                             </li>
                             <li className="nav-item">
                                 <Link to="/my-todos" className="nav-link">My todos</Link>
                             </li>
                             <li className="nav-item">
+                                <Link to="/profile" className="nav-link">My profile</Link>
+                            </li>
+                            <li className="nav-item mb-2">
                                 <Link to="/" className="nav-link" onClick={logOut}>Log out</Link>
-                            </li>
-                        </ul>
-                    )}
-
-                    {showAdminBoard && (
-                        <ul className="navbar-nav mr-auto">
-                            <li><h4 className="text-light">Admin</h4></li>
-                            <li className="nav-item">
-                                <Link to={"/admin"} className="nav-link">Admin pages</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to={"/create-user"} className="nav-link">Admin: Create users</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to={"/create-todo"} className="nav-link">Admin: Create todos</Link>
                             </li>
                         </ul>
                     )}
@@ -96,10 +90,10 @@ const Navbar = () => {
                 {!user && (
                     <ul className="nav ml-auto">
                         <li className="nav-item">
-                            <Link to="/login" className="nav-link">Login</Link>
+                            <Link to="/login" className="nav-link text-white">Login</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/register" className="nav-link">Sign Up</Link>
+                            <Link to="/register" className="nav-link text-white">Sign Up</Link>
                         </li>
                     </ul>
                 )}

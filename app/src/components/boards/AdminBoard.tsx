@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import UserService from "../../services/user.service";
 
@@ -26,12 +27,26 @@ const AdminBoard = () => {
   }, []);
 
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>{content}</h3>
-      </header>
-        <UserDashboard />
+  <React.Fragment>
+    <div className="jumbotron jumbotron-fluid">
+      <div className="container">
+        <h1 className="display-4">{content}</h1>
+          <Link to={"/create-user"} className="btn btn-primary mt-4 mr-2">
+              Create new user
+          </Link>
+          <Link to={"/create-todo"} className="btn btn-secondary mt-4">
+              Create new todo for users
+          </Link>
+      </div>
     </div>
+    <div className="container">
+      <div className="row">
+        <div className="col-12 table-wrapper">
+          <UserDashboard />
+        </div>
+      </div>
+    </div>
+  </React.Fragment>
   );
 };
 

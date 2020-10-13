@@ -1,30 +1,16 @@
 import * as React from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import UserList from "./UserList";
-import AdminList from "./AdminList";
+import { withRouter } from "react-router-dom";
+import UserList from "./lists/UserList";
+import AdminList from "./lists/AdminList";
 
-export interface IState {
-    // users: any[];
-}
-
-class UserDashboard extends React.Component<RouteComponentProps, IState> {
-    constructor(props: RouteComponentProps) {
-        super(props);
-        this.state = {
-            // users: []
-        };
-    }
-
-    public render() {
-        // const users = this.state.users;
+const UserDashboard = () => {
 
     return (
-        <div>
+        <React.Fragment>
             <UserList />
             <AdminList />
-        </div>
-        );
-    }
+        </React.Fragment>
+    );
 }
 
 export default withRouter(UserDashboard);

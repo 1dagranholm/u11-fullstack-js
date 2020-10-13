@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import AuthService from "./services/auth.services";
 
 import Navbar from "./components/core/Navbar";
+import Footer from "./components/core/Footer";
 
 import Home from "./components/Home";
 import CreateUser from "./components/user/CreateUser";
@@ -25,8 +26,8 @@ import UserMyTodos from "./components/todo/UserMyTodos";
 
 const App = () => {
 
-    const [showAdminBoard, setShowAdminBoard] = useState(false);
-    const [currentUser, setCurrentUser] = useState("");
+    const [, setShowAdminBoard] = useState(false);
+    const [, setCurrentUser] = useState("");
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
@@ -58,6 +59,7 @@ const App = () => {
                     <Route path={"/edit-todo/:id"} exact component={EditTodo} />
                 </Switch>
             </div>
+            <Footer/>
         </React.Fragment>
     );
 }
