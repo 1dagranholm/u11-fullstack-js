@@ -41,7 +41,6 @@ router.route('/search/users').post(userController.search);
 router.route('/search/todos').post(todoController.search);
 router.route('/search/todos/:user_id').post(todoController.searchUserTodos);
 
-
 // Test authorities routes
 router.route("/test/all").get(userController.allAccess);
 router.route("/test/user").get([authJwt.verifyToken], userController.userBoard);

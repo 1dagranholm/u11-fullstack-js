@@ -1,6 +1,23 @@
 .App-link {
     color: #61dafb;
 }
+
+table.user-list {
+  font-size: 0.8rem;
+}
+
+table.user-list th:last-child {
+  width: 92px;
+}
+
+.table-wrapper {
+  overflow: scroll;
+}
+
+.icon-button {
+  width: 32px;
+}
+
 @keyframes App-logo-spin {
     from {
         transform: rotate(0deg);
@@ -42,3 +59,8 @@ label {
     -webkit-border-radius: 50%;
     border-radius: 50%;
   }
+
+div.container, nav.container, div.container-sm, div.container-md, div.container-lg, div.container-xl {
+    max-width: 720px; 
+  }
+

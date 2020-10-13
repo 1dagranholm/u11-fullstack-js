@@ -61,92 +61,90 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
     };
 
     public render() {
-        const { submitSuccess, loading } = this.state;
-        return (
-            <div className="App">
-                {this.state.user && (
-                    <div>
-                        <div>
-                            <div className={"col-md-12 form-wrapper"}>
-                                <h2> Edit Customer </h2>
-                                {submitSuccess && (
-                                    <div className="alert alert-info" role="alert">
-                                        Users's details has been edited successfully{" "}
-                                    </div>
-                                )}
-                                <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
-                                    <div className="form-group col-md-12">
-                                        <label htmlFor="firstName"> First Name </label>
-                                        <input
-                                            type="text"
-                                            id="firstName"
-                                            defaultValue={this.state.user.firstName}
-                                            onChange={(e) => this.handleInputChanges(e)}
-                                            name="firstName"
-                                            className="form-control"
-                                            placeholder="Enter user's first name"
-                                        />
-                                    </div>
-                                    <div className="form-group col-md-12">
-                                        <label htmlFor="lastName"> Last Name </label>
-                                        <input
-                                            type="text"
-                                            id="lastName"
-                                            defaultValue={this.state.user.lastName}
-                                            onChange={(e) => this.handleInputChanges(e)}
-                                            name="lastName"
-                                            className="form-control"
-                                            placeholder="Enter user's last name"
-                                        />
-                                    </div>
-                                    <div className="form-group col-md-12">
-                                        <label htmlFor="email"> E-mail </label>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            defaultValue={this.state.user.email}
-                                            onChange={(e) => this.handleInputChanges(e)}
-                                            name="email"
-                                            className="form-control"
-                                            placeholder="Enter user's email address"
-                                        />
-                                    </div>
-                                    <div className="form-group col-md-12">
-                                        <label htmlFor="role">Role</label>
-                                        <select
-                                            name="role"
-                                            id="role"
-                                            value={this.state.role}
-                                            onChange={(e) => this.handleOptionChanges(e)}
-                                        >
-                                            <option value="user">Standard User</option>
-                                            <option value="admin">Admin</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group col-md-12">
-                                        <label htmlFor="password"> Password </label>
-                                        <input
-                                            type="text"
-                                            id="password"
-                                            // defaultValue={this.state.user.password}
-                                            onChange={(e) => this.handleInputChanges(e)}
-                                            name="password"
-                                            className="form-control"
-                                            placeholder="Set new password"
-                                        />
-                                    </div>
-                                    <div className="form-group col-md-4 pull-right">
-                                        <button className="btn btn-success" type="submit">
-                                            Edit Customer{" "}
-                                        </button>
-                                        {loading && <span className="fa fa-circle-o-notch fa-spin" />}
-                                    </div>
-                                </form>
-                            </div>
+        const { submitSuccess } = this.state;
+
+    return (
+        <React.Fragment>
+            {this.state.user && (
+            <div className="jumbotron jumbotron-fluid">
+                <div className="container">
+                    <h1 className="display-4">Edit User</h1>
+                    {submitSuccess && (
+                        <div className="alert alert-info" role="alert">
+                            The new user was successfully submitted!
+                        </div>
+                    )}
+                            <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
+                                <div className="form-group">
+                                    <label htmlFor="firstName"> First Name </label>
+                                    <input
+                                        type="text"
+                                        id="firstName"
+                                        defaultValue={this.state.user.firstName}
+                                        onChange={(e) => this.handleInputChanges(e)}
+                                        name="firstName"
+                                        className="form-control"
+                                        placeholder="Enter user's first name"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="lastName"> Last Name </label>
+                                    <input
+                                        type="text"
+                                        id="lastName"
+                                        defaultValue={this.state.user.lastName}
+                                        onChange={(e) => this.handleInputChanges(e)}
+                                        name="lastName"
+                                        className="form-control"
+                                        placeholder="Enter user's last name"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="email"> E-mail </label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        defaultValue={this.state.user.email}
+                                        onChange={(e) => this.handleInputChanges(e)}
+                                        name="email"
+                                        className="form-control"
+                                        placeholder="Enter user's email address"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="role">Role</label>
+                                    <select
+                                        name="role"
+                                        id="role"
+                                        value={this.state.role}
+                                        onChange={(e) => this.handleOptionChanges(e)}
+                                    >
+                                        <option value="user">Standard User</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="password"> Password </label>
+                                    <input
+                                        type="text"
+                                        id="password"
+                                        // defaultValue={this.state.user.password}
+                                        onChange={(e) => this.handleInputChanges(e)}
+                                        name="password"
+                                        className="form-control"
+                                        placeholder="Set new password"
+                                    />
+                                </div>
+                                <div className="form-group mt-4">
+                                    <button className="btn btn-success" type="submit">
+                                        Edit User
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                )}
-            </div>
+            )}
+        </React.Fragment>
         );
     }
 }

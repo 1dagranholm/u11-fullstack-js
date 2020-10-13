@@ -4,7 +4,7 @@ const { restApiResponse } = require('../utils/api-utils');
 const bcrypt = require("bcryptjs");
 
 exports.allAccess = (req, res) => {
-  res.status(200).send("TodoApp - Making your life easier.");
+  res.status(200).send("TodoApp");
 };
 
 exports.userBoard = (req, res) => {

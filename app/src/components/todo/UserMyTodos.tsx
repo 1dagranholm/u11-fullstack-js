@@ -1,7 +1,7 @@
 import * as React from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPenAlt, faUndoAlt, faCheck, faSpinner, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPenAlt, faUndoAlt, faCheck, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import { formatTimestamp } from "../../helper";
 import AuthService from "../../services/auth.services";
@@ -92,10 +92,6 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
             let todos = response.data;
             
             this.setState({ todos });
-            
-            setTimeout(() => {
-                this.setState({ submitSuccess: false}); 
-            }, 3000);
         });
     };
     
@@ -220,8 +216,8 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                                             </div>
                                                     </span>
                                                     <span>
-                                                        <Link to={`/edit-todo/${todo._id}`} className="btn btn-sm btn-outline-dark mr-2">
-                                                            <FontAwesomeIcon icon={faPenAlt} className="mr-1"/>Edit
+                                                        <Link to={`/edit-todo/${todo._id}`} className="btn btn-sm btn-outline-dark mr-1">
+                                                            <FontAwesomeIcon icon={faPenAlt}/>
                                                         </Link>
                                                         <button type="button" className="btn btn-sm btn-outline-dark" onClick={() => this.deleteTodo(todo._id)}><FontAwesomeIcon icon={faTrashAlt} /></button>
                                                     </span>
@@ -240,7 +236,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                                     <button type="button" className="btn btn-sm btn-primary mr-3" onClick={() => this.activateTodo(todo._id)}><FontAwesomeIcon className="text-light" icon={faUndoAlt} /></button>
                                                         <div className="d-flex flex-column">
                                                             <span>
-                                                                {todo.title} <span className="badge badge-pill badge-success ml-2 mb-2">Done: {formatTimestamp(todo.completedAt)}</span>
+                                                                <span className="mr-2">{todo.title}</span> <span className="badge badge-pill badge-success mb-2">Done: {formatTimestamp(todo.completedAt)}</span>
                                                             </span>
                                                             <span className="small text-secondary">{todo.description}</span>
                                                         </div>

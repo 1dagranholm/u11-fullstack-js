@@ -158,7 +158,7 @@ const vpassword = (value) => {
                   </div>
     
                   <div className="form-group">
-                    <button className="btn btn-primary btn-block">Sign Up</button>
+                    <button className="btn btn-primary btn-block mt-4">Sign Up</button>
                   </div>
                 </div>
               )}

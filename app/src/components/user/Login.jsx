@@ -100,10 +100,7 @@ const Login = (props) => {
               </div>
 
               <div className="form-group">
-            <button className="btn btn-primary btn-block" disabled={loading}>
-              {loading && (
-                <span className="spinner-border spinner-border-sm"></span>
-              )}
+            <button className="btn btn-primary btn-block mt-4" disabled={loading}>
               <span>Login</span>
             </button>
           </div>
