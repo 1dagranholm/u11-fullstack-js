@@ -67,80 +67,77 @@ class UserList extends React.Component<RouteComponentProps, IState> {
         
         return (
             <React.Fragment>
-            <h3>Users</h3>
-            <table className="table user-list">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th><span>Name</span></th>
-                        <th><span>Created</span></th>
-                        <th><span>Status</span></th>
-                        <th><span>Email</span></th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {users &&
-                    users.map((user) => (
-                    <tr key={user._id}>
-                        <td>
-                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="50px" alt="{user.firstName + ' ' + user.lastName}" />
-                        </td>
-                        <td>
-                            <strong>{user.firstName + ' ' + user.lastName}</strong><br/>
-                        </td>
-                        <td>{ formatTimestamp(user.createdAt, 'yy/MM/dd')}</td>
-                        <td>
-                        { !user.deletedAt && (
-                            <span className="badge badge-success">Active</span>
-                        )}
-                        { user.deletedAt && (
-                            <span className="badge badge-warning">
-                                Deleted { formatTimestamp(user.deletedAt, 'yy/MM/dd')}
-                            </span>
-                        )}
-                        </td>
-                        <td>
-                            <a href={`mailto:${user.email}`}>{user.email}</a>
-                        </td>
-                        <td>
-                            <div className="d-flex flex-row justify-content-between align-items-center">
-                                <div>
-                                    <Link 
-                                        to={`/edit-user/${user._id}`}
-                                        className="btn btn-sm btn-primary icon-button"
-                                    >
-                                        <FontAwesomeIcon icon={faPenAlt}/>
-                                    </Link>
+                <h3>Users</h3>
+                <table className="table user-list mb-5">
+                    <thead>
+                        <tr>
+                            <th className="hidden-xs"></th>
+                            <th><span>User</span></th>
+                            <th className="hidden-xs"><span>Created</span></th>
+                            <th><span>Status</span></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {users &&
+                        users.map((user) => (
+                        <tr key={user._id}>
+                            <td className="hidden-xs">
+                                <img src={`${process.env.PUBLIC_URL}/avatars/${ Math.floor(Math.random() * (8 - 1) + 1) }.png`} width="50px" alt="{user.firstName + ' ' + user.lastName}" />
+                            </td>
+                            <td>
+                                <strong>{user.firstName + ' ' + user.lastName}</strong><br/>
+                                <a href={`mailto:${user.email}`}>{user.email}</a>
+                            </td>
+                            <td className="hidden-xs">{ formatTimestamp(user.createdAt, 'yy/MM/dd')}</td>
+                            <td>
+                            { !user.deletedAt && (
+                                <span className="badge badge-success">Active</span>
+                            )}
+                            { user.deletedAt && (
+                                <span className="badge badge-warning">
+                                    Deleted { formatTimestamp(user.deletedAt, 'yy/MM/dd')}
+                                </span>
+                            )}
+                            </td>
+                            <td>
+                                <div className="d-flex flex-row justify-content-between align-items-center">
+                                    <div>
+                                        <Link 
+                                            to={`/edit-user/${user._id}`}
+                                            className="btn btn-sm btn-primary icon-button"
+                                        >
+                                            <FontAwesomeIcon icon={faPenAlt}/>
+                                        </Link>
+                                    </div>
+                                    { !user.deletedAt && (
+                                    <div>
+                                        <button
+                                            type="button" 
+                                            className="btn btn-sm btn-danger icon-button"
+                                            onClick={() => this.deleteUser(user._id)}
+                                        >
+                                            <FontAwesomeIcon icon={faTrashAlt} />
+                                        </button>
+                                    </div>
+                                    )}
+                                    { user.deletedAt && (
+                                    <div>
+                                        <button
+                                            className="btn btn-sm btn-success icon-button"
+                                            onClick={() => this.restoreUser(user._id)}
+                                        >
+                                            <FontAwesomeIcon icon={faUndo} />
+                                        </button>
+                                    </div>
+                                    )}
                                 </div>
-                                { !user.deletedAt && (
-                                <div>
-                                    <button
-                                        type="button" 
-                                        className="btn btn-sm btn-danger icon-button"
-                                        onClick={() => this.deleteUser(user._id)}
-                                    >
-                                        <FontAwesomeIcon icon={faTrashAlt} />
-                                    </button>
-                                </div>
-                                )}
-                                { user.deletedAt && (
-                                <div>
-                                    <button
-                                        className="btn btn-sm btn-success icon-button"
-                                        onClick={() => this.restoreUser(user._id)}
-                                    >
-                                        <FontAwesomeIcon icon={faUndo} />
-                                    </button>
-                                </div>
-                                )}
-                            </div>
-                        </td>
-                    </tr>
-                    ))}
-                </tbody>
-            </table>
-        </React.Fragment>
+                            </td>
+                        </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </React.Fragment>
         );
     }
 }

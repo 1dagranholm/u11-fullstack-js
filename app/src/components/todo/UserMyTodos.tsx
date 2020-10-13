@@ -24,6 +24,8 @@ export interface IFormState {
 }
 
 class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
+    focusInput: any;
+
     constructor(props: RouteComponentProps) {
         super(props);
         this.state = {
@@ -48,6 +50,8 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
         axios.get(`http://localhost:8080/api/users/todos/${user.id}`).then((response) => {
             this.setState({ todos: response.data });
         });
+
+        this.focusInput.focus();
     }
 
     private processFormSubmission = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -142,84 +146,101 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
         <React.Fragment>
             <div className="jumbotron jumbotron-fluid">
                 <div className="container">
-                    <h1 className="display-4">My todos</h1>
-                    <form onSubmit={this.processFormSubmission} noValidate={true}>
-                        <div className="form-group">
-                            <div className="input-group input-group-lg mb-3">
-                                <input 
-                                    type="text" 
-                                    id="title"
-                                    name="title"
-                                    value={this.state.title}
-                                    onChange={(e) => this.handleInputChanges(e) }
-                                    className="form-control" 
-                                    placeholder="Enter your new todo here"
-                                    aria-label="Todo title" 
-                                />
-                                <div className="input-group-append">
-                                    <button className="btn btn-success" type="submit">Add</button>
+                    <div className="row">
+                        <div className="col-12 form-wrapper">
+                            <h1 className="display-4">My Todo's</h1>
+                            <form onSubmit={this.processSearchSubmission} noValidate={true}>
+                                <div className="form-group">
+                                    <div className="input-group mb-3">
+                                        <input 
+                                            type="text" 
+                                            id="term"
+                                            name="term"
+                                            value={this.state.term}
+                                            onChange={(e) => this.handleInputChanges(e)}
+                                            className="form-control" 
+                                            placeholder="Search in your todos..."
+                                            aria-label="Search box"
+                                        />
+                                        <div className="input-group-append">
+                                            <button className="btn btn-secondary" type="submit">
+                                                <FontAwesomeIcon className="mr-1" icon={faSearch} />Search
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            {submitSuccess && (
-                                <div className="alert alert-success fade show h6" role="alert">
-                                    <FontAwesomeIcon className="text-success" icon={faCheck} /> <strong>Congrats!</strong> Your new todo was successfully submitted.
-                                </div>
-                            )}
-                            <input
-                                type="text"
-                                id="ownerId"
-                                name="ownerId"
-                                className="form-control"
-                                defaultValue={this.state.ownerId}
-                                hidden
-                                />
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
             <div className="container">
                 <section className="row">
-                    <div className="col-12 form-wrapper">
-                        <form onSubmit={this.processSearchSubmission} noValidate={true}>
+                    <div className="col-12">
+                        <form onSubmit={this.processFormSubmission} noValidate={true}>
                             <div className="form-group">
-                                <div className="input-group mb-3">
+                                <div className="input-group input-group-lg mb-3">
                                     <input 
                                         type="text" 
-                                        id="term"
-                                        name="term"
-                                        value={this.state.term}
-                                        onChange={(e) => this.handleInputChanges(e)}
+                                        id="title"
+                                        name="title"
+                                        value={this.state.title}
+                                        onChange={(e) => this.handleInputChanges(e) }
                                         className="form-control" 
-                                        placeholder="Search in your todos..."
-                                        aria-label="Search box"
+                                        placeholder="Enter your new todo here..."
+                                        aria-label="Todo title" 
+                                        ref={(input) => { this.focusInput = input; }}
                                     />
                                     <div className="input-group-append">
-                                        <button className="btn btn-secondary" type="submit"><FontAwesomeIcon className="mr-1" icon={faSearch} />Search</button>
+                                        <button className="btn btn-primary" type="submit">Add</button>
                                     </div>
                                 </div>
+                                {submitSuccess && (
+                                    <div className="alert alert-success fade show h6" role="alert">
+                                        <FontAwesomeIcon className="text-success" icon={faCheck} /> <strong>Congrats!</strong> 
+                                        Your new todo was successfully submitted.
+                                    </div>
+                                )}
+                                <input
+                                    type="text"
+                                    id="ownerId"
+                                    name="ownerId"
+                                    className="form-control"
+                                    defaultValue={this.state.ownerId}
+                                    hidden
+                                    />
                             </div>
                         </form>
-                    </div>
-                    <div className="col-12">
                         { todos && (
                             <React.Fragment>
                                 <ul className="list-group mb-4"> 
-                                    { todos.map((todo: { _id: number; deletedAt: any; completedAt: any;  title: React.ReactNode; description: React.ReactNode; createdAt: any; }) => (
+                                    { todos.map((todo: { 
+                                        _id: number; 
+                                        deletedAt: any; 
+                                        completedAt: any;  
+                                        title: React.ReactNode; 
+                                        description: React.ReactNode; 
+                                        createdAt: any; 
+                                    }) => (
                                         !todo.deletedAt && !todo.completedAt && (
                                             <React.Fragment key={todo._id}>
                                                 <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
                                                     <span className="d-flex">
-                                                        <button type="button" className="btn btn-sm btn-outline-success mr-3" onClick={() => this.completeTodo(todo._id)}><FontAwesomeIcon className="text-white" icon={faCheck} /></button>
-                                                            <div className="d-flex flex-column">
-                                                                <span>{todo.title}</span>
-                                                                <span className="small text-secondary">{todo.description}</span>
-                                                            </div>
+                                                        <button type="button" className="btn btn-sm btn-outline-success mr-3" onClick={() => this.completeTodo(todo._id)}>
+                                                            <FontAwesomeIcon className="text-white" icon={faCheck} />
+                                                        </button>
+                                                        <div className="d-flex flex-column">
+                                                            <span>{todo.title}</span>
+                                                            <span className="small text-secondary">{todo.description}</span>
+                                                        </div>
                                                     </span>
                                                     <span>
-                                                        <Link to={`/edit-todo/${todo._id}`} className="btn btn-sm btn-outline-dark mr-1">
+                                                        <Link to={`/edit-todo/${todo._id}`} className="btn btn-sm btn-primary mr-1">
                                                             <FontAwesomeIcon icon={faPenAlt}/>
                                                         </Link>
-                                                        <button type="button" className="btn btn-sm btn-outline-dark" onClick={() => this.deleteTodo(todo._id)}><FontAwesomeIcon icon={faTrashAlt} /></button>
+                                                        <button type="button" className="btn btn-sm btn-danger" onClick={() => this.deleteTodo(todo._id)}>
+                                                            <FontAwesomeIcon icon={faTrashAlt} />
+                                                        </button>
                                                     </span>
                                                 </li>
                                             </React.Fragment>
@@ -228,21 +249,36 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                 </ul>
                             
                                 <ul className="list-group"> 
-                                { todos.map((todo: { _id: number; deletedAt: any; completedAt: any;  title: React.ReactNode; description: React.ReactNode; createdAt: any; }) => (
+                                { todos.map((todo: { 
+                                    _id: number; 
+                                    deletedAt: any; 
+                                    completedAt: any;  
+                                    title: React.ReactNode; 
+                                    description: React.ReactNode; 
+                                    createdAt: any; 
+                                }) => (
                                     !todo.deletedAt && todo.completedAt && (
                                         <React.Fragment key={todo._id}>
                                             <li className="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
                                                 <span className="d-flex">
-                                                    <button type="button" className="btn btn-sm btn-primary mr-3" onClick={() => this.activateTodo(todo._id)}><FontAwesomeIcon className="text-light" icon={faUndoAlt} /></button>
-                                                        <div className="d-flex flex-column">
-                                                            <span>
-                                                                <span className="mr-2">{todo.title}</span> <span className="badge badge-pill badge-success mb-2">Done: {formatTimestamp(todo.completedAt)}</span>
+                                                    <button type="button" className="btn btn-sm btn-success mr-3" onClick={() => this.activateTodo(todo._id)}>
+                                                        <FontAwesomeIcon className="text-light" icon={faUndoAlt} />
+                                                    </button>
+                                                    <div className="d-flex flex-column">
+                                                        <span>
+                                                            <span className="mr-2">
+                                                                {todo.title}
+                                                            </span> <span className="badge badge-pill badge-success mb-2">
+                                                                Done: { formatTimestamp(todo.completedAt, 'yy/MM/dd')}
                                                             </span>
-                                                            <span className="small text-secondary">{todo.description}</span>
-                                                        </div>
+                                                        </span>
+                                                        <span className="small text-secondary">{todo.description}</span>
+                                                    </div>
                                                 </span>
                                                 <span>
-                                                    <button type="button" className="btn btn-sm btn-outline-dark" onClick={() => this.deleteTodo(todo._id)}><FontAwesomeIcon icon={faTrashAlt} /></button>
+                                                    <button type="button" className="btn btn-sm btn-danger" onClick={() => this.deleteTodo(todo._id)}>
+                                                        <FontAwesomeIcon icon={faTrashAlt} />
+                                                    </button>
                                                 </span>
                                             </li>
                                         </React.Fragment>

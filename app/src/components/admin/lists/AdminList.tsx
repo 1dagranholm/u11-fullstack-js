@@ -71,11 +71,10 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
                 <table className="table user-list">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th><span>Name</span></th>
-                            <th><span>Created</span></th>
+                            <th className="hidden-xs"></th>
+                            <th><span>User</span></th>
+                            <th className="hidden-xs"><span>Created</span></th>
                             <th><span>Status</span></th>
-                            <th><span>Email</span></th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -83,13 +82,14 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
                     {users &&
                         users.map((user) => (
                         <tr key={user._id}>
-                            <td>
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="50px" alt="{user.firstName + ' ' + user.lastName}" />
+                            <td className="hidden-xs">
+                                <img src={`${process.env.PUBLIC_URL}/avatars/${ Math.floor(Math.random() * (8 - 1) + 1) }.png`} width="50px" alt="{user.firstName + ' ' + user.lastName}" />
                             </td>
                             <td>
                                 <strong>{user.firstName + ' ' + user.lastName}</strong><br/>
+                                <a href={`mailto:${user.email}`}>{user.email}</a>
                             </td>
-                            <td>{ formatTimestamp(user.createdAt, 'yy/MM/dd')}</td>
+                            <td className="hidden-xs">{ formatTimestamp(user.createdAt, 'yy/MM/dd')}</td>
                             <td>
                             { !user.deletedAt && (
                                 <span className="badge badge-success">Active</span>
@@ -99,9 +99,6 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
                                     Deleted { formatTimestamp(user.deletedAt, 'yy/MM/dd')}
                                 </span>
                             )}
-                            </td>
-                            <td>
-                                <a href={`mailto:${user.email}`}>{user.email}</a>
                             </td>
                             <td>
                                 <div className="d-flex flex-row justify-content-between align-items-center">

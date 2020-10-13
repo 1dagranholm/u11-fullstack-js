@@ -26,7 +26,7 @@ const Navbar = () => {
     };
 
     return (
-        <section id="navbar" className="navbar-dark bg-dark">
+        <section id="navbar" className="navbar-dark bg-primary">
           <nav className="navbar container justify-content-between">
                 <Link to="/" className="navbar-brand" href="#"><FontAwesomeIcon className="mr-1" icon={faListAlt} /> TodoApp</Link>
                 {user && (

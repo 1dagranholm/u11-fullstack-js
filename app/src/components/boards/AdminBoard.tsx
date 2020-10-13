@@ -31,7 +31,7 @@ const AdminBoard = () => {
     <div className="jumbotron jumbotron-fluid">
       <div className="container">
         <h1 className="display-4">{content}</h1>
-          <Link to={"/create-user"} className="btn btn-info mt-4 mr-2">
+          <Link to={"/create-user"} className="btn btn-primary mt-4 mr-2">
               Create new user
           </Link>
           <Link to={"/create-todo"} className="btn btn-secondary mt-4">
