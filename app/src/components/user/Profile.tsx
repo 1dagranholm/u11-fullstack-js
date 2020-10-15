@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AuthService from "../../services/auth.services";
 
-const Profile = () => {
+import AuthService from "../../services/auth.services";
+import { formatTimestamp } from "../../helper";
+
+const Profile = (props: any) => {
 
   const user = AuthService.getCurrentUser();
-    const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [showAdminBoard, setShowAdminBoard] = useState(false);
     
-    useEffect(() => {
-        const currentUser = AuthService.getCurrentUser();
+  useEffect(() => {
+    const currentUser = AuthService.getCurrentUser();
 
-        if (currentUser) {
-            setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
-        }
+    if (currentUser) {
+      setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
+    }
     
-    }, []);
+  }, []);
 
   return (
   <React.Fragment>
     <div className="jumbotron jumbotron-fluid">
-        <div className="container">
+        <div className="container mb-4">
           <div className="row">
             <div className="col-12">
-              <h1 className="display-4"><strong>{user.firstName} {user.lastName}</strong> Profile</h1>
-              <ul className="list-group"> 
+              <span className="muted-text">My profile</span>
+              <h1 className="display-4"><strong>{user.firstName} {user.lastName}</strong></h1>
+              <ul className="list-group mt-3"> 
                   <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
                     <strong>E-mail:</strong> {user.email}
                   </li> 
@@ -34,6 +37,9 @@ const Profile = () => {
                     <strong>Authority:</strong>
                       {user.roles &&
                       user.roles.map((role: React.ReactNode, index: string | number | null | undefined) => <span key={index}>{role}</span>)}
+                  </li>
+                  <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
+                    <strong>Account created:</strong> { formatTimestamp(user.createdAt) }
                   </li>
                 </ul>
               </div>
