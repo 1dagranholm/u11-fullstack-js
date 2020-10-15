@@ -103,6 +103,9 @@ exports.signup = (req, res) => {
         res.status(200).send({
           id: user._id,
           email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          createdAt: user.createdAt,
           roles: authorities,
           accessToken: token,
           expiresIn: 86400

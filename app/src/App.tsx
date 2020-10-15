@@ -4,9 +4,6 @@ import { Switch, Route, withRouter} from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { useState, useEffect } from "react";
-import AuthService from "./services/auth.services";
-
 import Navbar from "./components/core/Navbar";
 import Footer from "./components/core/Footer";
 
@@ -25,18 +22,6 @@ import AdminBoard from "./components/boards/AdminBoard";
 import UserMyTodos from "./components/todo/UserMyTodos";
 
 const App = () => {
-
-    const [, setShowAdminBoard] = useState(false);
-    const [, setCurrentUser] = useState("");
-
-    useEffect(() => {
-        const user = AuthService.getCurrentUser();
-
-        if (user) {
-            setCurrentUser(user);
-            setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-        }
-    }, []);
 
     return (
         <React.Fragment>

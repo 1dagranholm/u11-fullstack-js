@@ -20,7 +20,6 @@ export interface IFormState {
     [key: string]: any;
     values: IValues[];
     submitSuccess: boolean;
-    loading: boolean;
 }
 
 class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
@@ -37,7 +36,6 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
             createdAt: undefined,
             updatedAt: undefined,
             values: [],
-            loading: false,
             submitSuccess: false,
             todos:[], 
             term: "",
