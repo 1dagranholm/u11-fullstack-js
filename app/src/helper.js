@@ -7,3 +7,7 @@ export function formatTimestamp(timestamp, timestampFormat = "HH:mm, d MMMM yyyy
         return;
     }
 }
+
+export function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }

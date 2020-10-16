@@ -2,9 +2,14 @@ import * as React from "react";
 import axios from "axios";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
+import { capitalizeFirstLetter } from "../../helper";
+
+export interface IState {
+    roles: any[];
+}
 export interface IValues {
     password: string;
-    role: string;
+    roles: string;
     email: string;
     firstName: string;
     lastName: string;
@@ -16,7 +21,6 @@ export interface IFormState {
     [key: string]: any;
     values: IValues[];
     submitSuccess: boolean;
-    loading: boolean;
 }
 
 class CreateUser extends React.Component<RouteComponentProps, IFormState> {
@@ -24,7 +28,7 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
         super(props);
         this.state = {
             password: "",
-            role: "user",
+            role: "",
             email: "",
             firstName: "",
             lastName: "",
@@ -32,9 +36,17 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
             createdAt: undefined,
             updatedAt: undefined,
             values: [],
-            loading: false,
             submitSuccess: false,
+            roles: [],
         };
+    }
+
+    public async componentDidMount() {
+        const roles = await axios.get(`http://localhost:8080/api/roles`).then((response) => {
+            return response.data.data;
+        });
+
+        this.setState({ roles });
     }
 
     private processFormSubmission = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -42,7 +54,7 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
         this.setState({ loading: true });
         const formData = {
             password: this.state.password,
-            role: this.state.role,
+            roles: this.state.role,
             email: this.state.email,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -50,11 +62,11 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
             createdAt: this.state.createdAt,
             updatedAt: this.state.updatedAt,
         };
-        this.setState({ submitSuccess: true, values: [...this.state.values, formData], loading: false });
+        this.setState({ submitSuccess: true, values: [...this.state.values, formData] });
         axios.post(`http://localhost:8080/api/users/`, formData).then((data) => [
-            setTimeout(() => {
-                this.props.history.push("/admin");
-            }, 1500),
+            // setTimeout(() => {
+            //     this.props.history.push("/admin");
+            // }, 1500),
         ]);
     };
 
@@ -70,11 +82,12 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
         this.setState({
             [e.currentTarget.name]: e.currentTarget.value,
         });
-        this.setState({ role: e.currentTarget.value });
+        console.log(this.state.role);
+        // this.setState({ role: e.currentTarget.value });
     };
 
     public render() {
-        const { submitSuccess } = this.state;
+        const { submitSuccess, roles } = this.state;
 
         return (
             <React.Fragment>
@@ -88,40 +101,7 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
                         )}
                         <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
                             <div className="form-group">
-                                <label htmlFor="password"> Password </label>
-                                <input
-                                    type="text"
-                                    id="password"
-                                    onChange={(e) => this.handleInputChanges(e)}
-                                    name="password"
-                                    className="form-control"
-                                    placeholder="Set a password for the user"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="firstName"> First Name </label>
-                                <input
-                                    type="text"
-                                    id="firstName"
-                                    onChange={(e) => this.handleInputChanges(e)}
-                                    name="firstName"
-                                    className="form-control"
-                                    placeholder="Enter user's first name"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="lastName"> Last Name </label>
-                                <input
-                                    type="text"
-                                    id="lastName"
-                                    onChange={(e) => this.handleInputChanges(e)}
-                                    name="lastName"
-                                    className="form-control"
-                                    placeholder="Enter user's last name"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="email"> E-mail </label>
+                                <label htmlFor="email"> E-mail <span className="small text-success">(required)</span></label>
                                 <input
                                     type="email"
                                     id="email"
@@ -132,16 +112,58 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="role">Role</label>
-                                <select
-                                    name="role"
-                                    id="role"
-                                    value={this.state.role}
-                                    onChange={(e) => this.handleOptionChanges(e)}
-                                >
-                                    <option value="user">Standard User</option>
-                                    <option value="admin">Admin</option>
-                                </select>
+                                <label htmlFor="password"> Password <span className="small text-success">(required)</span></label>
+                                <input
+                                    type="text"
+                                    id="password"
+                                    onChange={(e) => this.handleInputChanges(e)}
+                                    name="password"
+                                    className="form-control"
+                                    placeholder="Set a password for the user"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="firstName"> First Name <span className="small text-success">(required)</span></label>
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    onChange={(e) => this.handleInputChanges(e)}
+                                    name="firstName"
+                                    className="form-control"
+                                    placeholder="Enter user's first name"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="lastName"> Last Name <span className="small text-success">(required)</span></label>
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    onChange={(e) => this.handleInputChanges(e)}
+                                    name="lastName"
+                                    className="form-control"
+                                    placeholder="Enter user's last name"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="role">Role <span className="small text-success">(required)</span></label>
+                                
+                                {roles && (
+                                    <React.Fragment>
+                                        <select
+                                            className="custom-select"
+                                            name="role"
+                                            id="role"
+                                            value={this.state.role}
+                                            onChange={(e) => this.handleOptionChanges(e)}
+                                            required
+                                            >
+                                            <option >Select user</option>
+                                            { roles.map((role: any) => (
+                                                <option className="text-capitalize" key={role._id} value={role._id}>{ capitalizeFirstLetter(role.name) }</option>
+                                            ))}
+                                        </select>
+                                    </React.Fragment>
+                                )}
                             </div>
                             <div className="form-group mt-4">
                                 <button className="btn btn-success" type="submit">

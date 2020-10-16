@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faListAlt, faUser, faUnlockAlt  } from '@fortawesome/free-solid-svg-icons';
+import { faListAlt, faUser, faUnlockAlt, faSignOutAlt, faCheckSquare  } from '@fortawesome/free-solid-svg-icons';
 
 import AuthService from "../../services/auth.services";
 
 const Navbar = () => {
 
     const user = AuthService.getCurrentUser();
-    const [showSuperAdminBoard, setShowSuperAdminBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     
     useEffect(() => {
         const currentUser = AuthService.getCurrentUser();
 
         if (currentUser) {
-            setShowSuperAdminBoard(currentUser.roles.includes("ROLE_SUPERADMIN"));
             setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
         }
     
@@ -44,46 +42,37 @@ const Navbar = () => {
                 {user && (
                 <div className="collapse navbar-collapse dropdown-menu-right text-right" id="navbarsExample01">
                     
-                    {showAdminBoard && (
-                        <ul className="navbar-nav mr-auto mt-3">
-                            <li className="nav-item">
-                                    <Link to={"/admin"} className="nav-link"><FontAwesomeIcon className="mr-1" icon={faUnlockAlt} /> <strong>Admin pages</strong></Link>
-                            </li>
-                        </ul>
-                    )}
                     
                     {user && (
                         <ul className="navbar-nav mr-auto mt-3">
-                            <li className="text-light small mb-1">
-                                <FontAwesomeIcon className="mr-1" icon={faUser} /> <strong>{user.email}</strong>
+                            <li className="nav-item mb-3">
+                                <Link to="/my-todos" className="nav-link">
+                                    <FontAwesomeIcon className="mr-2" icon={faCheckSquare} /> 
+                                        <strong>My Todo-list</strong>
+                                </Link>
                             </li>
-                            <li className="nav-item">
-                                <Link to="/my-todos" className="nav-link">My todos</Link>
+                            <li className="nav-item text-info mb-1">
+                                Logged in as: <strong>{user.firstName} {user.lastName}</strong> 
                             </li>
-                            <li className="nav-item">
-                                <Link to="/profile" className="nav-link">My profile</Link>
+                            <li className="nav-item ">
+                                <Link to="/profile" className="nav-link">
+                                    <FontAwesomeIcon className="mr-1" icon={faUser} /> View profile
+                                </Link>
                             </li>
-                            <li className="nav-item mb-2">
-                                <Link to="/" className="nav-link" onClick={logOut}>Log out</Link>
+                            {showAdminBoard && (
+                                <li className="nav-item mt-2">
+                                        <Link to={"/admin"} className="nav-link text-info">
+                                            <FontAwesomeIcon className="mr-1" icon={faUnlockAlt} /> <strong>Admin pages</strong>
+                                        </Link>
+                                </li>
+                            )}
+                            <li className="nav-item mt-2 mb-2">
+                                <Link to="/" className="nav-link text-secondary" onClick={logOut}>
+                                    <FontAwesomeIcon className="mr-1" icon={faSignOutAlt} /> Log out
+                                </Link>
                             </li>
                         </ul>
                     )}
-
-                    {showSuperAdminBoard && (
-                        <ul className="navbar-nav mr-auto">
-                            <li><h4 className="text-light">Admin</h4></li>
-                            <li className="nav-item">
-                                <Link to={"/superadmin"} className="nav-link">Admin pages</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to={"/create-user"} className="nav-link">Admin: Create users</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to={"/create-todo"} className="nav-link">Admin: Create todos</Link>
-                            </li>
-                        </ul>
-                    )}
-
                 </div>
                 )}
 

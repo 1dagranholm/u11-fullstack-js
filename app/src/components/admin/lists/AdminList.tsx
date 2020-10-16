@@ -10,7 +10,6 @@ import { faTrashAlt, faPenAlt, faUndo } from '@fortawesome/free-solid-svg-icons'
 export interface IState {
     roles: any[];
     admin: any[];
-    userList: any[];
 }
 
 class AdminList extends React.Component<RouteComponentProps, IState> {
@@ -19,7 +18,6 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
         this.state = {
             roles: [],
             admin: [],
-            userList: []
         };
     } 
 

@@ -259,7 +259,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                         <React.Fragment key={todo._id}>
                                             <li className="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
                                                 <span className="d-flex">
-                                                    <button type="button" className="btn btn-sm btn-success mr-3" onClick={() => this.activateTodo(todo._id)}>
+                                                    <button type="button" className="btn btn-sm btn-info mr-3" onClick={() => this.activateTodo(todo._id)}>
                                                         <FontAwesomeIcon className="text-light" icon={faUndoAlt} />
                                                     </button>
                                                     <div className="d-flex flex-column">
