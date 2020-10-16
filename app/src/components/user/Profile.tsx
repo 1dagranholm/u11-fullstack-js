@@ -24,7 +24,7 @@ const Profile = (props: any) => {
         <div className="container mb-4">
           <div className="row">
             <div className="col-12">
-              <span className="muted-text">My profile</span>
+              <span className="text-success">My profile</span>
               <h1 className="display-4"><strong>{user.firstName} {user.lastName}</strong></h1>
               <ul className="list-group mt-3"> 
                   <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
