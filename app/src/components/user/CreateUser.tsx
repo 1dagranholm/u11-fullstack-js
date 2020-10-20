@@ -176,7 +176,7 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
                                 )}
                             </div>
                             <div className="form-group">
-                                <label htmlFor="avatar"> Avatar </label>
+                                <label htmlFor="avatar"> Set avatar </label>
                                 <ImagePicker 
                                 images={avatarList.map((image) => ({src: `${process.env.PUBLIC_URL}/avatars/avatar${image}.png`, value: image, alt: image}))}
                                 onPick={this.onPick}

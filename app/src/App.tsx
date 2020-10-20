@@ -16,6 +16,7 @@ import EditTodo from "./components/todo/EditTodo";
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
 import Profile from "./components/user/Profile";
+import EditMyProfile from "./components/user/EditMyProfile";
 
 import UserBoard from "./components/boards/UserBoard";
 import AdminBoard from "./components/boards/AdminBoard";
@@ -33,6 +34,7 @@ const App = () => {
                     <Route exact path="/register" component={Register} />
 
                     <Route exact path="/profile" component={Profile} />
+                    <Route exact path="/edit-profile" component={EditMyProfile} />
                     <Route exact path="/my-todos" component={UserMyTodos} />
 
                     <Route path="/user" component={UserBoard} />
