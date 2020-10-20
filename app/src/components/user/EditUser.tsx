@@ -32,7 +32,7 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
             submitSuccess: false,
             role: "",
             roles: [],
-            avatar:  ""
+            avatar:  this.state.avatar
         };
         this.onPick = this.onPick.bind(this)
     }
@@ -171,9 +171,8 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
                                 <div className="form-group">
                                     <label htmlFor="avatar"> Avatar </label>
                                     <ImagePicker 
-                                    images={avatarList.map((image, i) => ({src: `${process.env.PUBLIC_URL}/avatars/avatar${image}.png`, value: image, alt: image}))}
+                                    images={avatarList.map((image) => ({src: `${process.env.PUBLIC_URL}/avatars/avatar${image}.png`, value: image, alt: image}))}
                                     onPick={this.onPick}
-                                    
                                     />
                                 </div>
                                 <div className="form-group mt-4">
