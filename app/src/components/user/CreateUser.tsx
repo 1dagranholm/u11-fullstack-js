@@ -82,8 +82,6 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
         this.setState({
             [e.currentTarget.name]: e.currentTarget.value,
         });
-        console.log(this.state.role);
-        // this.setState({ role: e.currentTarget.value });
     };
 
     public render() {
@@ -157,7 +155,7 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
                                             onChange={(e) => this.handleOptionChanges(e)}
                                             required
                                             >
-                                            <option >Select user</option>
+                                            <option >Set role</option>
                                             { roles.map((role: any) => (
                                                 <option className="text-capitalize" key={role._id} value={role._id}>{ capitalizeFirstLetter(role.name) }</option>
                                             ))}

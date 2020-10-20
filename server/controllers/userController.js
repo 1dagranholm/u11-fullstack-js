@@ -45,6 +45,7 @@ exports.new = function (req, res) {
   user.email = req.body.email;
   user.firstName = req.body.firstName;
   user.lastName = req.body.lastName;
+  user.avatar = req.body.avatar;
 
   user.save((err) => {
     restApiResponse(err, ['Unable to save new user', 'New user created!'], user, res);
@@ -67,6 +68,7 @@ exports.update = function (req, res) {
       user.email = req.body.email ? req.body.email : user.email;
       user.firstName = req.body.firstName ? req.body.firstName : user.firstName;
       user.lastName = req.body.lastName ? req.body.lastName : user.lastName;
+      user.avatar = req.body.avatar ? req.body.avatar : user.avatar;
 
       user.save((saveErr) => {
         restApiResponse(saveErr, ['Unable to update user info', 'User info updated'], user, res);

@@ -83,7 +83,11 @@ class UserList extends React.Component<RouteComponentProps, IState> {
                         users.map((user) => (
                         <tr key={user._id}>
                             <td className="hidden-xs">
-                                <img src={`${process.env.PUBLIC_URL}/avatars/${ Math.floor(Math.random() * (8 - 1) + 1) }.png`} width="50px" alt="{user.firstName + ' ' + user.lastName}" />
+                                { !user.avatar ? (
+                                    <img src={`${process.env.PUBLIC_URL}/avatars/avatar0.png`} width="50px" alt="{user.firstName + ' ' + user.lastName}" />
+                                ) : (
+                                    <img src={`${process.env.PUBLIC_URL}/avatars/avatar${ user.avatar }.png`} width="50px" alt="{user.firstName + ' ' + user.lastName}" />
+                                )}
                             </td>
                             <td>
                                 <strong>{user.firstName + ' ' + user.lastName}</strong><br/>
