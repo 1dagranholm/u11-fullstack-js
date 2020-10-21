@@ -13,7 +13,11 @@
 
 /* Table styling */
 table.styled-list {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+}
+
+table.styled-list > thead {
+  font-size: 0.9rem !important;
 }
 
 table.styled-list th:last-child {

@@ -4,7 +4,9 @@ import axios from "axios";
 import { formatTimestamp } from "../../helper";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPenAlt, faUndo } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faUndo } from '@fortawesome/free-solid-svg-icons';
+
+import Tooltip from '@material-ui/core/Tooltip';
 
 export interface IState {
     todos: any[];
@@ -88,7 +90,6 @@ class ViewTodos extends React.Component<RouteComponentProps<any>, IState> {
                                         <th scope="col">Title</th>
                                         <th className="hidden-xs" scope="col">Description</th>
                                         <th scope="col">Created</th>
-                                        <th className="hidden-xs" scope="col">Updated</th>
                                         <th className="hidden-xs" scope="col">Completed</th>
                                         <th scope="col">Deleted</th>
                                         <th scope="col">Actions</th>
@@ -98,38 +99,41 @@ class ViewTodos extends React.Component<RouteComponentProps<any>, IState> {
                                     {userTodos &&
                                         userTodos.map((todo: any) => (
                                             <tr key={todo._id}>
-                                                <td className="text-info">{todo.title}</td>
-                                                <td className="small hidden-xs">{todo.description}</td>
+                                                <td className="overflow-hidden"><strong>{todo.title}</strong></td>
+                                                <td className="overflow-hidden hidden-xs">{todo.description}</td>
                                                 <td>{ formatTimestamp(todo.createdAt, 'yy/MM/dd HH:mm')}</td>
-                                                <td className="hidden-xs">{ formatTimestamp(todo.updatedAt, 'yy/MM/dd HH:mm')}</td>
                                                 <td className="hidden-xs">{ formatTimestamp(todo.completedAt, 'yy/MM/dd HH:mm')}</td>
                                                 <td>{ formatTimestamp(todo.deletedAt, 'yy/MM/dd HH:mm')}</td>
                                                 <td>
                                                     <div className="d-flex justify-content-center">
                                                         <div className="btn-group" style={{ marginBottom: "20px" }}>
+                                                        <Tooltip title="Copy Todo-ID to clipboard">
                                                             <button 
-                                                                className="btn btn-sm btn-secondary icon-button"
+                                                                className="btn btn-sm btn-primary icon-button"
                                                                 onClick={() => {navigator.clipboard.writeText(todo._id)}}>
                                                                     <strong>ID</strong>
                                                             </button> 
-                                                            <Link
-                                                                to={`edit-todo/${todo._id}`}
-                                                                className="btn btn-sm btn-primary icon-button"
-                                                            >
-                                                                <FontAwesomeIcon icon={faPenAlt}/>
-                                                            </Link>
+                                                        </Tooltip>
+                                                        { !todo.deletedAt && (
+                                                        <Tooltip title="Delete this todo">  
                                                             <button
                                                                 className="btn btn-sm btn-danger icon-button"
                                                                 onClick={() => this.deleteTodo(todo._id)}
                                                             >
                                                                 <FontAwesomeIcon icon={faTrashAlt} />
                                                             </button>
+                                                        </Tooltip>
+                                                        )}
+                                                        { todo.deletedAt && (
+                                                        <Tooltip title="Restore this todo">
                                                             <button
                                                                 className="btn btn-sm btn-success icon-button"
                                                                 onClick={() => this.restoreTodo(todo._id)}
                                                             >
                                                                 <FontAwesomeIcon icon={faUndo} />
                                                             </button>
+                                                        </Tooltip>
+                                                        )}
                                                         </div>
                                                     </div>
                                                 </td>

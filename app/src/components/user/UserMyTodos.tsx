@@ -1,10 +1,15 @@
 import * as React from "react";
 import axios from "axios";
+import { RouteComponentProps, withRouter, Link } from "react-router-dom";
+
+import AuthService from "../../services/auth.services";
+
+import { formatTimestamp } from "../../helper";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPenAlt, faUndoAlt, faCheck, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { RouteComponentProps, withRouter, Link } from "react-router-dom";
-import { formatTimestamp } from "../../helper";
-import AuthService from "../../services/auth.services";
+
+import Tooltip from '@material-ui/core/Tooltip';
 
 export interface IValues {
     title: string;
@@ -224,21 +229,27 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                             <React.Fragment key={todo._id}>
                                                 <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
                                                     <span className="d-flex">
-                                                        <button type="button" className="btn btn-sm btn-outline-success mr-3" onClick={() => this.completeTodo(todo._id)}>
-                                                            <FontAwesomeIcon className="text-white" icon={faCheck} />
-                                                        </button>
+                                                        <Tooltip title="Check this Todo as completed">
+                                                            <button type="button" className="btn btn-sm btn-outline-success mr-3" onClick={() => this.completeTodo(todo._id)}>
+                                                                <FontAwesomeIcon className="text-white" icon={faCheck} />
+                                                            </button>
+                                                        </Tooltip>
                                                         <div className="d-flex flex-column">
                                                             <span>{todo.title}</span>
                                                             <span className="small text-secondary">{todo.description}</span>
                                                         </div>
                                                     </span>
                                                     <span>
-                                                        <Link to={`/edit-todo/${todo._id}`} className="btn btn-sm btn-primary mr-1">
-                                                            <FontAwesomeIcon icon={faPenAlt}/>
-                                                        </Link>
-                                                        <button type="button" className="btn btn-sm btn-danger" onClick={() => this.deleteTodo(todo._id)}>
-                                                            <FontAwesomeIcon icon={faTrashAlt} />
-                                                        </button>
+                                                        <Tooltip title="Edit this Todo">
+                                                            <Link to={`/edit-todo/${todo._id}`} className="btn btn-sm btn-primary mr-1">
+                                                                <FontAwesomeIcon icon={faPenAlt}/>
+                                                            </Link>
+                                                        </Tooltip>
+                                                        <Tooltip title="Delete this Todo">
+                                                            <button type="button" className="btn btn-sm btn-danger" onClick={() => this.deleteTodo(todo._id)}>
+                                                                <FontAwesomeIcon icon={faTrashAlt} />
+                                                            </button>
+                                                        </Tooltip>
                                                     </span>
                                                 </li>
                                             </React.Fragment>
@@ -259,9 +270,11 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                         <React.Fragment key={todo._id}>
                                             <li className="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
                                                 <span className="d-flex">
-                                                    <button type="button" className="btn btn-sm btn-info mr-3" onClick={() => this.activateTodo(todo._id)}>
-                                                        <FontAwesomeIcon className="text-light" icon={faUndoAlt} />
-                                                    </button>
+                                                    <Tooltip title="Restore this Todo">
+                                                        <button type="button" className="btn btn-sm btn-info mr-3" onClick={() => this.activateTodo(todo._id)}>
+                                                            <FontAwesomeIcon className="text-light" icon={faUndoAlt} />
+                                                        </button>
+                                                    </Tooltip>
                                                     <div className="d-flex flex-column">
                                                         <span>
                                                             <span className="mr-2">
@@ -274,9 +287,11 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                                     </div>
                                                 </span>
                                                 <span>
-                                                    <button type="button" className="btn btn-sm btn-danger" onClick={() => this.deleteTodo(todo._id)}>
-                                                        <FontAwesomeIcon icon={faTrashAlt} />
-                                                    </button>
+                                                    <Tooltip title="Delete this Todo">
+                                                        <button type="button" className="btn btn-sm btn-danger" onClick={() => this.deleteTodo(todo._id)}>
+                                                            <FontAwesomeIcon icon={faTrashAlt} />
+                                                        </button>
+                                                    </Tooltip>
                                                 </span>
                                             </li>
                                         </React.Fragment>

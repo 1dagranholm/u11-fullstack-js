@@ -7,6 +7,8 @@ import { formatTimestamp } from "../../../helper";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPenAlt, faUndo, faListAlt } from '@fortawesome/free-solid-svg-icons';
 
+import Tooltip from '@material-ui/core/Tooltip';
+
 export interface IState {
     roles: any[];
     admin: any[];
@@ -104,40 +106,50 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
                             </td>
                             <td>
                                 <div className="btn-group d-flex flex-row justify-content-center">
-                                    <button 
-                                        className="btn btn-sm btn-secondary icon-button"
-                                        onClick={() => {navigator.clipboard.writeText(user._id)}}>
-                                            <strong>ID</strong>
-                                    </button> 
-                                    <Link 
-                                        to={`/view-todos/user/${user._id}`}
-                                        className="btn btn-sm btn-info icon-button"
-                                    >
-                                        <FontAwesomeIcon icon={faListAlt}/>
-                                    </Link>
-                                    <Link 
-                                        to={`/edit-user/${user._id}`}
-                                        className="btn btn-sm btn-primary icon-button"
-                                    >
-                                        <FontAwesomeIcon icon={faPenAlt}/>
-                                    </Link>
-                                { !user.deletedAt && (
-                                    <button
-                                        type="button" 
-                                        className="btn btn-sm btn-danger icon-button"
-                                        onClick={() => this.deleteUser(user._id)}
-                                    >
-                                        <FontAwesomeIcon icon={faTrashAlt} />
-                                    </button>
-                                )}
-                                { user.deletedAt && (
-                                    <button
-                                        className="btn btn-sm btn-success icon-button"
-                                        onClick={() => this.restoreUser(user._id)}
-                                    >
-                                        <FontAwesomeIcon icon={faUndo} />
-                                    </button>
-                                )}
+                                    <Tooltip title="Copy User-ID to clipboard">
+                                        <button 
+                                            className="btn btn-sm btn-primary icon-button"
+                                            onClick={() => {navigator.clipboard.writeText(user._id)}}>
+                                                <strong>ID</strong>
+                                        </button> 
+                                    </Tooltip>
+                                    <Tooltip title="View this users Todo's">
+                                        <Link 
+                                            to={`/view-todos/user/${user._id}`}
+                                            className="btn btn-sm btn-info icon-button"
+                                        >
+                                            <FontAwesomeIcon icon={faListAlt}/>
+                                        </Link>
+                                    </Tooltip>
+                                    <Tooltip title="Edit this user">
+                                        <Link 
+                                            to={`/edit-user/${user._id}`}
+                                            className="btn btn-sm btn-warning icon-button"
+                                        >
+                                            <FontAwesomeIcon icon={faPenAlt}/>
+                                        </Link>
+                                    </Tooltip>
+                                    { !user.deletedAt && (
+                                    <Tooltip title="Remove this user">
+                                        <button
+                                            type="button" 
+                                            className="btn btn-sm btn-danger icon-button"
+                                            onClick={() => this.deleteUser(user._id)}
+                                        >
+                                            <FontAwesomeIcon icon={faTrashAlt} />
+                                        </button>
+                                    </Tooltip>
+                                    )}
+                                    { user.deletedAt && (
+                                    <Tooltip title="Remove this user">
+                                        <button
+                                            className="btn btn-sm btn-success icon-button"
+                                            onClick={() => this.restoreUser(user._id)}
+                                        >
+                                            <FontAwesomeIcon icon={faUndo} />
+                                        </button>
+                                    </Tooltip>
+                                    )}
                                 </div>
                             </td>
                         </tr>
