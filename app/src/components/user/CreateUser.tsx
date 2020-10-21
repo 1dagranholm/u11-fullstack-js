@@ -2,6 +2,9 @@ import * as React from "react";
 import axios from "axios";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
+import ImagePicker from 'react-image-picker'
+import 'react-image-picker/dist/index.css'
+
 import { capitalizeFirstLetter } from "../../helper";
 
 export interface IState {
@@ -16,6 +19,7 @@ export interface IValues {
     deletedAt: Date;
     createdAt: Date;
     updatedAt: Date;
+    avatar: Number;
 }
 export interface IFormState {
     [key: string]: any;
@@ -38,7 +42,9 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
             values: [],
             submitSuccess: false,
             roles: [],
+            avatar: 0,
         };
+        this.onPick = this.onPick.bind(this)
     }
 
     public async componentDidMount() {
@@ -61,12 +67,13 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
             deletedAt: this.state.deletedAt,
             createdAt: this.state.createdAt,
             updatedAt: this.state.updatedAt,
+            avatar: this.state.avatar,
         };
         this.setState({ submitSuccess: true, values: [...this.state.values, formData] });
         axios.post(`http://localhost:8080/api/users/`, formData).then((data) => [
-            // setTimeout(() => {
-            //     this.props.history.push("/admin");
-            // }, 1500),
+            setTimeout(() => {
+                this.props.history.push("/admin");
+            }, 1500),
         ]);
     };
 
@@ -82,12 +89,15 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
         this.setState({
             [e.currentTarget.name]: e.currentTarget.value,
         });
-        console.log(this.state.role);
-        // this.setState({ role: e.currentTarget.value });
     };
+
+    onPick(avatar: any) {
+        this.setState({ avatar: avatar.value })
+    }
 
     public render() {
         const { submitSuccess, roles } = this.state;
+        const avatarList = [1, 2, 3, 4, 5, 6, 7, 8];
 
         return (
             <React.Fragment>
@@ -157,13 +167,20 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
                                             onChange={(e) => this.handleOptionChanges(e)}
                                             required
                                             >
-                                            <option >Select user</option>
+                                            <option >Set role</option>
                                             { roles.map((role: any) => (
                                                 <option className="text-capitalize" key={role._id} value={role._id}>{ capitalizeFirstLetter(role.name) }</option>
                                             ))}
                                         </select>
                                     </React.Fragment>
                                 )}
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="avatar"> Set avatar </label>
+                                <ImagePicker 
+                                images={avatarList.map((image) => ({src: `${process.env.PUBLIC_URL}/avatars/avatar${image}.png`, value: image, alt: image}))}
+                                onPick={this.onPick}
+                                />
                             </div>
                             <div className="form-group mt-4">
                                 <button className="btn btn-success" type="submit">

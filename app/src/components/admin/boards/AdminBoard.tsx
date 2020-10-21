@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import UserService from "../../services/user.service";
+import UserService from "../../../services/user.service";
 
-import UserDashboard from "../admin/UserDashboard";
+import UserDashboard from "../UserDashboard";
 
 const AdminBoard = () => {
   const [content, setContent] = useState("");

@@ -34,9 +34,7 @@ const Profile = (props: any) => {
                     <strong>Id:</strong> {user.id}
                   </li> 
                   <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
-                    <strong>Authority:</strong>
-                      {user.roles &&
-                      user.roles.map((role: React.ReactNode, index: string | number | null | undefined) => <span key={index}>{role}</span>)}
+                    <strong>Authority:</strong>{user.roles}
                   </li>
                   <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
                     <strong>Account created:</strong> { formatTimestamp(user.createdAt) }
@@ -46,6 +44,9 @@ const Profile = (props: any) => {
               <div className="col-12">
                 <Link to={"/my-todos"} className="btn btn-success mt-4 mr-2">
                   See my Todo's
+                </Link>
+                <Link to={"/edit-profile"} className="btn btn-secondary mt-4 mr-2">
+                  Edit my profile
                 </Link>
                 {showAdminBoard && (
                 <Link to={"/admin"} className="btn btn-info mt-4 mr-2">

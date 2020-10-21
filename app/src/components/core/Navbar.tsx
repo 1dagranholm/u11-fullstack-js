@@ -42,7 +42,6 @@ const Navbar = () => {
                 {user && (
                 <div className="collapse navbar-collapse dropdown-menu-right text-right" id="navbarsExample01">
                     
-                    
                     {user && (
                         <ul className="navbar-nav mr-auto mt-3">
                             <li className="nav-item mb-3">
@@ -51,22 +50,22 @@ const Navbar = () => {
                                         <strong>My Todo-list</strong>
                                 </Link>
                             </li>
-                            <li className="nav-item text-info mb-1">
+                            <li className="nav-item text-info">
                                 Logged in as: <strong>{user.firstName} {user.lastName}</strong> 
                             </li>
-                            <li className="nav-item ">
+                            <li className="nav-item mb-3">
                                 <Link to="/profile" className="nav-link">
                                     <FontAwesomeIcon className="mr-1" icon={faUser} /> View profile
                                 </Link>
                             </li>
                             {showAdminBoard && (
-                                <li className="nav-item mt-2">
-                                        <Link to={"/admin"} className="nav-link text-info">
+                                <li className="nav-item">
+                                        <Link to={"/admin"} className="nav-link text-success">
                                             <FontAwesomeIcon className="mr-1" icon={faUnlockAlt} /> <strong>Admin pages</strong>
                                         </Link>
                                 </li>
                             )}
-                            <li className="nav-item mt-2 mb-2">
+                            <li className="nav-item mb-2">
                                 <Link to="/" className="nav-link text-secondary" onClick={logOut}>
                                     <FontAwesomeIcon className="mr-1" icon={faSignOutAlt} /> Log out
                                 </Link>
