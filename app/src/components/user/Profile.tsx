@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import AuthService from "../../services/auth.services";
 import { formatTimestamp } from "../../helper";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenAlt, faListAlt } from '@fortawesome/free-solid-svg-icons';
+
 const Profile = (props: any) => {
 
   const user = AuthService.getCurrentUser();
@@ -43,10 +46,10 @@ const Profile = (props: any) => {
               </div>
               <div className="col-12">
                 <Link to={"/my-todos"} className="btn btn-success mt-4 mr-2">
-                  See my Todo's
+                  <FontAwesomeIcon icon={faListAlt} /> See my Todo's
                 </Link>
                 <Link to={"/edit-profile"} className="btn btn-secondary mt-4 mr-2">
-                  Edit my profile
+                  <FontAwesomeIcon icon={faPenAlt} /> Edit my profile
                 </Link>
                 {showAdminBoard && (
                 <Link to={"/admin"} className="btn btn-info mt-4 mr-2">
