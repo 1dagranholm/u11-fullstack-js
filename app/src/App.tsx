@@ -11,18 +11,16 @@ import Home from "./components/Home";
 
 import CreateTodo from "./components/admin/CreateTodo";
 import ViewTodos from "./components/admin/ViewTodos";
+import EditUser from "./components/admin/EditUser";
+import UserBoard from "./components/admin/boards/UserBoard";
+import AdminBoard from "./components/admin/boards/AdminBoard";
 
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
 import Profile from "./components/user/Profile";
 import EditMyProfile from "./components/user/EditMyProfile";
 import CreateUser from "./components/user/CreateUser";
-import EditUser from "./components/user/EditUser";
 import EditTodo from "./components/user/EditTodo";
-
-import UserBoard from "./components/admin/boards/UserBoard";
-import AdminBoard from "./components/admin/boards/AdminBoard";
-
 import UserMyTodos from "./components/user/UserMyTodos";
 
 const App = () => {
