@@ -41,8 +41,6 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
         });
 
         this.setState({ user });
-
-        console.log(this.state.user);
     }
 
     private processFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {

@@ -13,6 +13,7 @@
         "@testing-library/user-event": "^7.1.2",
         "@types/jquery": "^3.5.2",
         "@types/react-router-dom": "^5.1.5",
+        "@types/react": "^16.0.25",
         "axios": "^0.20.0",
         "bootstrap": "^4.5.2",
         "date-fns": "^2.16.1",
@@ -47,5 +48,8 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "@types/history": "^4.7.3"
     }
 }

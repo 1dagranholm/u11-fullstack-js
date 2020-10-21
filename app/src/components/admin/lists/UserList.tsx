@@ -5,7 +5,7 @@ import axios from "axios";
 import { formatTimestamp } from "../../../helper";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPenAlt, faUndo } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPenAlt, faUndo, faListAlt } from '@fortawesome/free-solid-svg-icons';
 
 export interface IState {
     roles: any[];
@@ -68,7 +68,7 @@ class UserList extends React.Component<RouteComponentProps, IState> {
         return (
             <React.Fragment>
                 <h3>Users</h3>
-                <table className="table user-list mb-5">
+                <table className="table styled-list mb-5">
                     <thead>
                         <tr>
                             <th className="hidden-xs"></th>
@@ -105,36 +105,41 @@ class UserList extends React.Component<RouteComponentProps, IState> {
                             )}
                             </td>
                             <td>
-                                <div className="d-flex flex-row justify-content-between align-items-center">
-                                    <div>
-                                        <Link 
-                                            to={`/edit-user/${user._id}`}
-                                            className="btn btn-sm btn-primary icon-button"
-                                        >
-                                            <FontAwesomeIcon icon={faPenAlt}/>
-                                        </Link>
-                                    </div>
-                                    { !user.deletedAt && (
-                                    <div>
-                                        <button
-                                            type="button" 
-                                            className="btn btn-sm btn-danger icon-button"
-                                            onClick={() => this.deleteUser(user._id)}
-                                        >
-                                            <FontAwesomeIcon icon={faTrashAlt} />
-                                        </button>
-                                    </div>
-                                    )}
-                                    { user.deletedAt && (
-                                    <div>
-                                        <button
-                                            className="btn btn-sm btn-success icon-button"
-                                            onClick={() => this.restoreUser(user._id)}
-                                        >
-                                            <FontAwesomeIcon icon={faUndo} />
-                                        </button>
-                                    </div>
-                                    )}
+                                <div className="btn-group d-flex flex-row justify-content-around align-items-center">
+                                    <button 
+                                        className="btn btn-sm btn-secondary icon-button"
+                                        onClick={() => {navigator.clipboard.writeText(user._id)}}>
+                                            <strong>ID</strong>
+                                    </button> 
+                                    <Link 
+                                        to={`/view-todos/user/${user._id}`}
+                                        className="btn btn-sm btn-info icon-button"
+                                    >
+                                        <FontAwesomeIcon icon={faListAlt}/>
+                                    </Link>
+                                    <Link 
+                                        to={`/edit-user/${user._id}`}
+                                        className="btn btn-sm btn-primary icon-button"
+                                    >
+                                        <FontAwesomeIcon icon={faPenAlt}/>
+                                    </Link>
+                                { !user.deletedAt && (
+                                    <button
+                                        type="button" 
+                                        className="btn btn-sm btn-danger icon-button"
+                                        onClick={() => this.deleteUser(user._id)}
+                                    >
+                                        <FontAwesomeIcon icon={faTrashAlt} />
+                                    </button>
+                                )}
+                                { user.deletedAt && (
+                                    <button
+                                        className="btn btn-sm btn-success icon-button"
+                                        onClick={() => this.restoreUser(user._id)}
+                                    >
+                                        <FontAwesomeIcon icon={faUndo} />
+                                    </button>
+                                )}
                                 </div>
                             </td>
                         </tr>

@@ -12,11 +12,11 @@
 }
 
 /* Table styling */
-table.user-list {
+table.styled-list {
   font-size: 0.8rem;
 }
 
-table.user-list th:last-child {
+table.styled-list th:last-child {
   width: 92px;
 }
 
