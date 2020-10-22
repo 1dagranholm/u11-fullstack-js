@@ -1,9 +1,14 @@
 import * as React from "react";
 import axios from "axios";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 
 import ImagePicker from 'react-image-picker'
 import 'react-image-picker/dist/index.css'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash, faUser, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { capitalizeFirstLetter } from "../../helper";
 
@@ -43,8 +48,15 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
             submitSuccess: false,
             roles: [],
             avatar: 0,
+            hidden: true
         };
         this.onPick = this.onPick.bind(this)
+        this.toggleShow = this.toggleShow.bind(this);
+    }
+    
+    toggleShow(e: any) {
+        e.preventDefault();
+        this.setState({ hidden: !this.state.hidden });
     }
 
     public async componentDidMount() {
@@ -57,7 +69,31 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
 
     private processFormSubmission = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        this.setState({ loading: true });
+
+        if (this.state.email === "") {
+            return;
+        }
+
+        if (this.state.password === "") {
+            return;
+        }
+
+        if (this.state.firstName === "") {
+            return;
+        }
+
+        if (this.state.lastName === "") {
+            return;
+        }
+
+        if (this.state.roles === "") {
+            return;
+        }
+
+        if (this.state.avatar === "") {
+            return;
+        }
+
         const formData = {
             password: this.state.password,
             roles: this.state.role,
@@ -119,18 +155,30 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
                                     name="email"
                                     className="form-control"
                                     placeholder="Enter user's email address"
+                                    required
                                 />
+                                <small className="form-text text-muted">Please enter a valid e-mail adress.</small>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="password"> Password <span className="small text-success">(required)</span></label>
-                                <input
-                                    type="text"
-                                    id="password"
-                                    onChange={(e) => this.handleInputChanges(e)}
-                                    name="password"
-                                    className="form-control"
-                                    placeholder="Set a password for the user"
-                                />
+                            <label htmlFor="password"> Password <span className="small text-success">(required)</span></label>
+                            <div className="input-group">
+                                <div className="input-group">
+                                    <input
+                                        type={this.state.hidden ? "password" : "text"}
+                                        id="password"
+                                        onChange={(e) => this.handleInputChanges(e)}
+                                        name="password"
+                                        className="form-control"
+                                        placeholder="Set a password for the user"
+                                        pattern="^.{1,100}$"
+                                        required
+                                    />
+                                    <div className="input-group-append">
+                                        <Tooltip title="Toggle to show or hide password input">  
+                                            <button className="btn btn-info" onClick={this.toggleShow}><FontAwesomeIcon icon={this.state.hidden ? faEye : faEyeSlash} /></button>
+                                        </Tooltip>
+                                    </div>
+                                </div>
+                                <small className="form-text text-muted mb-3">Password must be minimum 8 characters, maximum 100 characters.</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="firstName"> First Name <span className="small text-success">(required)</span></label>
@@ -141,7 +189,10 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
                                     name="firstName"
                                     className="form-control"
                                     placeholder="Enter user's first name"
+                                    pattern="^.{1,30}$"
+                                    required
                                 />
+                                <small className="form-text text-muted">Only letters allowed.</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="lastName"> Last Name <span className="small text-success">(required)</span></label>
@@ -152,7 +203,10 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
                                     name="lastName"
                                     className="form-control"
                                     placeholder="Enter user's last name"
+                                    pattern="^.{1,50}$"
+                                    required
                                 />
+                                <small className="form-text text-muted">Only letters allowed.</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="role">Role <span className="small text-success">(required)</span></label>
@@ -167,25 +221,33 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
                                             onChange={(e) => this.handleOptionChanges(e)}
                                             required
                                             >
-                                            <option >Set role</option>
+                                            <option value="">Set role</option>
                                             { roles.map((role: any) => (
                                                 <option className="text-capitalize" key={role._id} value={role._id}>{ capitalizeFirstLetter(role.name) }</option>
                                             ))}
                                         </select>
                                     </React.Fragment>
                                 )}
+                                <small className="form-text text-muted">User must have a role.</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="avatar"> Set avatar </label>
                                 <ImagePicker 
                                 images={avatarList.map((image) => ({src: `${process.env.PUBLIC_URL}/avatars/avatar${image}.png`, value: image, alt: image}))}
                                 onPick={this.onPick}
+                                required
                                 />
                             </div>
                             <div className="form-group mt-4">
-                                <button className="btn btn-success" type="submit">
-                                    Create User
+                                <button className="btn btn-success mr-2" type="submit">
+                                    <FontAwesomeIcon className="mr-1" icon={faUser} /> Create User
                                 </button>
+                                <Link 
+                                    to="/admin"
+                                    className="btn btn-primary"
+                                >
+                                    <FontAwesomeIcon icon={faArrowLeft}/> Cancel and get back
+                                </Link>
                             </div>
                         </form>
                     </div>

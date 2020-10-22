@@ -7,8 +7,10 @@ import 'react-image-picker/dist/index.css'
 
 import AuthService from "../../services/auth.services";
 
+import Tooltip from '@material-ui/core/Tooltip';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEye, faEyeSlash, faSave } from '@fortawesome/free-solid-svg-icons';
 
 export interface IValues {
     [key: string]: any;
@@ -20,6 +22,7 @@ export interface IFormState {
     submitSuccess: boolean;
     avatar: Number;
     currentUser: string;
+    hidden: boolean;
 }
 
 class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState> {
@@ -32,8 +35,15 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
             submitSuccess: false,
             avatar:  0,
             currentUser: "",
+            hidden: true
         };
-        this.onPick = this.onPick.bind(this)
+        this.onPick = this.onPick.bind(this);
+        this.toggleShow = this.toggleShow.bind(this);
+    }
+
+    toggleShow(e: any) {
+        e.preventDefault();
+        this.setState({ hidden: !this.state.hidden });
     }
 
     public async componentDidMount() {
@@ -48,6 +58,18 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
 
     private processFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
+
+        if (this.state.user.firstName === "") {
+            return;
+        }
+
+        if (this.state.user.lastName === "") {
+            return;
+        }
+
+        if (this.state.user.email === "") {
+            return;
+        }
         
         const currentUser = AuthService.getCurrentUser();
         
@@ -102,7 +124,8 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
                             </div>
                         )}
                         <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
-                            <div className="form-group">
+                        <div className="form-row">
+                            <div className="form-group col-md-6">
                                 <label htmlFor="firstName"> First Name <span className="small text-success">(required)</span></label>
                                 <input
                                     type="text"
@@ -112,9 +135,11 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
                                     name="firstName"
                                     className="form-control"
                                     placeholder="Enter user's first name"
+                                    pattern="^.{1,30}$"
+                                    required
                                 />
                             </div>
-                            <div className="form-group">
+                            <div className="form-group col-md-6">
                                 <label htmlFor="lastName"> Last Name <span className="small text-success">(required)</span></label>
                                 <input
                                     type="text"
@@ -124,42 +149,54 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
                                     name="lastName"
                                     className="form-control"
                                     placeholder="Enter user's last name"
+                                    pattern="^.{1,50}$"
+                                    required
                                 />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="email"> E-mail <span className="small text-success">(required)</span></label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    defaultValue={this.state.user.email}
-                                    onChange={(e) => this.handleInputChanges(e)}
-                                    name="email"
-                                    className="form-control"
-                                    placeholder="Enter user's email address"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="password"> Password </label>
-                                <input
-                                    type="text"
-                                    id="password"
-                                    // defaultValue={this.state.user.password}
-                                    onChange={(e) => this.handleInputChanges(e)}
-                                    name="password"
-                                    className="form-control"
-                                    placeholder="Set new password"
-                                />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email"> E-mail <span className="small text-success">(required)</span></label>
+                            <input
+                                type="email"
+                                id="email"
+                                defaultValue={this.state.user.email}
+                                onChange={(e) => this.handleInputChanges(e)}
+                                name="email"
+                                className="form-control"
+                                placeholder="Enter user's email address"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password"> Password </label>
+                                <div className="input-group">
+                                    <input
+                                        type={this.state.hidden ? "password" : "text"}
+                                        id="password"
+                                        onChange={(e) => this.handleInputChanges(e)}
+                                        name="password"
+                                        className="form-control"
+                                        placeholder="Set new password"
+                                        pattern="^.{1,100}$"
+                                    />
+                                    <div className="input-group-append">
+                                            <Tooltip title="Toggle to show or hide password input">  
+                                                <button className="btn btn-info" onClick={this.toggleShow}><FontAwesomeIcon icon={this.state.hidden ? faEye : faEyeSlash} /></button>
+                                            </Tooltip>
+                                    </div>
+                                </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="avatar"> Set avatar </label>
                                 <ImagePicker 
                                 images={avatarList.map((image) => ({src: `${process.env.PUBLIC_URL}/avatars/avatar${image}.png`, value: image, alt: image}))}
                                 onPick={this.onPick}
+                                required
                                 />
                             </div>
                             <div className="form-group mt-4">
                                 <button className="btn btn-success" type="submit">
-                                    Edit User
+                                    <FontAwesomeIcon className="mr-1" icon={faSave} /> Save edit
                                 </button>
                             </div>
                         </form>

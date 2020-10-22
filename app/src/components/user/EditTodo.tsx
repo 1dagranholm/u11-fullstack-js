@@ -1,6 +1,10 @@
 import * as React from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import axios from "axios";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSave, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+
 import { formatTimestamp } from "../../helper";
 
 export interface IValues {
@@ -11,7 +15,6 @@ export interface IFormState {
     todo: any;
     values: IValues[];
     submitSuccess: boolean;
-    loading: boolean;
 }
 
 class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
@@ -21,7 +24,6 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
             id: this.props.match.params.id,
             todo: {},
             values: [],
-            loading: false,
             submitSuccess: false,
         };
     }
@@ -34,9 +36,13 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
 
     private processFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        this.setState({ loading: true });
+
+        if (this.state.todo.title === "") {
+            return;
+        }
+
         axios.patch(`http://localhost:8080/api/todos/${this.state.id}`, this.state.values).then((data) => {
-            this.setState({ submitSuccess: true, loading: false });
+            this.setState({ submitSuccess: true });
             setTimeout(() => {
                 this.props.history.push("/my-todos");
             }, 1500);
@@ -87,6 +93,8 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
                                                     name="title"
                                                     className="form-control"
                                                     placeholder="Enter title"
+                                                    pattern="^.{1,30}$"
+                                                    required
                                                 />
                                             </div>
                                             <div className="form-group">
@@ -99,12 +107,19 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
                                                     name="description"
                                                     className="form-control"
                                                     placeholder="Edit description"
+                                                    pattern="^.{1,50}$"
                                                 />
                                             </div>
-                                            <div className="form-group pull-right">
-                                                <button className="btn btn-success" type="submit">
-                                                    Save
+                                            <div className="form-group">
+                                                <button className="btn btn-success mr-2" type="submit">
+                                                    <FontAwesomeIcon className="mr-1" icon={faSave} /> Save
                                                 </button>
+                                                <Link 
+                                                    to="/my-todos"
+                                                    className="btn btn-secondary"
+                                                >
+                                                    <FontAwesomeIcon icon={faArrowLeft}/> Cancel and get back to Todo's
+                                                </Link>
                                             </div>
                                         </form>
                                     </div>

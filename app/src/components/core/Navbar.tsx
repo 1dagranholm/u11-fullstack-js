@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faListAlt, faUser, faUnlockAlt, faSignOutAlt, faCheckSquare  } from '@fortawesome/free-solid-svg-icons';
+import { faListAlt, faUser, faTools, faSignOutAlt, faCheckSquare  } from '@fortawesome/free-solid-svg-icons';
 
 import AuthService from "../../services/auth.services";
 
@@ -45,23 +46,23 @@ const Navbar = () => {
                     {user && (
                         <ul className="navbar-nav mr-auto mt-3">
                             <li className="nav-item mb-3">
-                                <Link to="/my-todos" className="nav-link">
+                                <Link to="/my-todos" className="nav-link text-info">
                                     <FontAwesomeIcon className="mr-2" icon={faCheckSquare} /> 
                                         <strong>My Todo-list</strong>
                                 </Link>
                             </li>
-                            <li className="nav-item text-info">
+                            <li className="nav-item text-white">
                                 Logged in as: <strong>{user.firstName} {user.lastName}</strong> 
                             </li>
                             <li className="nav-item mb-3">
-                                <Link to="/profile" className="nav-link">
+                                <Link to="/profile" className="nav-link text-success">
                                     <FontAwesomeIcon className="mr-1" icon={faUser} /> View profile
                                 </Link>
                             </li>
                             {showAdminBoard && (
-                                <li className="nav-item">
-                                        <Link to={"/admin"} className="nav-link text-success">
-                                            <FontAwesomeIcon className="mr-1" icon={faUnlockAlt} /> <strong>Admin pages</strong>
+                                <li className="nav-item mb-2">
+                                        <Link to={"/admin"} className="nav-link text-warning">
+                                            <FontAwesomeIcon className="mr-1" icon={faTools} /> <strong>Admin pages</strong>
                                         </Link>
                                 </li>
                             )}

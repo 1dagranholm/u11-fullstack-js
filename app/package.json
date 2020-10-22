@@ -52,6 +52,26 @@
         ]
     },
     "devDependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.12.1",
+        "@babel/preset-react": "^7.12.1",
         "@types/history": "^4.7.3"
-    }
+    },
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "modules": "commonjs"
+            }
+        ],
+        "@babel/preset-react",
+        "@babel/preset-typescript"
+    ],
+    "plugins": [
+        [
+            "@babel/plugin-proposal-class-properties",
+            {
+                "loose": true
+            }
+        ]
+    ]
 }

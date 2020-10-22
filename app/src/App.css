@@ -7,8 +7,22 @@
   background-color: rgb(224, 75, 155) !important;
 }
 
+.text-danger {
+  color: rgb(224, 75, 155) !important;
+}
+
 .jumbotron {
   padding: 1.5rem 0 !important;
+}
+
+.thumbnail {
+  width: 74px !important;
+  height: 74px !important;
+}
+
+div.checked > .icon {
+  width: 35px !important;
+  height: 35px !important;
 }
 
 /* Table styling */
@@ -51,6 +65,35 @@ table.styled-list th:last-child {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+}
+
+/* Form validation */
+input:invalid {
+  border: 2px solid rgb(224, 75, 155);
+}
+
+input:invalid:required {
+  background-image: rgba(224, 75, 154, 0.20);
+}
+
+select:invalid {
+  border: 2px solid rgb(224, 75, 155);
+}
+
+select:invalid:required {
+  background-image: rgba(224, 75, 154, 0.20);
+}
+
+input:valid {
+  border: 2px solid #18bc9c;
+}
+
+input:invalid {
+  box-shadow: 0 0 3px 1px #bdbdbd;;
+}
+
+input:focus:invalid {
+  box-shadow: none;
 }
 
 /* Misc */
