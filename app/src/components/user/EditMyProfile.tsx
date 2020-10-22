@@ -58,6 +58,18 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
 
     private processFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
+
+        if (this.state.user.firstName === "") {
+            return;
+        }
+
+        if (this.state.user.lastName === "") {
+            return;
+        }
+
+        if (this.state.user.email === "") {
+            return;
+        }
         
         const currentUser = AuthService.getCurrentUser();
         
@@ -112,7 +124,8 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
                             </div>
                         )}
                         <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
-                            <div className="form-group">
+                        <div className="form-row">
+                            <div className="form-group col-md-6">
                                 <label htmlFor="firstName"> First Name <span className="small text-success">(required)</span></label>
                                 <input
                                     type="text"
@@ -126,7 +139,7 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
                                     required
                                 />
                             </div>
-                            <div className="form-group">
+                            <div className="form-group col-md-6">
                                 <label htmlFor="lastName"> Last Name <span className="small text-success">(required)</span></label>
                                 <input
                                     type="text"
@@ -140,37 +153,38 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
                                     required
                                 />
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="email"> E-mail <span className="small text-success">(required)</span></label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    defaultValue={this.state.user.email}
-                                    onChange={(e) => this.handleInputChanges(e)}
-                                    name="email"
-                                    className="form-control"
-                                    placeholder="Enter user's email address"
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="password"> Password </label>
-                                    <div className="input-group">
-                                        <input
-                                            type={this.state.hidden ? "password" : "text"}
-                                            id="password"
-                                            onChange={(e) => this.handleInputChanges(e)}
-                                            name="password"
-                                            className="form-control"
-                                            placeholder="Set new password"
-                                            pattern="^.{1,100}$"
-                                        />
-                                        <div className="input-group-append">
-                                                <Tooltip title="Toggle to show or hide password input">  
-                                                    <button className="btn btn-info" onClick={this.toggleShow}><FontAwesomeIcon icon={this.state.hidden ? faEye : faEyeSlash} /></button>
-                                                </Tooltip>
-                                        </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email"> E-mail <span className="small text-success">(required)</span></label>
+                            <input
+                                type="email"
+                                id="email"
+                                defaultValue={this.state.user.email}
+                                onChange={(e) => this.handleInputChanges(e)}
+                                name="email"
+                                className="form-control"
+                                placeholder="Enter user's email address"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password"> Password </label>
+                                <div className="input-group">
+                                    <input
+                                        type={this.state.hidden ? "password" : "text"}
+                                        id="password"
+                                        onChange={(e) => this.handleInputChanges(e)}
+                                        name="password"
+                                        className="form-control"
+                                        placeholder="Set new password"
+                                        pattern="^.{1,100}$"
+                                    />
+                                    <div className="input-group-append">
+                                            <Tooltip title="Toggle to show or hide password input">  
+                                                <button className="btn btn-info" onClick={this.toggleShow}><FontAwesomeIcon icon={this.state.hidden ? faEye : faEyeSlash} /></button>
+                                            </Tooltip>
                                     </div>
+                                </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="avatar"> Set avatar </label>

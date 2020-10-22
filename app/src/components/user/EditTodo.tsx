@@ -15,7 +15,6 @@ export interface IFormState {
     todo: any;
     values: IValues[];
     submitSuccess: boolean;
-    loading: boolean;
 }
 
 class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
@@ -25,7 +24,6 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
             id: this.props.match.params.id,
             todo: {},
             values: [],
-            loading: false,
             submitSuccess: false,
         };
     }
@@ -38,9 +36,13 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
 
     private processFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        this.setState({ loading: true });
+
+        if (this.state.todo.title === "") {
+            return;
+        }
+
         axios.patch(`http://localhost:8080/api/todos/${this.state.id}`, this.state.values).then((data) => {
-            this.setState({ submitSuccess: true, loading: false });
+            this.setState({ submitSuccess: true });
             setTimeout(() => {
                 this.props.history.push("/my-todos");
             }, 1500);

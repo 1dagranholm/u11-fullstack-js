@@ -69,6 +69,31 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
 
     private processFormSubmission = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
+
+        if (this.state.email === "") {
+            return;
+        }
+
+        if (this.state.password === "") {
+            return;
+        }
+
+        if (this.state.firstName === "") {
+            return;
+        }
+
+        if (this.state.lastName === "") {
+            return;
+        }
+
+        if (this.state.roles === "") {
+            return;
+        }
+
+        if (this.state.avatar === "") {
+            return;
+        }
+
         const formData = {
             password: this.state.password,
             roles: this.state.role,
@@ -219,7 +244,7 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
                                 </button>
                                 <Link 
                                     to="/admin"
-                                    className="btn btn-secondary"
+                                    className="btn btn-primary"
                                 >
                                     <FontAwesomeIcon icon={faArrowLeft}/> Cancel and get back
                                 </Link>

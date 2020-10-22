@@ -99,29 +99,31 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
                         </div>
                     )}
                             <form id={"create-post-form"} onSubmit={this.processFormSubmission} noValidate={true}>
-                                <div className="form-group">
-                                    <label htmlFor="firstName"> First Name <span className="small text-success">(required)</span></label>
-                                    <input
-                                        type="text"
-                                        id="firstName"
-                                        defaultValue={this.state.user.firstName}
-                                        onChange={(e) => this.handleInputChanges(e)}
-                                        name="firstName"
-                                        className="form-control"
-                                        placeholder="Enter user's first name"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="lastName"> Last Name <span className="small text-success">(required)</span></label>
-                                    <input
-                                        type="text"
-                                        id="lastName"
-                                        defaultValue={this.state.user.lastName}
-                                        onChange={(e) => this.handleInputChanges(e)}
-                                        name="lastName"
-                                        className="form-control"
-                                        placeholder="Enter user's last name"
-                                    />
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
+                                        <label htmlFor="firstName"> First Name <span className="small text-success">(required)</span></label>
+                                        <input
+                                            type="text"
+                                            id="firstName"
+                                            defaultValue={this.state.user.firstName}
+                                            onChange={(e) => this.handleInputChanges(e)}
+                                            name="firstName"
+                                            className="form-control"
+                                            placeholder="Enter user's first name"
+                                        />
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                        <label htmlFor="lastName"> Last Name <span className="small text-success">(required)</span></label>
+                                        <input
+                                            type="text"
+                                            id="lastName"
+                                            defaultValue={this.state.user.lastName}
+                                            onChange={(e) => this.handleInputChanges(e)}
+                                            name="lastName"
+                                            className="form-control"
+                                            placeholder="Enter user's last name"
+                                        />
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="email"> E-mail <span className="small text-success">(required)</span></label>
@@ -135,40 +137,42 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
                                         placeholder="Enter user's email address"
                                     />
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="role">Role <span className="small text-success">(required)</span></label>
-                                    
-                                    {roles && (
-                                        <React.Fragment>
-                                            <select
-                                                className="custom-select"
-                                                name="roles"
-                                                id="roles"
-                                                value={this.state.role}
-                                                onChange={(e) => this.handleOptionChanges(e)}
-                                                >
-                                                <option value="">Set role</option>
-                                                { roles.map((role: any) => (
-                                                    <option 
-                                                        className="text-capitalize" 
-                                                        key={role._id} 
-                                                        value={role._id}>{ capitalizeFirstLetter(role.name) }</option>
-                                                ))}
-                                            </select>
-                                        </React.Fragment>
-                                    )}
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="password"> Password </label>
-                                    <input
-                                        type="text"
-                                        id="password"
-                                        // defaultValue={this.state.user.password}
-                                        onChange={(e) => this.handleInputChanges(e)}
-                                        name="password"
-                                        className="form-control"
-                                        placeholder="Set new password"
-                                    />
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
+                                        <label htmlFor="role">Role <span className="small text-success">(required)</span></label>
+                                        
+                                        {roles && (
+                                            <React.Fragment>
+                                                <select
+                                                    className="custom-select"
+                                                    name="roles"
+                                                    id="roles"
+                                                    value={this.state.role}
+                                                    onChange={(e) => this.handleOptionChanges(e)}
+                                                    >
+                                                    <option value="">Set role</option>
+                                                    { roles.map((role: any) => (
+                                                        <option 
+                                                            className="text-capitalize" 
+                                                            key={role._id} 
+                                                            value={role._id}>{ capitalizeFirstLetter(role.name) }</option>
+                                                    ))}
+                                                </select>
+                                            </React.Fragment>
+                                        )}
+                                    </div>
+                                    <div className="form-group col-md-6">
+                                        <label htmlFor="password"> Password </label>
+                                        <input
+                                            type="text"
+                                            id="password"
+                                            // defaultValue={this.state.user.password}
+                                            onChange={(e) => this.handleInputChanges(e)}
+                                            name="password"
+                                            className="form-control"
+                                            placeholder="Set new password"
+                                        />
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="avatar"> Set avatar </label>
@@ -179,11 +183,11 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
                                 </div>
                                 <div className="form-group mt-4">
                                     <button className="btn btn-success mr-2" type="submit">
-                                        <FontAwesomeIcon icon={faArrowLeft}/> Save edit
+                                        <FontAwesomeIcon icon={faSave}/> Save edit
                                     </button>
                                     <Link 
                                         to="/admin"
-                                        className="btn btn-secondary"
+                                        className="btn btn-primary"
                                     >
                                         <FontAwesomeIcon icon={faArrowLeft}/> Cancel and get back
                                     </Link>
