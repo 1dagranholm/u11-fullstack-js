@@ -107,6 +107,7 @@ exports.signup = (req, res) => {
           firstName: user.firstName,
           lastName: user.lastName,
           createdAt: user.createdAt,
+          avatar: user.avatar,
           roles: authorities,
           accessToken: token,
           expiresIn: 86400

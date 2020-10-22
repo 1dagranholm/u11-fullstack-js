@@ -15,14 +15,25 @@
   padding: 1.5rem 0 !important;
 }
 
+/* Avatar styling */
 .thumbnail {
   width: 74px !important;
   height: 74px !important;
 }
 
+.profile-thumbnail {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+/* Icon styling */
 div.checked > .icon {
   width: 35px !important;
   height: 35px !important;
+}
+
+.icon-button {
+  width: 32px;
 }
 
 /* Table styling */
@@ -97,9 +108,6 @@ input:focus:invalid {
 }
 
 /* Misc */
-.icon-button {
-  width: 32px;
-}
 
 div.container, nav.container, div.container-sm, div.container-md, div.container-lg, div.container-xl {
     max-width: 720px; 

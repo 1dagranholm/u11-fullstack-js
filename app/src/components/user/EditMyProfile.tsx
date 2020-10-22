@@ -12,6 +12,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEye, faEyeSlash, faSave } from '@fortawesome/free-solid-svg-icons';
 
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
+
 export interface IValues {
     [key: string]: any;
 }
@@ -95,7 +98,7 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
         this.setState({ avatar: avatar.value })
     }
 
-    private deleteUser() {
+    private deleteUser(id: string) {
         const user = AuthService.getCurrentUser();
 
         axios.delete(`http://localhost:8080/api/users/${user.id}`).then((response) => {
@@ -106,6 +109,22 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
                 }, 1500);
         });
     }
+
+    private confirmDelete() {
+        confirmAlert({
+          message: "Are you sure to do delete your account?",
+          buttons: [
+            {
+              label: "Yes, I'm sure",
+              onClick: () => this.deleteUser(this.state.user.id)
+            },
+            {
+              label: "No, cancel this request",
+              onClick: () => {}
+            }
+          ]
+        });
+      };
 
     public render() {
         const { submitSuccess } = this.state;
@@ -206,7 +225,7 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
                     <button
                         type="button" 
                         className="btn btn-danger"
-                        onClick={() => this.deleteUser()}
+                        onClick={() => this.confirmDelete()}
                     >
                         <FontAwesomeIcon className="mr-1" icon={faTrashAlt} /> Delete my account
                     </button>
