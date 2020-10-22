@@ -1,6 +1,9 @@
 import * as React from "react";
 import axios from "axios";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter, Link } from "react-router-dom";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 
 export interface IState {
     users: any[];
@@ -108,8 +111,10 @@ class CreateTodo extends React.Component<RouteComponentProps, IFormState> {
                                     name="title"
                                     className="form-control"
                                     placeholder="Enter title"
+                                    pattern="^.{1,30}$"
                                     required
                                 />
+                                <small className="form-text text-muted">Maximum 30 characters.</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="description"> Description </label>
@@ -120,7 +125,9 @@ class CreateTodo extends React.Component<RouteComponentProps, IFormState> {
                                     name="description"
                                     className="form-control"
                                     placeholder="Set description"
+                                    pattern="^.{1,50}$"
                                 />
+                                <small className="form-text text-muted">Maximum 50 characters.</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="role">Owner <span className="small text-success">(required)</span></label>
@@ -135,21 +142,28 @@ class CreateTodo extends React.Component<RouteComponentProps, IFormState> {
                                             onChange={(e) => this.handleOptionChanges(e)}
                                             required
                                             >
-                                            <option >Select user</option>
+                                            <option value="">Select user</option>
                                             { users.map((user: any) => (
                                                 !user.deletedAt && (
                                                     <option key={user._id} value={user._id}>{user.firstName} {user.lastName}</option>
                                                 )
                                             ))}
                                         </select>
+                                        <small className="form-text text-muted">This list contains only active users.</small>
                                     </React.Fragment>
                                 )}
                             </div>
-                            <div className="form-group">
-                                <button className="btn btn-success mt-4" type="submit">
-                                    Create Todo
-                                </button>
-                            </div>
+                                <div className="mt-4">
+                                    <button className="btn btn-success mr-2" type="submit">
+                                        <FontAwesomeIcon icon={faCheckSquare}/> Create Todo
+                                    </button>
+                                    <Link 
+                                        to="/admin"
+                                        className="btn btn-secondary"
+                                    >
+                                        <FontAwesomeIcon icon={faArrowLeft}/> Cancel and get back
+                                    </Link>
+                                </div>
                         </form>
                     </div>
                 </div>

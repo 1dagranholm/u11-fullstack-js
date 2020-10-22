@@ -5,6 +5,9 @@ import UserService from "../../../services/user.service";
 
 import UserDashboard from "../UserDashboard";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+
 const AdminBoard = () => {
   const [content, setContent] = useState("");
 
@@ -32,10 +35,10 @@ const AdminBoard = () => {
       <div className="container">
         <h1 className="display-4">{content}</h1>
           <Link to={"/create-user"} className="btn btn-primary mt-4 mr-2">
-              Create new user
+            <FontAwesomeIcon className="mr-1" icon={faUser} /> Create new user
           </Link>
           <Link to={"/create-todo"} className="btn btn-secondary mt-4">
-              Create new todo for users
+            <FontAwesomeIcon className="mr-2" icon={faCheckSquare} />Create new todo for users
           </Link>
       </div>
     </div>

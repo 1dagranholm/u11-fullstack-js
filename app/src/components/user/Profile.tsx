@@ -5,7 +5,7 @@ import AuthService from "../../services/auth.services";
 import { formatTimestamp } from "../../helper";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenAlt, faListAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPenAlt, faListAlt, faTools } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = (props: any) => {
 
@@ -46,14 +46,14 @@ const Profile = (props: any) => {
               </div>
               <div className="col-12">
                 <Link to={"/my-todos"} className="btn btn-success mt-4 mr-2">
-                  <FontAwesomeIcon icon={faListAlt} /> See my Todo's
+                  <FontAwesomeIcon className="mr-1" icon={faListAlt} /> See my Todo's
                 </Link>
                 <Link to={"/edit-profile"} className="btn btn-secondary mt-4 mr-2">
-                  <FontAwesomeIcon icon={faPenAlt} /> Edit my profile
+                  <FontAwesomeIcon className="mr-1" icon={faPenAlt} /> Edit my profile
                 </Link>
                 {showAdminBoard && (
                 <Link to={"/admin"} className="btn btn-info mt-4 mr-2">
-                  Admin pages
+                 <FontAwesomeIcon className="mr-1" icon={faTools} /> Admin pages
                 </Link>
                 )}
               </div>

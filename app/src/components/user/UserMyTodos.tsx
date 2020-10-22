@@ -7,7 +7,7 @@ import AuthService from "../../services/auth.services";
 import { formatTimestamp } from "../../helper";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPenAlt, faUndoAlt, faCheck, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPenAlt, faUndoAlt, faCheck, faSearch, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 import Tooltip from '@material-ui/core/Tooltip';
 
@@ -154,7 +154,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                             <h1 className="display-4">My Todo's</h1>
                             <form onSubmit={this.processSearchSubmission} noValidate={true}>
                                 <div className="form-group">
-                                    <div className="input-group mb-3">
+                                    <div className="input-group input-group-lg mb-3">
                                         <input 
                                             type="text" 
                                             id="term"
@@ -166,7 +166,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                             aria-label="Search box"
                                         />
                                         <div className="input-group-append">
-                                            <button className="btn btn-secondary" type="submit">
+                                            <button className="btn btn-secondary mr-1" type="submit">
                                                 <FontAwesomeIcon className="mr-1" icon={faSearch} />Search
                                             </button>
                                         </div>
@@ -193,9 +193,13 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                         placeholder="Enter your new todo here..."
                                         aria-label="Todo title" 
                                         ref={(input) => { this.focusInput = input; }}
+                                        pattern="^.{1,30}$"
+                                        required
                                     />
                                     <div className="input-group-append">
-                                        <button className="btn btn-primary" type="submit">Add</button>
+                                        <button className="btn btn-primary" type="submit">
+                                         <FontAwesomeIcon className="mr-1" icon={faPlusCircle} /> Add Todo
+                                        </button>
                                     </div>
                                 </div>
                                 {submitSuccess && (

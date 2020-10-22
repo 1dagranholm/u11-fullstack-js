@@ -1,9 +1,12 @@
 import * as React from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import axios from "axios";
 
 import ImagePicker from 'react-image-picker'
 import 'react-image-picker/dist/index.css'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSave, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { capitalizeFirstLetter } from "../../helper";
 
@@ -139,13 +142,12 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
                                         <React.Fragment>
                                             <select
                                                 className="custom-select"
-                                                name="role"
-                                                id="role"
+                                                name="roles"
+                                                id="roles"
                                                 value={this.state.role}
                                                 onChange={(e) => this.handleOptionChanges(e)}
-                                                required
                                                 >
-                                                <option >Set role</option>
+                                                <option value="">Set role</option>
                                                 { roles.map((role: any) => (
                                                     <option 
                                                         className="text-capitalize" 
@@ -176,9 +178,15 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
                                     />
                                 </div>
                                 <div className="form-group mt-4">
-                                    <button className="btn btn-success" type="submit">
-                                        Edit User
+                                    <button className="btn btn-success mr-2" type="submit">
+                                        <FontAwesomeIcon icon={faArrowLeft}/> Save edit
                                     </button>
+                                    <Link 
+                                        to="/admin"
+                                        className="btn btn-secondary"
+                                    >
+                                        <FontAwesomeIcon icon={faArrowLeft}/> Cancel and get back
+                                    </Link>
                                 </div>
                             </form>
                         </div>
