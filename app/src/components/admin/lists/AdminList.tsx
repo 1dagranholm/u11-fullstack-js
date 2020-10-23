@@ -71,7 +71,7 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
                 <table className="table styled-list">
                     <thead>
                         <tr>
-                            <th className="hidden-xs"></th>
+                            <th className="hidden-xs w60"></th>
                             <th><span>User</span></th>
                             <th className="hidden-xs"><span>Created</span></th>
                             <th><span>Status</span></th>
@@ -84,9 +84,9 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
                         <tr key={user._id}>
                             <td className="hidden-xs">
                                 { !user.avatar ? (
-                                    <img src={`${process.env.PUBLIC_URL}/avatars/avatar0.png`} width="50px" alt="{user.firstName + ' ' + user.lastName}" />
+                                    <img className="rounded-circle" src={`${process.env.PUBLIC_URL}/avatars/avatar0.png`} width="50px" alt="{user.firstName + ' ' + user.lastName}" />
                                 ) : (
-                                    <img src={`${process.env.PUBLIC_URL}/avatars/avatar${ user.avatar }.png`} width="50px" alt="{user.firstName + ' ' + user.lastName}" />
+                                    <img className="rounded-circle" src={`${process.env.PUBLIC_URL}/avatars/avatar${ user.avatar }.png`} width="50px" alt="{user.firstName + ' ' + user.lastName}" />
                                 )}
                             </td>
                             <td>

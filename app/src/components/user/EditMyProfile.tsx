@@ -36,7 +36,7 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
             user: {},
             values: [],
             submitSuccess: false,
-            avatar:  0,
+            avatar: 0,
             currentUser: "",
             hidden: true
         };
@@ -74,10 +74,19 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
             return;
         }
         
-        const currentUser = AuthService.getCurrentUser();
+        let currentUser = AuthService.getCurrentUser();
         
         axios.patch(`http://localhost:8080/api/users/${currentUser.id}`, this.state.values).then((data) => {
             this.setState({ submitSuccess: true });
+
+            let valuesData = this.state.values;
+
+            for (const [key, value] of Object.entries(valuesData)) {
+                currentUser[key] = value;
+            }
+
+            localStorage.setItem("user", JSON.stringify(currentUser));
+
             setTimeout(() => {
                 this.props.history.push("/profile");
             }, 1500);
