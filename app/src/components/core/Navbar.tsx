@@ -6,8 +6,10 @@ import { faListAlt, faUser, faTools, faSignOutAlt, faCheckSquare  } from '@forta
 
 import AuthService from "../../services/auth.services";
 
-const Navbar = () => {
+import $ from "jquery";
 
+const Navbar = () => {
+    
     const user = AuthService.getCurrentUser();
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     
@@ -24,10 +26,14 @@ const Navbar = () => {
         AuthService.logout();
     };
 
+    const toggleNav = () => {
+        $('.navbar-toggler:not(.collapsed)').trigger("click");
+    }
+
     return (
         <section id="navbar" className="navbar-dark bg-primary">
           <nav className="navbar container justify-content-between">
-                <Link to="/" className="navbar-brand" href="#"><FontAwesomeIcon className="mr-1" icon={faListAlt} /> TodoApp</Link>
+                <Link to="/" className="navbar-brand" href="#" onClick={toggleNav}><FontAwesomeIcon className="mr-1" icon={faListAlt} /> TodoApp</Link>
                 {user && (
                 <button className="navbar-toggler" 
                     type="button" 
@@ -46,7 +52,7 @@ const Navbar = () => {
                     {user && (
                         <ul className="navbar-nav mr-auto mt-3">
                             <li className="nav-item mb-3">
-                                <Link to="/my-todos" className="nav-link text-info">
+                                <Link to="/my-todos" className="nav-link text-info" onClick={toggleNav}>
                                     <FontAwesomeIcon className="mr-2" icon={faCheckSquare} /> 
                                         <strong>My Todo-list</strong>
                                 </Link>
@@ -55,13 +61,13 @@ const Navbar = () => {
                                 Logged in as: <strong>{user.firstName} {user.lastName}</strong> 
                             </li>
                             <li className="nav-item mb-3">
-                                <Link to="/profile" className="nav-link text-success">
+                                <Link to="/profile" className="nav-link text-success" onClick={toggleNav}>
                                     <FontAwesomeIcon className="mr-1" icon={faUser} /> View profile
                                 </Link>
                             </li>
                             {showAdminBoard && (
                                 <li className="nav-item mb-2">
-                                        <Link to={"/admin"} className="nav-link text-warning">
+                                        <Link to={"/admin"} className="nav-link text-warning" onClick={toggleNav}>
                                             <FontAwesomeIcon className="mr-1" icon={faTools} /> <strong>Admin pages</strong>
                                         </Link>
                                 </li>
