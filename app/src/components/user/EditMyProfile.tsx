@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import axios from "axios";
 
 import ImagePicker from 'react-image-picker'
@@ -10,7 +10,7 @@ import AuthService from "../../services/auth.services";
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faEye, faEyeSlash, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEye, faEyeSlash, faSave, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
@@ -98,6 +98,10 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
         this.setState({ avatar: avatar.value })
     }
 
+    logOut = () => {
+        AuthService.logout();
+    };
+
     private deleteUser(id: string) {
         const user = AuthService.getCurrentUser();
 
@@ -105,6 +109,7 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
             user.deletedAt = response.data.data.deletedAt;
             this.setState({user});
                 setTimeout(() => {
+                    this.logOut();
                     this.props.history.push("/");
                 }, 1500);
         });
@@ -112,14 +117,14 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
 
     private confirmDelete() {
         confirmAlert({
-          message: "Are you sure to do delete your account?",
+          message: "Are you really absolutely sure that you want to do delete your account?",
           buttons: [
             {
-              label: "Yes, I'm sure",
+              label: "Yes, please delete me now!",
               onClick: () => this.deleteUser(this.state.user.id)
             },
             {
-              label: "No, cancel this request",
+              label: "Oh no, cancel this request.",
               onClick: () => {}
             }
           ]
@@ -214,9 +219,15 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
                                 />
                             </div>
                             <div className="form-group mt-4">
-                                <button className="btn btn-success" type="submit">
+                                <button className="btn btn-success mr-2" type="submit">
                                     <FontAwesomeIcon className="mr-1" icon={faSave} /> Save edit
                                 </button>
+                                <Link 
+                                    to="/profile"
+                                    className="btn btn-primary"
+                                >
+                                    <FontAwesomeIcon icon={faArrowLeft}/> Cancel and get back
+                                </Link>
                             </div>
                         </form>
                     </div>

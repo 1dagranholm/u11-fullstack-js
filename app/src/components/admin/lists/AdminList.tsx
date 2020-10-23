@@ -141,7 +141,7 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
                                     </Tooltip>
                                     )}
                                     { user.deletedAt && (
-                                    <Tooltip title="Remove this user">
+                                    <Tooltip title="Restore this user">
                                         <button
                                             className="btn btn-sm btn-success icon-button"
                                             onClick={() => this.restoreUser(user._id)}

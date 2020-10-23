@@ -116,7 +116,7 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
                                                 </button>
                                                 <Link 
                                                     to="/my-todos"
-                                                    className="btn btn-secondary"
+                                                    className="btn btn-primary"
                                                 >
                                                     <FontAwesomeIcon icon={faArrowLeft}/> Cancel and get back to Todo's
                                                 </Link>
