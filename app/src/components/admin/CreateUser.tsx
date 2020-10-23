@@ -60,7 +60,7 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
     }
 
     public async componentDidMount() {
-        const roles = await axios.get(`http://localhost:8080/api/roles`).then((response) => {
+        const roles = await axios.get(`${process.env.REACT_APP_NODE_URL}/roles`).then((response) => {
             return response.data.data;
         });
 
@@ -106,7 +106,7 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
             avatar: this.state.avatar,
         };
         this.setState({ submitSuccess: true, values: [...this.state.values, formData] });
-        axios.post(`http://localhost:8080/api/users/`, formData).then((data) => [
+        axios.post(`${process.env.REACT_APP_NODE_URL}/users/`, formData).then((data) => [
             setTimeout(() => {
                 this.props.history.push("/admin");
             }, 1500),

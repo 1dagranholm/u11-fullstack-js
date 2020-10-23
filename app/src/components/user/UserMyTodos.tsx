@@ -50,7 +50,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
     public componentDidMount(): void {
         const user = AuthService.getCurrentUser();
 
-        axios.get(`http://localhost:8080/api/users/todos/${user.id}`).then((response) => {
+        axios.get(`${process.env.REACT_APP_NODE_URL}/users/todos/${user.id}`).then((response) => {
             this.setState({ todos: response.data });
         });
 
@@ -74,7 +74,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
             term: this.state.term
         };
         this.setState({ submitSuccess: true, values: [...this.state.values, formData], loading: false });
-        axios.post(`http://localhost:8080/api/todos/`, formData).then((response) => {
+        axios.post(`${process.env.REACT_APP_NODE_URL}/todos/`, formData).then((response) => {
             let newTodo = response.data.data;
             
             this.setState({ title: ""}); 
@@ -95,7 +95,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
             term: this.state.term,
         };
 
-        axios.post(`http://localhost:8080/api/search/todos/${currentUser.id}`, searchTerm).then((response) => {
+        axios.post(`${process.env.REACT_APP_NODE_URL}/search/todos/${currentUser.id}`, searchTerm).then((response) => {
             let todos = response.data;
             
             this.setState({ todos });
@@ -110,7 +110,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
     };
 
     public deleteTodo(id: number) {
-        axios.delete(`http://localhost:8080/api/todos/${id}`).then((response) => {
+        axios.delete(`${process.env.REACT_APP_NODE_URL}/todos/${id}`).then((response) => {
             const todoIndex = this.state.todos.findIndex((todo: { _id: number; }) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };
@@ -121,7 +121,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
     }
 
     public completeTodo(id: number) {
-        axios.patch(`http://localhost:8080/api/complete/todos/${id}`).then((response) => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/complete/todos/${id}`).then((response) => {
             const todoIndex = this.state.todos.findIndex((todo: { _id: number; }) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };
@@ -132,7 +132,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
     }
 
     public activateTodo(id: number) {
-        axios.patch(`http://localhost:8080/api/activate/todos/${id}`, { activate: "true" }).then(() => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/activate/todos/${id}`, { activate: "true" }).then(() => {
             const todoIndex = this.state.todos.findIndex((todo: { _id: number; }) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };

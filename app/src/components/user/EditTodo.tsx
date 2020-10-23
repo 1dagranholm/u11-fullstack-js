@@ -29,7 +29,7 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
     }
 
     public componentDidMount(): void {
-        axios.get(`http://localhost:8080/api/todos/${this.state.id}`).then((response) => {
+        axios.get(`${process.env.REACT_APP_NODE_URL}/todos/${this.state.id}`).then((response) => {
             this.setState({ todo: response.data.data });
         });
     }
@@ -41,7 +41,7 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
             return;
         }
 
-        axios.patch(`http://localhost:8080/api/todos/${this.state.id}`, this.state.values).then((data) => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/todos/${this.state.id}`, this.state.values).then((data) => {
             this.setState({ submitSuccess: true });
             setTimeout(() => {
                 this.props.history.push("/my-todos");

@@ -41,11 +41,11 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
     }
 
     public async componentDidMount() {
-        const roles = await axios.get(`http://localhost:8080/api/roles`).then((response) => {
+        const roles = await axios.get(`${process.env.REACT_APP_NODE_URL}/roles`).then((response) => {
             return response.data.data;
         });
 
-        const user = await axios.get(`http://localhost:8080/api/users/${this.state.id}`).then((response) => {
+        const user = await axios.get(`${process.env.REACT_APP_NODE_URL}/users/${this.state.id}`).then((response) => {
             return response.data.data;
         });
 
@@ -55,7 +55,7 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
     private processFormSubmission = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         this.setState({ loading: true });
-        axios.patch(`http://localhost:8080/api/users/${this.state.id}`, this.state.values).then((data) => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/users/${this.state.id}`, this.state.values).then((data) => {
             this.setState({ submitSuccess: true });
             setTimeout(() => {
                 this.props.history.push("/admin");
