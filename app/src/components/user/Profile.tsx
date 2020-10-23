@@ -13,10 +13,10 @@ const Profile = (props: any) => {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
     
   useEffect(() => {
-    const currentUser = AuthService.getCurrentUser();
+    const user = AuthService.getCurrentUser();
 
-    if (currentUser) {
-      setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
+    if (user) {
+      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
     
   }, []);
@@ -27,18 +27,20 @@ const Profile = (props: any) => {
         <div className="container mb-4">
           <div className="row">
             <div className="col-12">
-              <span className="text-success">My profile</span>
-              <h1 className="display-4"><strong>{user.firstName} {user.lastName}</strong></h1>
+              <div className="d-flex flex-row justify-content-between">
+                <div>
+                  <span className="text-success">My profile</span>
+                  <h1 className="display-4"><strong>{user.firstName} {user.lastName}</strong></h1>
+                </div>
+                <img 
+                  className="profile-thumbnail" 
+                  src={process.env.PUBLIC_URL + "/avatars/avatar" + user.avatar + ".png"} 
+                  alt={user.avatar}/>
+              </div>
               <ul className="list-group mt-3"> 
                   <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
                     <strong>E-mail:</strong> {user.email}
                   </li> 
-                  <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
-                    <strong>Id:</strong> {user.id}
-                  </li> 
-                  <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
-                    <strong>Authority:</strong>{user.roles}
-                  </li>
                   <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
                     <strong>Account created:</strong> { formatTimestamp(user.createdAt) }
                   </li>
@@ -48,7 +50,7 @@ const Profile = (props: any) => {
                 <Link to={"/my-todos"} className="btn btn-success mt-4 mr-2">
                   <FontAwesomeIcon className="mr-1" icon={faListAlt} /> See my Todo's
                 </Link>
-                <Link to={"/edit-profile"} className="btn btn-secondary mt-4 mr-2">
+                <Link to={"/edit-profile"} className="btn btn-primary mt-4 mr-2">
                   <FontAwesomeIcon className="mr-1" icon={faPenAlt} /> Edit my profile
                 </Link>
                 {showAdminBoard && (

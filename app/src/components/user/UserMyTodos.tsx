@@ -7,7 +7,7 @@ import AuthService from "../../services/auth.services";
 import { formatTimestamp } from "../../helper";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPenAlt, faUndoAlt, faCheck, faSearch, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPenAlt, faUndoAlt, faCheck, faSearch, faPlusCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import Tooltip from '@material-ui/core/Tooltip';
 
@@ -197,7 +197,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                         required
                                     />
                                     <div className="input-group-append">
-                                        <button className="btn btn-primary" type="submit">
+                                        <button className="btn btn-success" type="submit">
                                          <FontAwesomeIcon className="mr-1" icon={faPlusCircle} /> Add Todo
                                         </button>
                                     </div>
@@ -306,6 +306,9 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                         )}
                     </div>
                 </section>
+                <Link to={"/profile"} className="btn btn-primary mt-4 mr-2">
+                  <FontAwesomeIcon className="mr-1" icon={faUser} /> Go to my profile
+                </Link>
             </div>
         </React.Fragment>
         )
