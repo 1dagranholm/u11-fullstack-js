@@ -52,7 +52,7 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
     public async componentDidMount() {
         const currentUser = AuthService.getCurrentUser();
 
-        const user = await axios.get(`http://localhost:8080/api/users/${currentUser.id}`).then((response) => {
+        const user = await axios.get(`${process.env.REACT_APP_NODE_URL}/users/${currentUser.id}`).then((response) => {
             return response.data.data;
         });
 
@@ -76,7 +76,7 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
         
         let currentUser = AuthService.getCurrentUser();
         
-        axios.patch(`http://localhost:8080/api/users/${currentUser.id}`, this.state.values).then((data) => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/users/${currentUser.id}`, this.state.values).then((data) => {
             this.setState({ submitSuccess: true });
 
             let valuesData = this.state.values;
@@ -114,7 +114,7 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
     private deleteUser(id: string) {
         const user = AuthService.getCurrentUser();
 
-        axios.delete(`http://localhost:8080/api/users/${user.id}`).then((response) => {
+        axios.delete(`${process.env.REACT_APP_NODE_URL}/users/${user.id}`).then((response) => {
             user.deletedAt = response.data.data.deletedAt;
             this.setState({user});
                 setTimeout(() => {

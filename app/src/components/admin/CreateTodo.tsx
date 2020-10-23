@@ -43,7 +43,7 @@ class CreateTodo extends React.Component<RouteComponentProps<any>, IFormState> {
     }
 
     public async componentDidMount() {
-        const users = await axios.get(`http://localhost:8080/api/users`).then((response) => {
+        const users = await axios.get(`${process.env.REACT_APP_NODE_URL}/users`).then((response) => {
             return response.data.data;
         });
 
@@ -71,7 +71,7 @@ class CreateTodo extends React.Component<RouteComponentProps<any>, IFormState> {
             updatedAt: this.state.updatedAt,
         };
         this.setState({ submitSuccess: true, values: [...this.state.values, formData]});
-        axios.post(`http://localhost:8080/api/todos/`, formData).then((data) => [
+        axios.post(`${process.env.REACT_APP_NODE_URL}/todos/`, formData).then((data) => [
             setTimeout(() => {
                 this.props.history.push("/admin");
             }, 1500),

@@ -24,14 +24,14 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
     } 
 
     public async componentDidMount() {
-        const roles = await axios.get(`http://localhost:8080/api/roles`).then((response) => {
+        const roles = await axios.get(`${process.env.REACT_APP_NODE_URL}/roles`).then((response) => {
             return response.data.data;
         });
 
         this.setState({roles});
 
         roles.map(async (role: { _id: any; name: any; }) => {
-            let response = await axios.get(`http://localhost:8080/api/users/roles/${role._id}`).then((response) => {
+            let response = await axios.get(`${process.env.REACT_APP_NODE_URL}/users/roles/${role._id}`).then((response) => {
                 return response.data.data;
             });
             this.setState(({ [role.name]: response } as Pick<IState, keyof IState>));
@@ -39,7 +39,7 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
     }
 
     public deleteUser(id: number) {
-        axios.delete(`http://localhost:8080/api/users/${id}`).then((response) => {
+        axios.delete(`${process.env.REACT_APP_NODE_URL}/users/${id}`).then((response) => {
             const userIndex = this.state.admin.findIndex((user) => user._id === id);
             let users = [...this.state.admin];
             let admin = { ...users[userIndex] };
@@ -51,7 +51,7 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
     }
 
     public restoreUser(id: number) {
-        axios.patch(`http://localhost:8080/api/restore/users/${id}`, { restore: "true" }).then(() => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/restore/users/${id}`, { restore: "true" }).then(() => {
             const userIndex = this.state.admin.findIndex((user) => user._id === id);
             let users = [...this.state.admin];
             let admin = { ...users[userIndex] };

@@ -30,15 +30,15 @@ class ViewTodos extends React.Component<RouteComponentProps<any>, IState> {
 
     public async componentDidMount() {
     await Promise.all([
-        axios.get(`http://localhost:8080/api/users/todos/${this.state.userId}`),
-        axios.get(`http://localhost:8080/api/users/${this.state.userId}`)
+        axios.get(`${process.env.REACT_APP_NODE_URL}/users/todos/${this.state.userId}`),
+        axios.get(`${process.env.REACT_APP_NODE_URL}/users/${this.state.userId}`)
       ]).then(([userTodoData, userData]) => {
               this.setState({ userTodos: userTodoData.data, user: userData.data.data, loaded: true,});
           });
     }
 
     public deleteTodo(id: number) {
-        axios.delete(`http://localhost:8080/api/todos/${id}`).then((response) => {
+        axios.delete(`${process.env.REACT_APP_NODE_URL}/todos/${id}`).then((response) => {
             const todoIndex = this.state.todos.findIndex((todo) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };
@@ -49,7 +49,7 @@ class ViewTodos extends React.Component<RouteComponentProps<any>, IState> {
     }
 
     public restoreTodo(id: number) {
-        axios.patch(`http://localhost:8080/api/restore/todos/${id}`, { restore: "true" }).then(() => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/restore/todos/${id}`, { restore: "true" }).then(() => {
             const todoIndex = this.state.todos.findIndex((todo) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };
