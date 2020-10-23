@@ -28,11 +28,16 @@ import AdminList from "./components/admin/lists/AdminList";
 import AuthenticatedRoute from "./components/auth/AuthenticatedRoute";
 import AdminAuthenticatedRoute from "./components/auth/AdminAuthenticatedRoute";
 
+import {Helmet} from "react-helmet";
 
 const App = () => {
 
     return (
         <React.Fragment>
+            <Helmet>
+                <title>TodoApp</title>
+                <meta name="Apping up your life, Todo by Todo." content="A Todo application." />
+            </Helmet>
             <Navbar />
                 <div>
                     <Switch>
