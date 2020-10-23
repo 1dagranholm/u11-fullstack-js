@@ -33,7 +33,7 @@ const Profile = (props: any) => {
                   <h1 className="display-4"><strong>{user.firstName} {user.lastName}</strong></h1>
                 </div>
                 <img 
-                  className="profile-thumbnail" 
+                  className="profile-thumbnail rounded-circle" 
                   src={process.env.PUBLIC_URL + "/avatars/avatar" + user.avatar + ".png"} 
                   alt={user.avatar}/>
               </div>

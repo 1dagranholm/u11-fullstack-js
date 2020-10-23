@@ -49,6 +49,10 @@ table.styled-list th:last-child {
   width: 92px;
 }
 
+.w60 {
+  width: 60px !important;
+}
+
 /* Login page */
 .card-container.card {
   max-width: 350px !important;
