@@ -143,6 +143,10 @@ div.container, nav.container, div.container-sm, div.container-md, div.container-
     max-width: 720px; 
   }
 
+body {
+  margin-top: 60px !important;
+}
+
 /* Media queries */
 @media (max-width: 576px) {
   .hidden-xs {
