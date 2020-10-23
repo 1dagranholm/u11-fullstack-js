@@ -8,46 +8,55 @@ import Navbar from "./components/core/Navbar";
 import Footer from "./components/core/Footer";
 
 import Home from "./components/Home";
+import Login from "./components/open/Login";
+import Register from "./components/open/Register";
+import Restricted from "./components/open/Restricted";
 
-import CreateTodo from "./components/admin/CreateTodo";
-import ViewTodos from "./components/admin/ViewTodos";
-import CreateUser from "./components/admin/CreateUser";
-import EditUser from "./components/admin/EditUser";
-import UserBoard from "./components/admin/boards/UserBoard";
-import AdminBoard from "./components/admin/boards/AdminBoard";
-
-import Login from "./components/user/Login";
-import Register from "./components/user/Register";
-import Profile from "./components/user/Profile";
 import EditMyProfile from "./components/user/EditMyProfile";
 import EditTodo from "./components/user/EditTodo";
+import Profile from "./components/user/Profile";
 import UserMyTodos from "./components/user/UserMyTodos";
+
+import AdminBoard from "./components/admin/AdminBoard";
+import CreateTodo from "./components/admin/CreateTodo";
+import CreateUser from "./components/admin/CreateUser";
+import EditUser from "./components/admin/EditUser";
+import ViewTodos from "./components/admin/ViewTodos";
+import UserList from "./components/admin/lists/UserList";
+import AdminList from "./components/admin/lists/AdminList";
+
+import AuthenticatedRoute from "./components/auth/AuthenticatedRoute";
+import AdminAuthenticatedRoute from "./components/auth/AdminAuthenticatedRoute";
+
 
 const App = () => {
 
     return (
         <React.Fragment>
             <Navbar />
-            <div>
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/register" component={Register} />
+                <div>
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/register" component={Register} />
+                        <Route exact path="/restricted" component={Restricted} />
 
-                    <Route exact path="/profile" component={Profile} />
-                    <Route exact path="/edit-profile" component={EditMyProfile} />
-                    <Route exact path="/my-todos" component={UserMyTodos} />
+                        <AuthenticatedRoute exact path="/edit-profile" component={EditMyProfile} />
+                        <AuthenticatedRoute path={"/edit-todo/:id"} exact component={EditTodo} />
+                        <AuthenticatedRoute exact path="/profile" component={Profile} />
+                        <AuthenticatedRoute exact path="/my-todos" component={UserMyTodos} />
 
-                    <Route path="/user" component={UserBoard} />
-                    <Route path="/admin" component={AdminBoard} />
-
-                    <Route path={"/create-user"} exact component={CreateUser} />
-                    <Route path={"/edit-user/:id"} exact component={EditUser} />
-                    <Route path={"/create-todo"} exact component={CreateTodo} />
-                    <Route path={"/edit-todo/:id"} exact component={EditTodo} />
-                    <Route path={"/view-todos/user/:id"} exact component={ViewTodos} />
-                </Switch>
-            </div>
+                        <AdminAuthenticatedRoute path="/admin" component={AdminBoard} />
+                        <AdminAuthenticatedRoute path={"/create-todo"} exact component={CreateTodo} />
+                        <AdminAuthenticatedRoute path={"/create-user"} exact component={CreateUser} />
+                        <AdminAuthenticatedRoute path={"/edit-user/:id"} exact component={EditUser} />
+                        <AdminAuthenticatedRoute path={"/view-todos/user/:id"} exact component={ViewTodos} />
+                        
+                        <AdminAuthenticatedRoute exact component={AdminBoard} />
+                        <AdminAuthenticatedRoute exact component={UserList} />
+                        <AdminAuthenticatedRoute exact component={AdminList} />
+                    </Switch>
+                </div>
             <Footer/>
         </React.Fragment>
     );

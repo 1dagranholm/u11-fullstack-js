@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import UserService from "../../../services/user.service";
+import UserService from "../../services/user.service";
 
-import UserDashboard from "../UserDashboard";
+import UserDashboard from "./UserDashboard";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
