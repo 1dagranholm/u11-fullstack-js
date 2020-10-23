@@ -17,7 +17,7 @@ const Home = () => {
       <header className="jumbotron jumbotron-fluid">
         <div className="container d-flex flex-column justify-content-between align-items-center">
           <h1 className="display-4">TodoApp</h1>
-          <span>- Making your life easier.</span>
+          <span>- Apping up your life, Todo by Todo.</span>
           </div>
       </header>
     </div>
