@@ -2,8 +2,6 @@
     "theme_color": "#2c3e50",
     "background_color": "#2c3e50",
     "display": "standalone",
-    "scope": "http://todoapp.idagranholm.com",
-    "start_url": "http://todoapp.idagranholm.com/",
     "description": "Apping up your life, Todo by Todo.",
     "app_name": "TodoApp",
     "short_name": "TodoApp",
