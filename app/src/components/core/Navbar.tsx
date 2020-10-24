@@ -29,10 +29,10 @@ const Navbar = () => {
     const toggleNav = () => {
         $('.navbar-toggler:not(.collapsed)').trigger("click");
     }
-
+    
     return (
         <section id="navbar" className="fixed-top navbar-dark bg-primary">
-          <nav className="navbar container justify-content-between">
+          <nav className="navbar container justify-content-between" id="topnavbar">
                 <Link to="/" className="navbar-brand" href="#" onClick={toggleNav}><FontAwesomeIcon className="mr-1" icon={faListAlt} /> TodoApp</Link>
                 {user && (
                 <button className="navbar-toggler" 
