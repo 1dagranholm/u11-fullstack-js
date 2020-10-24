@@ -1,8 +1,12 @@
 const express = require('express');
+const fs = require('fs')
+const https = require('https')
+const http = require('http');
+const app = express();
+
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const app = express();
 const cors = require('cors');
 const apiRoutes = require('./routes/api-routes');
 
@@ -66,7 +70,9 @@ function initial() {
 }
 
 // Setup server port
+const sslPort = process.env.APP_PORT_SSL || 8443;
 const port = process.env.APP_PORT || 8080;
+
 
 // Send message for default URL
 app.get('/', (req, res) => res.send('Server is live!'));
@@ -85,7 +91,12 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Launch app to listen to specified port
-app.listen(port, () => {
-  // console.log(`Server is running on port ${port}.`);
-});
+https.createServer({
+  key: fs.readFileSync('../cert/server.key'),
+  cert: fs.readFileSync('../cert/server.cert')
+}, app)
+.listen(sslPort, function () {
+  console.log(`Listening on port ${sslPort} Go to https://localhost:${sslPort}/`)
+})
+
+http.createServer(app).listen(port);
