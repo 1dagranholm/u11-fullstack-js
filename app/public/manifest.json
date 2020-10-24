@@ -1,7 +1,7 @@
 {
     "theme_color": "#2c3e50",
     "background_color": "#2c3e50",
-    "display": "standalone",
+    "display": "fullscreen",
     "description": "Apping up your life, Todo by Todo.",
     "app_name": "TodoApp",
     "short_name": "TodoApp",
