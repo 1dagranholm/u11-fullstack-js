@@ -97,8 +97,10 @@ const vpassword = (value) => {
       };
 
       return (
-        <div className="col-md-12">
-          <div className="card card-container">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-12 col-md-6 card-container">
+            <div className="card">
             <img
               src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
               alt="profile-img"
@@ -163,18 +165,20 @@ const vpassword = (value) => {
                 </div>
               )}
 
-              {message && (
-            <div className="form-group">
-              <div
-                className={ successful ? "alert alert-success" : "alert alert-danger" }
-                role="alert"
-              >
-                {message}
+                {message && (
+              <div className="form-group">
+                <div
+                  className={ successful ? "alert alert-success" : "alert alert-danger" }
+                  role="alert"
+                >
+                  {message}
+                </div>
               </div>
-            </div>
-          )}
-          <CheckButton style={{ display: "none" }} ref={checkBtn} />
-        </Form>
+            )}
+            <CheckButton style={{ display: "none" }} ref={checkBtn} />
+          </Form>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -92,8 +92,8 @@ app.use(function(req, res, next) {
 });
 
 https.createServer({
-  key: fs.readFileSync('../cert/server.key'),
-  cert: fs.readFileSync('../cert/server.cert')
+  key: fs.readFileSync(process.env.APP_SSL_KEY),
+  cert: fs.readFileSync(process.env.APP_SSL_CERT)
 }, app)
 .listen(sslPort, function () {
   console.log(`Listening on port ${sslPort} Go to https://localhost:${sslPort}/`)
