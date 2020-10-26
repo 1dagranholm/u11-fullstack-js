@@ -16,34 +16,34 @@ const todoController = require('../controllers/todoController');
 const roleController = require('../controllers/roleController');
 
 // User routes
-router.route('/users').get(userController.index).post(userController.new);
-router.route('/users/:user_id').get(userController.view).patch(userController.update).delete(userController.delete);
-router.route('/users/roles/:role_id').get(userController.filterUsersByRoleId);
-router.route('/users/todos/:owner_id').get(todoController.userTodos);
+router.route('/users').get([authJwt.verifyToken], userController.index).post([authJwt.verifyToken], userController.new);
+router.route('/users/:user_id').get([authJwt.verifyToken], userController.view).patch([authJwt.verifyToken], userController.update).delete([authJwt.verifyToken], userController.delete);
+router.route('/users/roles/:role_id').get([authJwt.verifyToken], userController.filterUsersByRoleId);
+router.route('/users/todos/:owner_id').get([authJwt.verifyToken], todoController.userTodos);
 
 // Role routes
-router.route('/roles').get(roleController.index);
+router.route('/roles').get([authJwt.verifyToken], roleController.index);
 
 // Todo routes
-router.route('/todos').get(todoController.index).post(todoController.new);
-router.route('/todos/:todo_id').get(todoController.view).patch(todoController.update).delete(todoController.delete);
+router.route('/todos').get([authJwt.verifyToken], todoController.index).post([authJwt.verifyToken], todoController.new);
+router.route('/todos/:todo_id').get([authJwt.verifyToken], todoController.view).patch([authJwt.verifyToken], todoController.update).delete([authJwt.verifyToken], todoController.delete);
 
 // Complete/uncomplete todos
-router.route('/complete/todos/:todo_id').patch(todoController.complete);
-router.route('/activate/todos/:todo_id').patch(todoController.activate)
+router.route('/complete/todos/:todo_id').patch([authJwt.verifyToken], todoController.complete);
+router.route('/activate/todos/:todo_id').patch([authJwt.verifyToken], todoController.activate)
 
 // Restore removed users/todos
-router.route('/restore/users/:user_id').patch(userController.restore);
-router.route('/restore/todos/:todo_id').patch(todoController.restore);
+router.route('/restore/users/:user_id').patch([authJwt.verifyToken], userController.restore);
+router.route('/restore/todos/:todo_id').patch([authJwt.verifyToken], todoController.restore);
 
 // Search routes
-router.route('/search/users').post(userController.search);
-router.route('/search/todos').post(todoController.search);
-router.route('/search/todos/:user_id').post(todoController.searchUserTodos);
+router.route('/search/users').post([authJwt.verifyToken], userController.search);
+router.route('/search/todos').post([authJwt.verifyToken], todoController.search);
+router.route('/search/todos/:user_id').post([authJwt.verifyToken], todoController.searchUserTodos);
 
 
 // Test authorities routes
-router.route("/test/all").get(userController.allAccess);
+router.route("/test/all").get([authJwt.verifyToken], userController.allAccess);
 router.route("/test/user").get([authJwt.verifyToken], userController.userBoard);
 
   router.route(

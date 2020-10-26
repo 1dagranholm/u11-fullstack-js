@@ -33,7 +33,7 @@ const Navbar = () => {
     console.log()
     
     return (
-        <section id="navbar" className="fixed-top navbar-dark bg-primary">
+        <section id="nav-section" className="fixed-top navbar-dark bg-primary">
           <nav className="navbar container justify-content-between" id="topnavbar">
                 <Link to="/" className="navbar-brand" href="#" onClick={toggleNav}><FontAwesomeIcon className="mr-1" icon={faListAlt} /> TodoApp</Link>
                 {user && (

@@ -2,6 +2,8 @@ import * as React from "react";
 import axios from "axios";
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 
+import authHeader from "../../services/auth-header";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 
@@ -43,7 +45,7 @@ class CreateTodo extends React.Component<RouteComponentProps<any>, IFormState> {
     }
 
     public async componentDidMount() {
-        const users = await axios.get(`${process.env.REACT_APP_NODE_URL}/users`).then((response) => {
+        const users = await axios.get(`${process.env.REACT_APP_NODE_URL}/users`, { headers: authHeader() }).then((response) => {
             return response.data.data;
         });
 
@@ -71,7 +73,7 @@ class CreateTodo extends React.Component<RouteComponentProps<any>, IFormState> {
             updatedAt: this.state.updatedAt,
         };
         this.setState({ submitSuccess: true, values: [...this.state.values, formData]});
-        axios.post(`${process.env.REACT_APP_NODE_URL}/todos/`, formData).then((data) => [
+        axios.post(`${process.env.REACT_APP_NODE_URL}/todos/`, formData, { headers: authHeader() }).then((data) => [
             setTimeout(() => {
                 this.props.history.push("/admin");
             }, 1500),

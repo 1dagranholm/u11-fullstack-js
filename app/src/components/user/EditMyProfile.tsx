@@ -2,6 +2,8 @@ import * as React from "react";
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import axios from "axios";
 
+import authHeader from "../../services/auth-header";
+
 import ImagePicker from 'react-image-picker'
 import 'react-image-picker/dist/index.css'
 
@@ -52,7 +54,7 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
     public async componentDidMount() {
         const currentUser = AuthService.getCurrentUser();
 
-        const user = await axios.get(`${process.env.REACT_APP_NODE_URL}/users/${currentUser.id}`).then((response) => {
+        const user = await axios.get(`${process.env.REACT_APP_NODE_URL}/users/${currentUser.id}`, { headers: authHeader() }).then((response) => {
             return response.data.data;
         });
 
@@ -76,7 +78,7 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
         
         let currentUser = AuthService.getCurrentUser();
         
-        axios.patch(`${process.env.REACT_APP_NODE_URL}/users/${currentUser.id}`, this.state.values).then((data) => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/users/${currentUser.id}`, this.state.values, { headers: authHeader() }).then((data) => {
             this.setState({ submitSuccess: true });
 
             let valuesData = this.state.values;
@@ -114,7 +116,7 @@ class EditMyProfile extends React.Component<RouteComponentProps<any>, IFormState
     private deleteUser(id: string) {
         const user = AuthService.getCurrentUser();
 
-        axios.delete(`${process.env.REACT_APP_NODE_URL}/users/${user.id}`).then((response) => {
+        axios.delete(`${process.env.REACT_APP_NODE_URL}/users/${user.id}`, { headers: authHeader() }).then((response) => {
             user.deletedAt = response.data.data.deletedAt;
             this.setState({user});
                 setTimeout(() => {

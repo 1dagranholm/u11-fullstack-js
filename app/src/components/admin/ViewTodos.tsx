@@ -1,6 +1,9 @@
 import * as React from "react";
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import axios from "axios";
+
+import authHeader from "../../services/auth-header";
+
 import { formatTimestamp } from "../../helper";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,15 +33,15 @@ class ViewTodos extends React.Component<RouteComponentProps<any>, IState> {
 
     public async componentDidMount() {
     await Promise.all([
-        axios.get(`${process.env.REACT_APP_NODE_URL}/users/todos/${this.state.userId}`),
-        axios.get(`${process.env.REACT_APP_NODE_URL}/users/${this.state.userId}`)
+        axios.get(`${process.env.REACT_APP_NODE_URL}/users/todos/${this.state.userId}`, { headers: authHeader() }),
+        axios.get(`${process.env.REACT_APP_NODE_URL}/users/${this.state.userId}`, { headers: authHeader() })
       ]).then(([userTodoData, userData]) => {
               this.setState({ userTodos: userTodoData.data, user: userData.data.data, loaded: true,});
           });
     }
 
     public deleteTodo(id: number) {
-        axios.delete(`${process.env.REACT_APP_NODE_URL}/todos/${id}`).then((response) => {
+        axios.delete(`${process.env.REACT_APP_NODE_URL}/todos/${id}`, { headers: authHeader() }).then((response) => {
             const todoIndex = this.state.todos.findIndex((todo) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };
@@ -49,7 +52,7 @@ class ViewTodos extends React.Component<RouteComponentProps<any>, IState> {
     }
 
     public restoreTodo(id: number) {
-        axios.patch(`${process.env.REACT_APP_NODE_URL}/restore/todos/${id}`, { restore: "true" }).then(() => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/restore/todos/${id}`, { restore: "true" }, { headers: authHeader() }).then(() => {
             const todoIndex = this.state.todos.findIndex((todo) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };
