@@ -16,8 +16,8 @@ const Navbar = () => {
     useEffect(() => {
         const currentUser = AuthService.getCurrentUser();
 
-        if (currentUser) {
-            setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
+        if (user) {
+            setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
         }
     
     }, []);
@@ -29,6 +29,8 @@ const Navbar = () => {
     const toggleNav = () => {
         $('.navbar-toggler:not(.collapsed)').trigger("click");
     }
+
+    console.log()
     
     return (
         <section id="navbar" className="fixed-top navbar-dark bg-primary">
