@@ -2,6 +2,8 @@ import * as React from "react";
 import axios from "axios";
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 
+import authHeader from "../../services/auth-header";
+
 import ImagePicker from 'react-image-picker'
 import 'react-image-picker/dist/index.css'
 
@@ -60,7 +62,7 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
     }
 
     public async componentDidMount() {
-        const roles = await axios.get(`${process.env.REACT_APP_NODE_URL}/roles`).then((response) => {
+        const roles = await axios.get(`${process.env.REACT_APP_NODE_URL}/roles`, { headers: authHeader() }).then((response) => {
             return response.data.data;
         });
 
@@ -106,7 +108,7 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
             avatar: this.state.avatar,
         };
         this.setState({ submitSuccess: true, values: [...this.state.values, formData] });
-        axios.post(`${process.env.REACT_APP_NODE_URL}/users/`, formData).then((data) => [
+        axios.post(`${process.env.REACT_APP_NODE_URL}/users/`, formData, { headers: authHeader() }).then((data) => [
             setTimeout(() => {
                 this.props.history.push("/admin");
             }, 1500),
@@ -180,33 +182,35 @@ class CreateUser extends React.Component<RouteComponentProps, IFormState> {
                                 </div>
                                 <small className="form-text text-muted mb-3">Password must be minimum 8 characters, maximum 100 characters.</small>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="firstName"> First Name <span className="small text-success">(required)</span></label>
-                                <input
-                                    type="text"
-                                    id="firstName"
-                                    onChange={(e) => this.handleInputChanges(e)}
-                                    name="firstName"
-                                    className="form-control"
-                                    placeholder="Enter user's first name"
-                                    pattern="^.{1,30}$"
-                                    required
-                                />
-                                <small className="form-text text-muted">Only letters allowed.</small>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="lastName"> Last Name <span className="small text-success">(required)</span></label>
-                                <input
-                                    type="text"
-                                    id="lastName"
-                                    onChange={(e) => this.handleInputChanges(e)}
-                                    name="lastName"
-                                    className="form-control"
-                                    placeholder="Enter user's last name"
-                                    pattern="^.{1,50}$"
-                                    required
-                                />
-                                <small className="form-text text-muted">Only letters allowed.</small>
+                            <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="firstName"> First Name <span className="small text-success">(required)</span></label>
+                                    <input
+                                        type="text"
+                                        id="firstName"
+                                        onChange={(e) => this.handleInputChanges(e)}
+                                        name="firstName"
+                                        className="form-control"
+                                        placeholder="Enter user's first name"
+                                        pattern="^.{1,30}$"
+                                        required
+                                    />
+                                    <small className="form-text text-muted">Only letters allowed.</small>
+                                </div>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="lastName"> Last Name <span className="small text-success">(required)</span></label>
+                                    <input
+                                        type="text"
+                                        id="lastName"
+                                        onChange={(e) => this.handleInputChanges(e)}
+                                        name="lastName"
+                                        className="form-control"
+                                        placeholder="Enter user's last name"
+                                        pattern="^.{1,50}$"
+                                        required
+                                    />
+                                    <small className="form-text text-muted">Only letters allowed.</small>
+                                </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="role">Role <span className="small text-success">(required)</span></label>

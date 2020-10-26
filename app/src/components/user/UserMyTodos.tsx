@@ -2,6 +2,7 @@ import * as React from "react";
 import axios from "axios";
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 
+import authHeader from "../../services/auth-header";
 import AuthService from "../../services/auth.services";
 
 import { formatTimestamp } from "../../helper";
@@ -50,7 +51,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
     public componentDidMount(): void {
         const user = AuthService.getCurrentUser();
 
-        axios.get(`${process.env.REACT_APP_NODE_URL}/users/todos/${user.id}`).then((response) => {
+        axios.get(`${process.env.REACT_APP_NODE_URL}/users/todos/${user.id}`, { headers: authHeader() }).then((response) => {
             this.setState({ todos: response.data });
         });
 
@@ -74,7 +75,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
             term: this.state.term
         };
         this.setState({ submitSuccess: true, values: [...this.state.values, formData], loading: false });
-        axios.post(`${process.env.REACT_APP_NODE_URL}/todos/`, formData).then((response) => {
+        axios.post(`${process.env.REACT_APP_NODE_URL}/todos/`, formData, { headers: authHeader() }).then((response) => {
             let newTodo = response.data.data;
             
             this.setState({ title: ""}); 
@@ -95,7 +96,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
             term: this.state.term,
         };
 
-        axios.post(`${process.env.REACT_APP_NODE_URL}/search/todos/${currentUser.id}`, searchTerm).then((response) => {
+        axios.post(`${process.env.REACT_APP_NODE_URL}/search/todos/${currentUser.id}`, searchTerm, { headers: authHeader() }).then((response) => {
             let todos = response.data;
             
             this.setState({ todos });
@@ -110,7 +111,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
     };
 
     public deleteTodo(id: number) {
-        axios.delete(`${process.env.REACT_APP_NODE_URL}/todos/${id}`).then((response) => {
+        axios.delete(`${process.env.REACT_APP_NODE_URL}/todos/${id}`, { headers: authHeader() }).then((response) => {
             const todoIndex = this.state.todos.findIndex((todo: { _id: number; }) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };
@@ -121,7 +122,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
     }
 
     public completeTodo(id: number) {
-        axios.patch(`${process.env.REACT_APP_NODE_URL}/complete/todos/${id}`).then((response) => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/complete/todos/${id}`, { headers: authHeader() }).then((response) => {
             const todoIndex = this.state.todos.findIndex((todo: { _id: number; }) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };
@@ -132,7 +133,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
     }
 
     public activateTodo(id: number) {
-        axios.patch(`${process.env.REACT_APP_NODE_URL}/activate/todos/${id}`, { activate: "true" }).then(() => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/activate/todos/${id}`, { activate: "true" }, { headers: authHeader() }).then(() => {
             const todoIndex = this.state.todos.findIndex((todo: { _id: number; }) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };

@@ -2,6 +2,8 @@ import * as React from "react";
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import axios from "axios";
 
+import authHeader from "../../../services/auth-header";
+
 import { formatTimestamp } from "../../../helper";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,14 +26,14 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
     } 
 
     public async componentDidMount() {
-        const roles = await axios.get(`${process.env.REACT_APP_NODE_URL}/roles`).then((response) => {
+        const roles = await axios.get(`${process.env.REACT_APP_NODE_URL}/roles`, { headers: authHeader() }).then((response) => {
             return response.data.data;
         });
 
         this.setState({roles});
 
         roles.map(async (role: { _id: any; name: any; }) => {
-            let response = await axios.get(`${process.env.REACT_APP_NODE_URL}/users/roles/${role._id}`).then((response) => {
+            let response = await axios.get(`${process.env.REACT_APP_NODE_URL}/users/roles/${role._id}`, { headers: authHeader() }).then((response) => {
                 return response.data.data;
             });
             this.setState(({ [role.name]: response } as Pick<IState, keyof IState>));
@@ -39,7 +41,7 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
     }
 
     public deleteUser(id: number) {
-        axios.delete(`${process.env.REACT_APP_NODE_URL}/users/${id}`).then((response) => {
+        axios.delete(`${process.env.REACT_APP_NODE_URL}/users/${id}`, { headers: authHeader() }).then((response) => {
             const userIndex = this.state.admin.findIndex((user) => user._id === id);
             let users = [...this.state.admin];
             let admin = { ...users[userIndex] };
@@ -51,7 +53,7 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
     }
 
     public restoreUser(id: number) {
-        axios.patch(`${process.env.REACT_APP_NODE_URL}/restore/users/${id}`, { restore: "true" }).then(() => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/restore/users/${id}`, { restore: "true" }, { headers: authHeader() }).then(() => {
             const userIndex = this.state.admin.findIndex((user) => user._id === id);
             let users = [...this.state.admin];
             let admin = { ...users[userIndex] };
@@ -71,10 +73,10 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
                 <table className="table styled-list">
                     <thead>
                         <tr>
-                            <th className="hidden-xs w60"></th>
+                            <th className="hidden-xs w60 text-center"><span className="text-muted small">Avatar</span></th>
                             <th><span>User</span></th>
                             <th className="hidden-xs"><span>Created</span></th>
-                            <th><span>Status</span></th>
+                            <th className="w100"><span>Status</span></th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -108,7 +110,7 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
                                 <div className="btn-group d-flex flex-row justify-content-center">
                                     <Tooltip title="Copy User-ID to clipboard">
                                         <button 
-                                            className="btn btn-sm btn-primary icon-button"
+                                            className="hidden-xs btn btn-sm btn-primary icon-button"
                                             onClick={() => {navigator.clipboard.writeText(user._id)}}>
                                                 <strong>ID</strong>
                                         </button> 

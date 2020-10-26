@@ -7,6 +7,8 @@ import { formatTimestamp } from "../../helper";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenAlt, faListAlt, faTools } from '@fortawesome/free-solid-svg-icons';
 
+import Tooltip from '@material-ui/core/Tooltip';
+
 const Profile = (props: any) => {
 
   const user = AuthService.getCurrentUser();
@@ -37,6 +39,17 @@ const Profile = (props: any) => {
                   src={process.env.PUBLIC_URL + "/avatars/avatar" + user.avatar + ".png"} 
                   alt={user.avatar}/>
               </div>
+              {showAdminBoard && (
+                <div>
+                  <Tooltip title="Copy Access Token to clipboard">
+                      <button 
+                          className="btn btn-sm btn-primary"
+                          onClick={() => {navigator.clipboard.writeText(user.accessToken)}}>
+                              <strong>Copy my Access Token</strong>
+                      </button> 
+                  </Tooltip>
+                </div>
+              )}
               <ul className="list-group mt-3"> 
                   <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
                     <strong>E-mail:</strong> {user.email}
@@ -44,6 +57,13 @@ const Profile = (props: any) => {
                   <li className="list-group-item d-flex flex-row justify-content-between align-items-center">
                     <strong>Account created:</strong> { formatTimestamp(user.createdAt) }
                   </li>
+                  {showAdminBoard && (
+                    <React.Fragment>
+                      <li className="list-group-item d-flex flex-row justify-content-between align-items-center bg-dark text-white">
+                        <strong>User-ID</strong> {user.id}
+                      </li>
+                    </React.Fragment>
+                  )}
                 </ul>
               </div>
               <div className="col-12">

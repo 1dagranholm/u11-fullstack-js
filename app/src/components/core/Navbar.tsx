@@ -14,10 +14,10 @@ const Navbar = () => {
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     
     useEffect(() => {
-        const currentUser = AuthService.getCurrentUser();
+        const user = AuthService.getCurrentUser();
 
-        if (currentUser) {
-            setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
+        if (user) {
+            setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
         }
     
     }, []);
@@ -29,9 +29,11 @@ const Navbar = () => {
     const toggleNav = () => {
         $('.navbar-toggler:not(.collapsed)').trigger("click");
     }
+
+    console.log()
     
     return (
-        <section id="navbar" className="fixed-top navbar-dark bg-primary">
+        <section id="nav-section" className="fixed-top navbar-dark bg-primary">
           <nav className="navbar container justify-content-between" id="topnavbar">
                 <Link to="/" className="navbar-brand" href="#" onClick={toggleNav}><FontAwesomeIcon className="mr-1" icon={faListAlt} /> TodoApp</Link>
                 {user && (

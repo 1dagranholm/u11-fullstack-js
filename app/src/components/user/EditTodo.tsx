@@ -2,6 +2,8 @@ import * as React from "react";
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import axios from "axios";
 
+import authHeader from "../../services/auth-header";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
@@ -29,7 +31,7 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
     }
 
     public componentDidMount(): void {
-        axios.get(`${process.env.REACT_APP_NODE_URL}/todos/${this.state.id}`).then((response) => {
+        axios.get(`${process.env.REACT_APP_NODE_URL}/todos/${this.state.id}`, { headers: authHeader() }).then((response) => {
             this.setState({ todo: response.data.data });
         });
     }
@@ -41,7 +43,7 @@ class EditTodo extends React.Component<RouteComponentProps<any>, IFormState> {
             return;
         }
 
-        axios.patch(`${process.env.REACT_APP_NODE_URL}/todos/${this.state.id}`, this.state.values).then((data) => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/todos/${this.state.id}`, this.state.values, { headers: authHeader() }).then((data) => {
             this.setState({ submitSuccess: true });
             setTimeout(() => {
                 this.props.history.push("/my-todos");
