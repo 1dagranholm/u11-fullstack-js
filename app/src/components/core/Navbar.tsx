@@ -14,7 +14,7 @@ const Navbar = () => {
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     
     useEffect(() => {
-        const currentUser = AuthService.getCurrentUser();
+        const user = AuthService.getCurrentUser();
 
         if (user) {
             setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
