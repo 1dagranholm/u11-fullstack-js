@@ -76,7 +76,7 @@ class AdminList extends React.Component<RouteComponentProps, IState> {
                             <th className="hidden-xs w60 text-center"><span className="text-muted small">Avatar</span></th>
                             <th><span>User</span></th>
                             <th className="hidden-xs"><span>Created</span></th>
-                            <th className="w100"><span>Status</span></th>
+                            <th className="w110"><span>Status</span></th>
                             <th>Actions</th>
                         </tr>
                     </thead>
