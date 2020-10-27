@@ -3,7 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Quick install
 ```
-wget -O - https://github.com/1dagranholm/u11-fullstack-js/install.sh | bash
+wget -O - https://github.com/1dagranholm/u11-fullstack-js/blob/master/install.sh | bash
 ```
 
 ## REACT APP
