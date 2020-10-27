@@ -34,7 +34,8 @@
         "validator": "^13.1.17"
     },
     "scripts": {
-        "start": "HTTPS=true PORT=8000 react-scripts start",
+        "start": "PORT=8000 react-scripts start",
+        "startssl": "HTTPS=true PORT=8000 react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"

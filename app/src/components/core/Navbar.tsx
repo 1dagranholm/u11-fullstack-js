@@ -20,7 +20,7 @@ const Navbar = () => {
             setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
         }
     
-    }, []);
+    }, [user]);
 
     const logOut = () => {
         AuthService.logout();
@@ -29,8 +29,6 @@ const Navbar = () => {
     const toggleNav = () => {
         $('.navbar-toggler:not(.collapsed)').trigger("click");
     }
-
-    console.log()
     
     return (
         <section id="nav-section" className="fixed-top navbar-dark bg-primary">
