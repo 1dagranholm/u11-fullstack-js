@@ -87,7 +87,7 @@ class EditUser extends React.Component<RouteComponentProps<any>, IFormState> {
 
     public render() {
         const { submitSuccess, roles } = this.state;
-        const avatarList = [1, 2, 3, 4, 5, 6, 7, 8];
+        const avatarList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     return (
         <React.Fragment>
