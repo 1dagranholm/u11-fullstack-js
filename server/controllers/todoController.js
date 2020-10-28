@@ -70,6 +70,7 @@ exports.update = function (req, res) {
 
 exports.complete = function (req, res) {
   Todo.findById(req.params.todo_id, (err, data) => {
+    console.log(data);
     const todo = data;
     if (err) {
       restApiResponse(err, ['No matching todo found and therefore unable to complete', ''], todo, res);

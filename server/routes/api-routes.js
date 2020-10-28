@@ -26,11 +26,11 @@ router.route('/roles').get([authJwt.verifyToken, authJwt.isAdmin], roleControlle
 
 // Todo routes
 router.route('/todos').get([authJwt.verifyToken, authJwt.isAdmin], todoController.index).post([authJwt.verifyToken, authJwt.isAdmin], todoController.new);
-router.route('/todos/:todo_id').get([authJwt.verifyToken], todoController.view).patch([authJwt.verifyToken], todoController.update).delete([authJwt.verifyToken], todoController.delete);
+router.route('/todos/:todo_id').get(authJwt.verifyToken, todoController.view).patch([authJwt.verifyToken], todoController.update).delete([authJwt.verifyToken], todoController.delete);
 
 // Complete/uncomplete todos
-router.route('/complete/todos/:todo_id').patch([authJwt.verifyToken], todoController.complete);
-router.route('/activate/todos/:todo_id').patch([authJwt.verifyToken], todoController.activate)
+router.route('/complete/todos/:todo_id').patch(authJwt.verifyToken, todoController.complete);
+router.route('/activate/todos/:todo_id').patch(authJwt.verifyToken, todoController.activate)
 
 // Restore removed users/todos
 router.route('/restore/users/:user_id').patch([authJwt.verifyToken, authJwt.isAdmin], userController.restore);
@@ -43,8 +43,8 @@ router.route('/search/todos/:user_id').post([authJwt.verifyToken, authJwt.isAdmi
 
 
 // Test authorities routes
-router.route("/test/all").get([authJwt.verifyToken], userController.allAccess);
-router.route("/test/user").get([authJwt.verifyToken], userController.userBoard);
+router.route("/test/all").get(authJwt.verifyToken, userController.allAccess);
+router.route("/test/user").get(authJwt.verifyToken, userController.userBoard);
 
   router.route(
   '/test/admin').get(

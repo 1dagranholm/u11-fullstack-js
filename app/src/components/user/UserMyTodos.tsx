@@ -122,7 +122,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
     }
 
     public completeTodo(id: number) {
-        axios.patch(`${process.env.REACT_APP_NODE_URL}/complete/todos/${id}`, { headers: authHeader() }).then((response) => {
+        axios.patch(`${process.env.REACT_APP_NODE_URL}/complete/todos/${id}`,{}, { headers: authHeader() }).then((response) => {
             const todoIndex = this.state.todos.findIndex((todo: { _id: number; }) => todo._id === id);
             let todos = [...this.state.todos];
             let todo = { ...todos[todoIndex] };

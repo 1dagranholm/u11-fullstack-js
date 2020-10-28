@@ -6,5 +6,5 @@ cd ./todo-app/app && npm i &&
 cd ../server && npm i &&
 rm ../install.sh &&
 echo -------------------------
-echo Install completed.
+echo Install completed
 echo -------------------------
