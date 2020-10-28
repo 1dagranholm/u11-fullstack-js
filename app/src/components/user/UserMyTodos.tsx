@@ -74,6 +74,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
             updatedAt: this.state.updatedAt,
             term: this.state.term
         };
+
         this.setState({ submitSuccess: true, values: [...this.state.values, formData], loading: false });
         axios.post(`${process.env.REACT_APP_NODE_URL}/todos/`, formData, { headers: authHeader() }).then((response) => {
             let newTodo = response.data.data;

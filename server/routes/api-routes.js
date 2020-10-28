@@ -25,7 +25,7 @@ router.route('/users/todos/:owner_id').get([authJwt.verifyToken], todoController
 router.route('/roles').get([authJwt.verifyToken, authJwt.isAdmin], roleController.index);
 
 // Todo routes
-router.route('/todos').get([authJwt.verifyToken, authJwt.isAdmin], todoController.index).post([authJwt.verifyToken, authJwt.isAdmin], todoController.new);
+router.route('/todos').get(authJwt.verifyToken, todoController.index).post(authJwt.verifyToken, todoController.new);
 router.route('/todos/:todo_id').get(authJwt.verifyToken, todoController.view).patch([authJwt.verifyToken], todoController.update).delete([authJwt.verifyToken], todoController.delete);
 
 // Complete/uncomplete todos

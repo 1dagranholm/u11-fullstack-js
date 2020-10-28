@@ -158,7 +158,6 @@ const vpassword = (value) => {
                       validations={[required]}
                     />
                   </div>
-    
                   <div className="form-group">
                     <button className="btn btn-primary btn-block mt-4">Sign Up</button>
                   </div>
