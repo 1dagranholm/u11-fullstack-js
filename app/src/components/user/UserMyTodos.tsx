@@ -158,7 +158,7 @@ class UserMyTodos extends React.Component<RouteComponentProps, IFormState> {
                                 <div className="form-group">
                                     <div className="input-group input-group-lg mb-3">
                                         <input 
-                                            type="text" 
+                                            type="search" 
                                             id="term"
                                             name="term"
                                             value={this.state.term}
